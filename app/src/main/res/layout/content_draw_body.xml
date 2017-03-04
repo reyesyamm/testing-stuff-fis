@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/divider"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.swyam.fisiomer.DrawBodyActivity"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_draw_body">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/panel"
+            android:layout_weight="3">
+
+            <ImageView
+                android:id="@+id/imagen_cuerpo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/human_body"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/panel"
+            >
+
+            <TextView
+                android:id="@+id/tv_color_pincel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Color del Pincel"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:padding="5dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:layout_marginBottom="10dp"
+                android:maxLines="2"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_gravity="center"
+                    android:id="@+id/btn_color_negro"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="1dp"
+                    android:background="#000000"/>
+
+                <Button
+                    android:layout_gravity="center"
+                    android:id="@+id/btn_color_rojo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="1dp"
+                    android:background="#FF0000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_gravity="top|center"
+                    android:id="@+id/btn_color_verde"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:background="#00FF00"/>
+
+                <Button
+                    android:layout_gravity="top|center"
+                    android:id="@+id/btn_color_azul"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:background="#0000FF"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_deshacer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mybutton"
+                android:layout_marginTop="20dp"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTextButton"
+                android:textSize="@dimen/font_size_subtitle"
+                android:layout_gravity="center"
+                android:text="Deshacer último"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:background="@drawable/panel"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:text="Pinta las áreas del malestar en el dibujo del cuerpo humano"
+            android:textSize="@dimen/font_size_paragraph"
+            android:gravity="top|left"
+            android:textColor="#000000"
+            />
+
+        <Button
+            android:id="@+id/btn_guardar_pintado"
+            android:textAllCaps="false"
+            android:text="Guardar Cambios"
+            android:textColor="@color/colorTextButton"
+            android:textSize="@dimen/font_size_title"
+            android:background="@drawable/mybutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- >
+
+    <dimen name="font_size_title">30sp</dimen>
+    <dimen name="font_size_subtitle">25sp</dimen>
+    <dimen name="font_size_paragraph">22sp</dimen>
+    <dimen name="font_size_footer">20sp</dimen>
+
+    < -->
+
+
+    <!-- para movil  -->
+    <dimen name="font_size_title">22sp</dimen>
+    <dimen name="font_size_subtitle">19sp</dimen>
+    <dimen name="font_size_paragraph">17sp</dimen>
+    <dimen name="font_size_footer">15sp</dimen>
+
+    <!-- -->
+
+</resources>

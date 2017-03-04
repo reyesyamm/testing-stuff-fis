@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- puncion seca -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contenedor_ll_opciones_puncion_seca"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radiogroup_ps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border_panel"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            >
+            <RadioButton
+                android:id="@+id/radio_mantenida"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Matenida"
+                android:padding="5dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/radio_e_s"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="E / S"
+                android:textSize="@dimen/font_size_subtitle"
+                android:padding="5dp"
+                />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="5dp"
+                android:orientation="vertical"
+                android:background="@drawable/border_panel">
+
+                <TextView
+                    android:id="@+id/tv_nombre_musculo_seleccionado_ps_mantenida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No se ha seleccionado ningún músculo"
+                    android:textSize="@dimen/font_size_paragraph"
+                    android:textColor="@color/colorSecondaryText"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btn_ps_estado_bien"
+                        android:layout_margin="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/cara1"
+                        android:scaleType="fitCenter"
+                        android:background="@null"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_ps_estado_mediobien"
+                        android:layout_margin="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:background="@null"
+                        android:src="@drawable/cara2"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_ps_estado_mal"
+                        android:layout_margin="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:background="@null"
+                        android:src="@drawable/cara3"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_ps_estado_muymal"
+                        android:layout_margin="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/cara4"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="vertical"
+                >
+
+                <Button
+                    android:id="@+id/btn_ps_seleccionar_musculo"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/mybutton"
+                    android:textColor="@color/colorTextButton"
+                    android:text="Seleccionar\nMúsculo"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textAllCaps="false"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="5dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    />
+
+                <Button
+                    android:id="@+id/btn_ps_agregar_tratamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/mybutton"
+                    android:textColor="@color/colorTextButton"
+                    android:text="Agregar a\nTratamiento"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textAllCaps="false"
+                    android:textAlignment="center"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+
+                    />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- fibrolisis -->
+    <LinearLayout
+        android:id="@+id/contenedor_ll_opciones_fibrolisis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:orientation="vertical"
+            android:background="@drawable/border_panel">
+
+            <TextView
+                android:id="@+id/tv_nombre_musculo_seleccionado_fibrolisis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No se ha seleccionado ningún músculo"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:maxLines="2"
+                android:ellipsize="end"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_fib_estado_bien"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/cara1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_fib_estado_mediobien"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:src="@drawable/cara2"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_fib_estado_mal"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:src="@drawable/cara3"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_fib_estado_muymal"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/cara4"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/btn_fib_seleccionar_musculo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:text="Seleccionar\nMúsculo"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:layout_marginBottom="5dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                />
+
+            <Button
+                android:id="@+id/btn_fib_agregar_tratamiento"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:text="Agregar a\nTratamiento"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:maxLines="2"
+                android:ellipsize="end"
+
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- tecnicas manuales -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contenedor_ll_opciones_tm"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <RadioGroup
+            android:id="@+id/radiogroup_tm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border_panel"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            >
+            <RadioButton
+                android:id="@+id/radio_estiramiento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Estiramiento"
+                android:padding="5dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/radio_movilizacion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Movilización"
+                android:textSize="@dimen/font_size_subtitle"
+                android:padding="5dp"
+                />
+
+        </RadioGroup>
+
+        <!-- opciones para estiramiento -->
+        <LinearLayout
+            android:id="@+id/contenedor_opciones_tm_estiramiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:visibility="visible"
+            android:background="@drawable/border_panel"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_nombre_musculo_seleccionado_tm_estiramiento"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:text="No se ha seleccionado ningún músculo"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:maxLines="2"
+                android:ellipsize="end"
+                />
+
+            <Button
+                android:id="@+id/btn_tm_estiramiento_seleccionar_musculo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:text="Seleccionar\nMúsculo"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:layout_marginBottom="5dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                />
+
+        </LinearLayout>
+
+        <!-- cuadro para movilizacion -->
+        <LinearLayout
+            android:id="@+id/contenedor_opciones_tm_movilizacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:background="@drawable/border_panel"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txt_tm_movilizacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:maxLength="100"
+                    android:hint="Escribe la descripción aqui. Máximo 100 caractéres"
+                    android:gravity="top|left"
+                    android:lines="3"
+                    android:textSize="@dimen/font_size_paragraph"
+                    android:minLines="3"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btn_tm_estado_bien"
+                        android:layout_margin="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/cara1"
+                        android:scaleType="fitCenter"
+                        android:background="@null"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_tm_estado_mediobien"
+                        android:layout_margin="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:background="@null"
+                        android:src="@drawable/cara2"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_tm_estado_mal"
+                        android:layout_margin="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:background="@null"
+                        android:src="@drawable/cara3"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_tm_estado_muymal"
+                        android:layout_margin="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/cara4"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+
+                        />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_tm_agregar_tratamiento"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:text="Agregar a\nTratamiento"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:maxLines="2"
+                android:ellipsize="end"
+
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

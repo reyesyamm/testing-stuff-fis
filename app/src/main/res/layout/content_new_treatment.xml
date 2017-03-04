@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:fillViewport="true"
+    android:background="@color/divider"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.swyam.fisiomer.NewTreatmentActivity"
+    tools:showIn="@layout/activity_new_treatment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_title"
+                android:text="Estado del paciente al llegar"
+                android:textColor="@color/colorPrimaryText"
+                android:textAlignment="center"
+                android:layout_marginBottom="5dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_estado_inicio_bien"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/cara1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_estado_inicio_mediobien"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:src="@drawable/cara2"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_estado_inicio_mal"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:src="@drawable/cara3"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_estado_inicio_muymal"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/cara4"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/panel"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_agregar_terapia_funcional"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Terapia Funcional"
+                    android:drawableLeft="@drawable/ic_add_white_24dp"
+                    android:background="@color/colorAccent"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorTextButton"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:padding="3dp"
+                    />
+
+                <Button
+                    android:id="@+id/btn_agregar_terapia_analgesica"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Terapia Analgésicas"
+                    android:drawableLeft="@drawable/ic_add_white_24dp"
+                    android:background="@color/colorAccent"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorTextButton"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:padding="3dp"
+                    />
+
+                <Button
+                    android:id="@+id/btn_agregar_terapia_preventiva"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Terapia Preventiva"
+                    android:drawableLeft="@drawable/ic_add_white_24dp"
+                    android:background="@color/colorAccent"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorTextButton"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:padding="3dp"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/contenedor_ll_terapias_funcionales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical"
+                android:background="@drawable/panel">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Terapias funcionales aplicadas"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_size_subtitle"/>
+
+                <LinearLayout
+                    android:id="@+id/contenedor_ll_terapias_funcionaes_aplicadas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    >
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/contenedor_ll_terapias_analgesicas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical"
+                android:background="@drawable/panel">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Terapias analgésicas aplicadas"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_size_subtitle"/>
+
+                <LinearLayout
+                    android:id="@+id/contenedor_ll_terapias_analgesicas_aplicadas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    >
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/contenedor_ll_terapias_preventivas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical"
+                android:background="@drawable/panel">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Terapias preventivas aplicadas"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_size_subtitle"/>
+
+                <LinearLayout
+                    android:id="@+id/contenedor_ll_terapias_preventivas_aplicadas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:orientation="vertical"
+                    >
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/panel"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_title"
+                android:text="Estado del paciente al salir"
+                android:textColor="@color/colorPrimaryText"
+                android:textAlignment="center"
+                android:layout_marginBottom="5dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_estado_fin_bien"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/cara1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_estado_fin_mediobien"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:src="@drawable/cara2"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_estado_fin_mal"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:src="@drawable/cara3"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_estado_fin_muymal"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/cara4"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/panel"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_terminar_tratamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:padding="4dp"
+                android:background="@drawable/mybutton"
+                android:text="Terminar Tratamiento"
+                android:textSize="@dimen/font_size_title"
+                android:textColor="@color/cardview_light_background"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

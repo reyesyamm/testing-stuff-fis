@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_tratamiento_preventivo"
+    cardview:cardCornerRadius="2dp"
+    android:background="#ffffff"
+    cardview:cardElevation="3dp"
+    cardview:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_margin="1dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_nombre_tratamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Nombre tratamiento"
+                />
+
+            <TextView
+                android:id="@+id/tv_descripcion_tratamiento"
+                android:padding="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:text="Opciones seleccionadas para el tratamiento"
+                />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_eliminar_tp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:background="@drawable/border_panel"
+            android:padding="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
+            android:src="@android:drawable/ic_delete"
+            />
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView >

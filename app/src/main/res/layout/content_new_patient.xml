@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp"
+    android:orientation="vertical"
+    android:background="@color/divider"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.swyam.fisiomer.NewPatientActivity"
+    tools:showIn="@layout/activity_new_patient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/txt_nombre_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombre *"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:inputType="text"
+                        android:maxLength="80"
+                        android:maxLines="1"
+                        android:imeOptions="actionNext"
+                        >
+                        <requestFocus/>
+                    </EditText>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/txt_edad_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Edad *"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:maxLength="3"
+                        android:imeOptions="actionNext"
+                        />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/txt_ocupacion_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ocupación"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:imeOptions="actionNext"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/txt_telefono_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Teléfono"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:imeOptions="actionNext"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txt_diagnostico_referencia_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Diagnóstico de referencia"
+                    android:maxLines="3"
+                    android:minLines="3"
+                    android:gravity="top|left"
+                    android:lines="3"
+                    android:maxLength="100"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txt_medico_referencia_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Médico"
+                    android:maxLines="1"
+                    android:maxLength="80"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Motivos de consulta"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/txt_motivo_consulta1_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Motivo *"
+                        android:maxLines="1"
+                        android:maxLength="50"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_agregar_motivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="0dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@drawable/mybutton"
+                    android:src="@drawable/ic_add_white_24dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contenedor_segundo_motivo"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/txt_motivo_consulta2_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Motivo"
+                        android:maxLines="1"
+                        android:maxLength="50"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_remover_motivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="0dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@null"
+                    android:src="@android:drawable/ic_delete"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Antedecedentes -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Antecedentes"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:id="@+id/txt_antecedente_motivo_consulta1_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Antecedente *"
+                    android:maxLines="1"
+                    android:maxLength="50"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contenedor_segundo_antecedente_motivo"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/txt_antecedente_motivo_consulta2_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Antecedente"
+                        android:maxLines="1"
+                        android:maxLength="50"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_remover_antecedente_motivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="0dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@null"
+                    android:src="@android:drawable/ic_delete"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!-- boton pintar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_pintar_areas_malestar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:text="Pintar áreas del malestar"
+                android:textSize="@dimen/font_size_subtitle"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="2"/>
+
+            <TextView
+                android:id="@+id/tv_info_areas_pintadas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Aun no se han pintado"
+                android:gravity="center"
+                android:ellipsize="end"
+                android:textSize="@dimen/font_size_subtitle"
+                android:padding="2dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+        <!-- exploracion clinica -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Exploración Clínica"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:id="@+id/txt_exploracion_motivo_consulta1_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Descripción *"
+                    android:maxLines="2"
+                    android:lines="2"
+                    android:minLines="2"
+                    android:maxLength="50"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:gravity="top|left"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contenedor_segunda_exploracion_motivo"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/txt_exploracion_motivo_consulta2_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Descripción"
+                        android:maxLines="2"
+                        android:lines="2"
+                        android:minLines="2"
+                        android:maxLength="50"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:gravity="top|left"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_remover_exploracion_motivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="0dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@null"
+                    android:src="@android:drawable/ic_delete"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+        <!-- diagnostico funcional -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Diagnóstico funcional"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:id="@+id/txt_diagnostico_motivo_consulta1_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Descripción *"
+                    android:maxLines="2"
+                    android:lines="2"
+                    android:minLines="2"
+                    android:maxLength="50"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:gravity="top|left"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contenedor_segundo_diagnostico_motivo"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3">
+
+                    <EditText
+                        android:id="@+id/txt_diagnostico_motivo_consulta2_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Descripción"
+                        android:maxLines="2"
+                        android:lines="2"
+                        android:minLines="2"
+                        android:maxLength="50"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:gravity="top|left"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_remover_diagnostico_motivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minWidth="0dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@null"
+                    android:src="@android:drawable/ic_delete"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <!-- objetivos del tratamiento -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Objetivos del tratamiento"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txt_objetivo1_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Objetivo 1 *"
+                    android:maxLines="1"
+                    android:maxLength="50"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txt_objetivo2_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Objetivo 2"
+                    android:maxLines="1"
+                    android:maxLength="50"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txt_objetivo3_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Objetivo 3"
+                    android:maxLines="1"
+                    android:maxLength="50"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <!-- boton guardar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_guardar_expediente_clinico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mybutton"
+                android:textSize="@dimen/font_size_title"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/colorTextButton"
+                android:textAllCaps="false"
+                android:text="Guardar Expediente Clínico"
+                />
+
+        </LinearLayout>
+
+
+
+        <!-- termina linear principal -->
+    </LinearLayout>
+</ScrollView>

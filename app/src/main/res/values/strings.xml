@@ -1,0 +1,272 @@
+<resources>
+    <string name="app_name">Fisiomer</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="title_activity_home">Fisiomer</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_new_patient">Nuevo Paciente</string>
+    <string name="title_activity_draw_body">Pinta las áreas del malestar</string>
+    <string name="title_activity_patients_found">Resultado Búsqueda</string>
+    <string name="title_activity_patient">Paciente</string>
+    <string name="title_activity_new_treatment">Nuevo Tratamiento</string>
+    <string name="title_activity_functional_treatment">Tratamiento Funcional</string>
+    <string name="title_activity_prevent_treatment">Tratamiento Preventivo</string>
+
+    <string-array name="str_articulaciones">
+        <item>Cervical</item>
+        <item>Escapular</item>
+        <item>Hombro</item>
+        <item>Codo</item>
+        <item>Muñeca</item>
+        <item>Columna Torácica</item>
+        <item>Columna Lumbral</item>
+        <item>Cadera</item>
+        <item>Rodilla</item>
+        <item>Tobillo</item>
+    </string-array>
+
+
+    <string-array name="str_tiempo_electro">
+        <item>1 minuto</item>
+        <item>2 minutos</item>
+        <item>3 minutos</item>
+        <item>4 minutos</item>
+        <item>5 minutos</item>
+        <item>6 minutos</item>
+        <item>7 minutos</item>
+        <item>8 minutos</item>
+        <item>9 minutos</item>
+        <item>10 minutos</item>
+    </string-array>
+
+    <string-array name="str_musculos">
+        <item>Musculo 1</item>
+        <item>Musculo 2</item>
+        <item>Musculo 3</item>
+        <item>Musculo 4</item>
+        <item>Musculo 5</item>
+        <item>Musculo 6</item>
+        <item>Musculo 7</item>
+        <item>Musculo 8</item>
+        <item>Musculo 9</item>
+        <item>Musculo 10</item>
+
+        <item>Musculo 11</item>
+        <item>Musculo 12</item>
+        <item>Musculo 13</item>
+        <item>Musculo 14</item>
+        <item>Musculo 15</item>
+        <item>Musculo 16</item>
+        <item>Musculo 17</item>
+        <item>Musculo 18</item>
+        <item>Musculo 19</item>
+        <item>Musculo 20</item>
+
+        <item>Musculo 21</item>
+        <item>Musculo 22</item>
+        <item>Musculo 23</item>
+        <item>Musculo 24</item>
+        <item>Musculo 25</item>
+        <item>Musculo 26</item>
+        <item>Musculo 27</item>
+        <item>Musculo 28</item>
+        <item>Musculo 29</item>
+        <item>Musculo 30</item>
+
+        <item>Musculo 31</item>
+        <item>Musculo 32</item>
+        <item>Musculo 33</item>
+        <item>Musculo 34</item>
+        <item>Musculo 35</item>
+        <item>Musculo 36</item>
+        <item>Musculo 37</item>
+        <item>Musculo 38</item>
+        <item>Musculo 39</item>
+        <item>Musculo 40</item>
+
+        <item>Musculo 41</item>
+        <item>Musculo 42</item>
+        <item>Musculo 43</item>
+        <item>Musculo 44</item>
+        <item>Musculo 45</item>
+        <item>Musculo 46</item>
+        <item>Musculo 47</item>
+        <item>Musculo 48</item>
+        <item>Musculo 49</item>
+        <item>Musculo 50</item>
+
+        <item>Musculo 51</item>
+        <item>Musculo 52</item>
+        <item>Musculo 53</item>
+        <item>Musculo 54</item>
+        <item>Musculo 55</item>
+        <item>Musculo 56</item>
+        <item>Musculo 57</item>
+        <item>Musculo 58</item>
+        <item>Musculo 59</item>
+        <item>Musculo 60</item>
+
+        <item>Musculo 61</item>
+        <item>Musculo 62</item>
+        <item>Musculo 63</item>
+        <item>Musculo 64</item>
+        <item>Musculo 65</item>
+        <item>Musculo 66</item>
+        <item>Musculo 67</item>
+        <item>Musculo 68</item>
+        <item>Musculo 69</item>
+        <item>Musculo 70</item>
+
+        <item>Musculo 71</item>
+        <item>Musculo 72</item>
+        <item>Musculo 73</item>
+        <item>Musculo 74</item>
+        <item>Musculo 75</item>
+        <item>Musculo 76</item>
+        <item>Musculo 77</item>
+        <item>Musculo 78</item>
+        <item>Musculo 79</item>
+        <item>Musculo 80</item>
+
+        <item>Musculo 81</item>
+        <item>Musculo 82</item>
+        <item>Musculo 83</item>
+        <item>Musculo 84</item>
+        <item>Musculo 85</item>
+        <item>Musculo 86</item>
+        <item>Musculo 87</item>
+        <item>Musculo 88</item>
+        <item>Musculo 89</item>
+        <item>Musculo 90</item>
+
+        <item>Musculo 91</item>
+        <item>Musculo 92</item>
+        <item>Musculo 93</item>
+        <item>Musculo 94</item>
+        <item>Musculo 95</item>
+        <item>Musculo 96</item>
+        <item>Musculo 97</item>
+        <item>Musculo 98</item>
+        <item>Musculo 99</item>
+        <item>Musculo 100</item>
+
+
+
+        <item>Musculo 101</item>
+        <item>Musculo 102</item>
+        <item>Musculo 103</item>
+        <item>Musculo 104</item>
+        <item>Musculo 105</item>
+        <item>Musculo 106</item>
+        <item>Musculo 107</item>
+        <item>Musculo 108</item>
+        <item>Musculo 109</item>
+        <item>Musculo 110</item>
+
+        <item>Musculo 111</item>
+        <item>Musculo 112</item>
+        <item>Musculo 113</item>
+        <item>Musculo 114</item>
+        <item>Musculo 115</item>
+        <item>Musculo 116</item>
+        <item>Musculo 117</item>
+        <item>Musculo 118</item>
+        <item>Musculo 119</item>
+        <item>Musculo 120</item>
+
+        <item>Musculo 121</item>
+        <item>Musculo 122</item>
+        <item>Musculo 123</item>
+        <item>Musculo 124</item>
+        <item>Musculo 125</item>
+        <item>Musculo 126</item>
+        <item>Musculo 127</item>
+        <item>Musculo 128</item>
+        <item>Musculo 129</item>
+        <item>Musculo 130</item>
+
+        <item>Musculo 131</item>
+        <item>Musculo 132</item>
+        <item>Musculo 133</item>
+        <item>Musculo 134</item>
+        <item>Musculo 135</item>
+        <item>Musculo 136</item>
+        <item>Musculo 137</item>
+        <item>Musculo 138</item>
+        <item>Musculo 139</item>
+        <item>Musculo 140</item>
+
+        <item>Musculo 141</item>
+        <item>Musculo 142</item>
+        <item>Musculo 143</item>
+        <item>Musculo 144</item>
+        <item>Musculo 145</item>
+        <item>Musculo 146</item>
+        <item>Musculo 147</item>
+        <item>Musculo 148</item>
+        <item>Musculo 149</item>
+        <item>Musculo 150</item>
+
+        <item>Musculo 151</item>
+        <item>Musculo 152</item>
+        <item>Musculo 153</item>
+        <item>Musculo 154</item>
+        <item>Musculo 155</item>
+        <item>Musculo 156</item>
+        <item>Musculo 157</item>
+        <item>Musculo 158</item>
+        <item>Musculo 159</item>
+        <item>Musculo 160</item>
+
+        <item>Musculo 161</item>
+        <item>Musculo 162</item>
+        <item>Musculo 163</item>
+        <item>Musculo 164</item>
+        <item>Musculo 165</item>
+        <item>Musculo 166</item>
+        <item>Musculo 167</item>
+        <item>Musculo 168</item>
+        <item>Musculo 169</item>
+        <item>Musculo 170</item>
+
+        <item>Musculo 171</item>
+        <item>Musculo 172</item>
+        <item>Musculo 173</item>
+        <item>Musculo 174</item>
+        <item>Musculo 175</item>
+        <item>Musculo 176</item>
+        <item>Musculo 177</item>
+        <item>Musculo 178</item>
+        <item>Musculo 179</item>
+        <item>Musculo 180</item>
+
+        <item>Musculo 181</item>
+        <item>Musculo 182</item>
+        <item>Musculo 183</item>
+        <item>Musculo 184</item>
+        <item>Musculo 185</item>
+        <item>Musculo 186</item>
+        <item>Musculo 187</item>
+        <item>Musculo 188</item>
+        <item>Musculo 189</item>
+        <item>Musculo 190</item>
+
+        <item>Musculo 191</item>
+        <item>Musculo 192</item>
+        <item>Musculo 193</item>
+        <item>Musculo 194</item>
+        <item>Musculo 195</item>
+        <item>Musculo 196</item>
+        <item>Musculo 197</item>
+        <item>Musculo 198</item>
+        <item>Musculo 199</item>
+        <item>Musculo 200</item>
+
+    </string-array>
+
+    <string name="title_activity_analgesic_treatment">Tratamiento Analgésico</string>
+
+
+
+</resources>

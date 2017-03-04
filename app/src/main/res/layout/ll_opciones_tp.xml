@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- vendajes -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contenedor_ll_opciones_vendaje"
+        android:visibility="visible"
+        android:paddingBottom="5dp"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radiogroup_vendaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border_panel"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            >
+
+            <RadioButton
+                android:id="@+id/radio_estabilizar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Estabilizar"
+                android:padding="5dp"
+                android:textSize="@dimen/font_size_paragraph"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/radio_facilitar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Facilitar"
+                android:textSize="@dimen/font_size_paragraph"
+                android:padding="5dp"
+                />
+
+            <RadioButton
+                android:id="@+id/radio_relajar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Relajar"
+                android:textSize="@dimen/font_size_paragraph"
+                android:padding="5dp"
+                />
+
+            <RadioButton
+                android:id="@+id/radio_linfatico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Linfático"
+                android:textSize="@dimen/font_size_paragraph"
+                android:padding="5dp"
+                />
+
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/contenedor_ll_opciones_vendaje_estabilizar_o_linfatico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_panel"
+                >
+                <Spinner
+                    android:id="@+id/spinner_vendaje_estabilizar_o_linfatico_articulacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:layout_margin="5dp"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/str_articulaciones"
+                    android:textAlignment="center"
+
+                    />
+            </LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/btn_agregar_tratamiento_vendaje_estabilizar_o_linfatico"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Agregar a\nTratamiento"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contenedor_ll_opciones_vendaje_facilitar_o_relajar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="5dp"
+                android:background="@drawable/border_panel"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                >
+
+                <Button
+                    android:id="@+id/btn_seleccionar_musculo_vendaje_fac_rel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/mybutton"
+                    android:textColor="@color/colorTextButton"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:text="Seleccionar Músculo"
+                    android:textAllCaps="false"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_nombre_musculo_seleccionado_facilitar_o_relajar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_margin="8dp"
+                    android:text="No has seleccionado un músculo"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_agregar_tratamiento_vendaje_facilitar_o_relajar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Agregar a\nTratamiento"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:textAllCaps="false"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!-- fortalecimiento -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contenedor_ll_opciones_fortalecimiento"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radiogroup_fortalecimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border_panel"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            >
+
+            <RadioButton
+                android:id="@+id/radio_concentrico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Concéntrico"
+                android:padding="5dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/radio_excentrico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Excéntrico"
+                android:textSize="@dimen/font_size_subtitle"
+                android:padding="5dp"
+                />
+
+        </RadioGroup>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="5dp"
+                android:background="@drawable/border_panel"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                >
+
+                <Button
+                    android:id="@+id/btn_fortalecimiento_seleccionar_musculo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/mybutton"
+                    android:textColor="@color/colorTextButton"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:text="Seleccionar Músculo"
+                    android:textAllCaps="false"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_nombre_musculo_seleccionado_fortalecimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_margin="8dp"
+                    android:text="No has seleccionado un músculo"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_agregar_tratamiento_fortalecimiento"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Agregar a\nTratamiento"
+                android:padding="8dp"
+                android:layout_margin="5dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:textAllCaps="false"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- autoestiramiento -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contenedor_ll_opciones_autoestiramiento"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:background="@drawable/border_panel"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/btn_autoestiramiento_seleccionar_musculo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:textSize="@dimen/font_size_subtitle"
+                android:text="Seleccionar Músculo"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:ellipsize="end"
+                />
+
+            <TextView
+                android:id="@+id/tv_nombre_musculo_seleccionado_autoestiramiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_margin="8dp"
+                android:text="No has seleccionado un músculo"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorSecondaryText"
+                android:textAlignment="center"
+                android:maxLines="1"
+                android:ellipsize="end"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_agregar_tratamiento_autoestiramiento"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Agregar a\nTratamiento"
+            android:padding="8dp"
+            android:layout_margin="5dp"
+            android:textSize="@dimen/font_size_subtitle"
+            android:background="@drawable/mybutton"
+            android:textColor="@color/colorTextButton"
+            android:textAllCaps="false"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

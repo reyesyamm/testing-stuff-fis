@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_paciente"
+    cardview:cardCornerRadius="2dp"
+    android:background="#ffffff"
+    cardview:cardElevation="3dp"
+    cardview:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnIconPaciente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_face_black_96dp"
+            android:scaleType="centerInside"
+            android:background="#ffffff"/>
+
+        <LinearLayout
+            android:id="@+id/contenedor_detalles_paciente"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_subtitle"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Nombre del paciente"
+                android:textColor="@color/colorPrimaryText"
+                android:id="@+id/tv_nombre_paciente"
+                android:padding="3dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_ultimo_tratamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorAccent"
+                android:text="Ultimo tratamiento realizado fue en: "
+                />
+
+            <TextView
+                android:id="@+id/tv_nombre_terapeuta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_size_paragraph"
+                android:text="por Nombre terapeuta "
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
