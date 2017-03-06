@@ -5,13 +5,19 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 /**
  * Created by Reyes Yam on 22/02/2017.
  */
 public class Helpers {
+
+    public static final String SEPARATOR_STRING_SER = "##-##";
+
+
 
     public static String Upper(String str){
         return str.toUpperCase();
@@ -37,17 +43,15 @@ public class Helpers {
 
     public static String MD5(String s) {
         try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes("UTF-8"));
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            return hexString.toString();
-
+            String result;
+            MessageDigest md = MessageDigest.getInstance("MD5"); // or "SHA-1"
+            md.update(s.getBytes("UTF-8"));
+            BigInteger hash = new BigInteger(1, md.digest());
+            result = hash.toString(16);
+            while (result.length() < 32) { // 40 for SHA-1
+                result = "0" + result;
+            }
+            return result;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -63,6 +67,19 @@ public class Helpers {
         } else {
             return context.getResources().getColor(id);
         }
+    }
+
+    public static String SerializarLista(ArrayList<String> lista){
+        String retorno="";
+        if(lista.size()>0){
+            retorno = lista.get(0);
+            if(lista.size()>1){
+                for(String str:lista){
+                    retorno+=(SEPARATOR_STRING_SER+str);
+                }
+            }
+        }
+        return retorno;
     }
 }
 

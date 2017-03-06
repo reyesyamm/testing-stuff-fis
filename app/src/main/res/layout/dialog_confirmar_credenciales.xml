@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/contenedor_progressbar"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_status_verificacion_credenciales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verificando credenciales"
+            android:textAlignment="center"
+            android:layout_margin="5dp"
+            android:textSize="@dimen/font_size_title"
+            android:textColor="@color/colorPrimaryText"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            />
+
+    </LinearLayout>
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Terapeuta"
+       android:textSize="@dimen/font_size_subtitle"
+       android:textColor="@color/colorPrimaryText"
+       android:textAlignment="center"
+       />
+    <Spinner
+        android:id="@+id/spinner_lista_terapeutas_dialog"
+        android:layout_width="match_parent"
+        android:minHeight="50dp"
+        android:textAlignment="center"
+        android:background="@drawable/shape"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contraseña"
+        android:textSize="@dimen/font_size_subtitle"
+        android:textColor="@color/colorPrimaryText"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/txt_contrasena_terapeuta_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_subtitle"
+        android:maxLength="32"
+        android:maxLines="1"
+        android:lines="1"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
+        />
+
+    <Button
+        android:id="@+id/btn_verificar_credenciales_dialog"
+        android:textAllCaps="false"
+        android:text="Verificar Credenciales"
+        android:textSize="@dimen/font_size_subtitle"
+        android:textColor="@color/colorTextButton"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/mybutton"/>
+
+</LinearLayout>

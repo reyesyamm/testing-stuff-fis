@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Configuraciones Servidor"
+        android:key="pref_key_conf_server">
+
+        <EditTextPreference
+            android:title="Dirección Servidor"
+            android:key="pref_key_host_server"
+            android:summary="Dirección web a la que se conecta la aplicación para obtener los datos."
+            android:defaultValue="@string/direccion_servidor"
+            />
+
+    </PreferenceCategory>
+</PreferenceScreen>

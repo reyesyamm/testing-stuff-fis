@@ -10,4 +10,6 @@
     <color name="colorIcons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
     <color name="colorTextButton">#FFFFFF</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

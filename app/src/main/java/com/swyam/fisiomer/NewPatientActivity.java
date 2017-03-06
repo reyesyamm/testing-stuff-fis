@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,9 +18,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import entidad.Terapeuta;
+
+import static com.swyam.fisiomer.Helpers.SerializarLista;
+import static com.swyam.fisiomer.Connection.*;
 public class NewPatientActivity extends AppCompatActivity {
 
     EditText nombre,edad,ocupacion,telefono,diagnosticoRef,medicoDiagnosticoRef,motivoConsulta1,motivoConsulta2;
@@ -223,12 +237,153 @@ public class NewPatientActivity extends AppCompatActivity {
                 strAntecedente2, strExploracion2, strDiagnostico2);
 
         if(validez){
-            Toast.makeText(this,"Los datos son correctos, se agregará el nuevo paciente al sistema.", Toast.LENGTH_LONG).show();
-            progressDialog.dismiss();
+            guardarDatos(strNombre, strEdad, strOcupacion, strTelefono, strDiagnosticoReferencia, strMedicoDiagnosticoRef,
+                    strMotivo1, strMotivo2, strAntecedente1, strAntecedente2, strExploracion1, strExploracion2, strDiagnostico1,
+                    strDiagnostico2,strObjetivo1, strObjetivo2, strObjetivo3);
+
         }else{
             Toast.makeText(this,"Algunos campos tienen valores no válidos", Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
         }
 
+    }
+
+    private void guardarDatos(String nombre, String edad, String ocupacion, String telefono, String diagRef, String medicoDiag,
+                               String motivo1, String motivo2, String antecedente1, String antecedente2, String exploracion1,
+                               String exploracion2, String diagnostico1, String diagnostico2, String objetivo1, String objetivo2,
+                              String objetivo3){
+
+        String coords= SerializarLista(coordsPintadas);
+
+        Terapeuta t = obtenerTerapeutaLogeado(getBaseContext());
+        try
+        {
+            JSONObject jsonPaciente = new JSONObject();
+            JSONObject jsonExpediente = new JSONObject();
+            JSONObject jsonObjetivos = new JSONObject();
+
+            jsonPaciente.put(KEY_PACIENTE_NOMBRE,nombre);
+            jsonPaciente.put(KEY_PACIENTE_EDAD,edad);
+            jsonPaciente.put(KEY_PACIENTE_OCUPACION,ocupacion);
+            jsonPaciente.put(KEY_PACIENTE_TELEFONO,telefono);
+            jsonPaciente.put(KEY_PACIENTE_DIAGREF,diagRef);
+            jsonPaciente.put(KEY_PACIENTE_MEDDIAG,medicoDiag);
+            jsonPaciente.put(KEY_PACIENTE_IDENGEOG,coords);
+            jsonPaciente.put(KEY_PACIENTE_TERAPEUTA,t.id);
+
+            JSONObject jsonMot1 = new JSONObject();
+            jsonMot1.put(KEY_EXP_PACIENTE_MOTCONSULT,motivo1);
+            jsonMot1.put(KEY_EXP_PACIENTE_ANTECEDENTES,antecedente1);
+            jsonMot1.put(KEY_EXP_PACIENTE_EXPLORACION,exploracion1);
+            jsonMot1.put(KEY_EXP_PACIENTE_DIAGNOSTICOFUN,diagnostico1);
+
+            jsonExpediente.put("1",jsonMot1);
+
+            if(motivo2!=null){
+                JSONObject jsonMot2 = new JSONObject();
+                jsonMot2.put(KEY_EXP_PACIENTE_MOTCONSULT,motivo2);
+                jsonMot2.put(KEY_EXP_PACIENTE_ANTECEDENTES,antecedente2);
+                jsonMot2.put(KEY_EXP_PACIENTE_EXPLORACION,exploracion2);
+                jsonMot2.put(KEY_EXP_PACIENTE_DIAGNOSTICOFUN,diagnostico2);
+                jsonExpediente.put("2",jsonMot2);
+            }
+
+            jsonObjetivos.put(KEY_OBJETIVOS_TRAT_OBJ1,objetivo1);
+            jsonObjetivos.put(KEY_OBJETIVOS_TRAT_OBJ2,objetivo2);
+            jsonObjetivos.put(KEY_OBJETIVOS_TRAT_OBJ3,objetivo3);
+
+
+            HashMap<String, JSONObject> obj = new HashMap<>();
+            obj.put("paciente",jsonPaciente);
+            obj.put("expediente",jsonExpediente);
+            obj.put("objetivos",jsonObjetivos);
+
+            JSONObject datos = new JSONObject(obj);
+            try{
+                String json = datos.toString();
+                Log.d("json",json);
+            }catch(Exception ex){
+                Log.d("json","Errrrooooorr");
+            }
+
+            String url=getHostServer(getBaseContext())+SUF_REGISTRAR_PACIENTE;
+            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
+                    Request.Method.POST,
+                    url,
+                    datos,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            procesarRespuesta(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            NetworkResponse response = error.networkResponse;
+                            if(response != null && response.data != null){
+                                String rs = new String(response.data);
+                                Log.e("error_parse",rs);
+                            }
+                            procesarError(error);
+                        }
+                    }
+            ));
+
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+            Toast.makeText(this,"Error en los datos", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void procesarRespuesta(JSONObject response){
+        progressDialog.dismiss();
+        try{
+            if(response.getInt("estado")==0){
+                int id = response.getInt("paciente");
+                reiniciarFormulario();
+                redirigirAPaciente(id);
+            }else{
+                Toast.makeText(getBaseContext(),response.getString("mensaje"), Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            Toast.makeText(getBaseContext(),"Error al leer el resultado del servidor", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void reiniciarFormulario(){
+        nombre.setText("");
+        edad.setText("");
+        ocupacion.setText("");
+        telefono.setText("");
+        diagnosticoRef.setText("");
+        medicoDiagnosticoRef.setText("");
+        motivoConsulta1.setText("");
+        motivoConsulta2.setText("");
+        antecedenteMotivo1.setText("");
+        antecedenteMotivo2.setText("");
+        exploracionClinicaMotivo1.setText("");
+        exploracionClinicaMotivo2.setText("");
+        diagnosticoFunMotivo1.setText("");
+        diagnosticoFunMotivo2.setText("");
+        objetivo1.setText("");
+        objetivo2.setText("");
+        objetivo3.setText("");
+        segundoElementosVisibles = false;
+        mostrarContenedores();
+    }
+
+    private void redirigirAPaciente(int id){
+        Toast.makeText(getBaseContext(),"Nuevo usuario registrado: "+id, Toast.LENGTH_LONG).show();
+    }
+
+    public void procesarError(VolleyError error){
+        progressDialog.dismiss();
+        Toast.makeText(getBaseContext(),parsearError(error),Toast.LENGTH_LONG).show();
     }
 
     public void limpiarErrores(){

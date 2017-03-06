@@ -2,6 +2,7 @@ package com.swyam.fisiomer;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,11 +22,30 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import entidad.Terapeuta;
+
 import static com.swyam.fisiomer.Helpers.*;
+import static com.swyam.fisiomer.Connection.*;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText txt_contrasena_terapeuta;
     Button btn_iniciar_sesion;
     ProgressDialog progressDialog;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,32 +63,34 @@ public class LoginActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+        context = getBaseContext();
 
         // Inicializando las variables
         sp_lista_terapeutas = (Spinner) findViewById(R.id.spinner_lista_terapeutas);
         txt_contrasena_terapeuta = (EditText) findViewById(R.id.edit_text_contrasena_terapeuta);
         btn_iniciar_sesion = (Button) findViewById(R.id.btn_iniciar_sesion);
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Cargando Datos");
+        progressDialog.setTitle("Verificando conexión");
         progressDialog.setMessage("Espere porfavor");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
-        progressDialog.show();
 
-        // en este apartado verificaremos si existe una sesion iniciada
-        if(false){
-            redireccionarHogar();
-        }else{
-            // lo primer es cargar los terapeutas en el spinner
-            cargarTerapeutas();
+        // obtenemos de los encontrados y llenamos
+        ArrayList<String> listTer = obtenerListaUsuarioTerapeutas(context) ;//(ArrayList<String>) getIntent().getSerializableExtra("usuarioTerapeutas");
+        for(String usuario:listTer){
+            listaTerapeutas.add(usuario);
         }
+
+        ArrayAdapter<String> adapterListaTerapeutas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listaTerapeutas);
+        adapterListaTerapeutas.setDropDownViewResource(R.layout.spinner_item);
+        sp_lista_terapeutas.setAdapter(adapterListaTerapeutas);
 
         btn_iniciar_sesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int posicion = sp_lista_terapeutas.getSelectedItemPosition();
-                if(posicion>0){
+                if(posicion>=0){
                     String usuario = sp_lista_terapeutas.getSelectedItem().toString();
                     String contrasena = txt_contrasena_terapeuta.getText().toString();
 
@@ -76,15 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.setMessage("Espere porfavor");
                         progressDialog.show();
                         contrasena = MD5(contrasena);
-                        boolean resultado =credencialesValidas(usuario,contrasena);
-                        progressDialog.dismiss();
-                        if(resultado){
-                            sp_lista_terapeutas.setSelection(0);
-                            txt_contrasena_terapeuta.setText("");
-                            redireccionarHogar();
-                        }else{
-                            Toast.makeText(getBaseContext(),"Datos incorrectos", Toast.LENGTH_SHORT).show();
-                        }
+                        validarContrasenas(usuario,contrasena);
                     }else{
                         Toast.makeText(getBaseContext(),"La contraseña es muy corta",Toast.LENGTH_LONG).show();
                         txt_contrasena_terapeuta.setFocusable(true);
@@ -93,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(getBaseContext(),"Selecciona un usuario",Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
@@ -102,34 +116,77 @@ public class LoginActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         // una vez cargados los datos pasamos el foco al spinner
-        sp_lista_terapeutas.setFocusable(true);
-
+        sp_lista_terapeutas.requestFocus();
     }
 
     private void redireccionarHogar(){
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
 
-    private void cargarTerapeutas(){
-        listaTerapeutas.add("Selecciona");
-        listaTerapeutas.add(Upper("Juan"));
-        listaTerapeutas.add(Upper("Carlos"));
+    public boolean validarContrasenas(String usuario,String contrasena){
+        String servidor = getHostServer(context);
+        String autentHost = servidor+SUF_AUTENTICAR;
+        HashMap<String,String> mapTerapeuta = new HashMap<>();
+        mapTerapeuta.put("usuario",usuario);
+        mapTerapeuta.put("contrasena",contrasena);
+        JSONObject objDatos = new JSONObject(mapTerapeuta);
 
-        progressDialog.dismiss();
-        if(listaTerapeutas.size()==1){
-            Toast.makeText(this,"No existen terapeutas registrados",Toast.LENGTH_LONG).show();
-        }
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
+                Request.Method.POST,
+                autentHost,
+                objDatos,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        procesarRespuesta(response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context,parsearError(error),Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    }
+                }
 
-        ArrayAdapter<String> adapterListaTerapeutas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listaTerapeutas);
-        adapterListaTerapeutas.setDropDownViewResource(R.layout.spinner_item);
-        sp_lista_terapeutas.setAdapter(adapterListaTerapeutas);
+        ));
+        return true;
     }
 
-    public boolean credencialesValidas(String usuario,String contrasena){
-
-
-        return true;
+    private void procesarRespuesta(JSONObject response){
+        limpiarSiExistenCredenciales(context);
+        try{
+            int estado = Integer.parseInt(response.getString("estado"));
+            if(estado==0){
+                sp_lista_terapeutas.setSelection(0);
+                txt_contrasena_terapeuta.setText("");
+                JSONObject obj = response.getJSONObject("terapeuta");
+                int existe = obj.getInt("existe");
+                if(existe==1){
+                    int id= obj.getInt(KEY_ID_USUARIO_LOGEADO);
+                    String usuario = obj.getString(KEY_USUARIO_USUARIO_LOGEADO);
+                    String nombre = obj.getString(KEY_NOMBRE_USUARIO_LOGEADO);
+                    String contrasena = obj.getString(KEY_CONTRASENA_USUARIO_LOGEADO);
+                    boolean esAdmin = obj.getInt(KEY_ESADMIN_USUARIO_LOGEADO)>0;
+                    boolean permiso = obj.getInt(KEY_PERMISO_USUARIO_LOGEADO)>0;
+                    actualizarCredenciales(context,new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso));
+                    redireccionarHogar();
+                }else{
+                    progressDialog.dismiss();
+                    Toast.makeText(this,"Los datos son incorrectos", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                progressDialog.dismiss();
+                Toast.makeText(this,response.getString("mensaje"),Toast.LENGTH_SHORT).show();
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+            Toast.makeText(this,"Error en la respuesta del servidor",Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
     }
 
 

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.swyam.fisiomer.PerfilActivity"
+    tools:showIn="@layout/activity_perfil">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datos de mi perfil de Terapeuta"
+            android:textSize="@dimen/font_size_title"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            />
+        <ImageButton
+            android:id="@+id/btn_editar_datos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_edit"
+            android:background="@drawable/mybutton"
+            android:layout_gravity="center"
+            />
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Nombre *: "
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorSecondaryText"
+                />
+
+            <EditText
+                android:id="@+id/txt_nombre_terapeuta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLength="80"
+                android:maxLines="1"
+                android:lines="1"
+                android:textSize="@dimen/font_size_subtitle"
+                android:imeOptions="actionNext"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Usuario: "
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorSecondaryText"
+                />
+
+            <TextView
+                android:id="@+id/tv_usuario_terapeuta"
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:maxLength="25"
+                android:maxLines="1"
+                android:lines="1"
+                android:textSize="@dimen/font_size_subtitle"
+                />
+
+            <ImageButton
+                android:id="@+id/btn_info_usuario_terapeuta"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:src="@android:drawable/ic_lock_idle_lock"
+                android:padding="5dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contenedor_contrasena"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Contraseña: "
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorSecondaryText"
+
+                />
+
+            <EditText
+                android:id="@+id/txt_contrasena_terapeuta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLength="32"
+                android:maxLines="1"
+                android:lines="1"
+                android:textSize="@dimen/font_size_subtitle"
+                android:inputType="textPassword"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contenedor_confirmar_contrasena"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Confirmar\nContraseña: "
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorSecondaryText"
+                />
+
+            <EditText
+                android:id="@+id/txt_confirmar_contrasena_terapeuta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLength="32"
+                android:maxLines="1"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:textSize="@dimen/font_size_subtitle"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_info_contrasenas"
+            android:layout_width="match_parent"
+            android:text="Si no deseas cambiar la contraseña, no llenes los cuadros 'Contraseña' y 'Confirmar Contraseña' "
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_size_paragraph"
+            android:textColor="@color/colorPrimaryText"
+            />
+
+        <Button
+            android:id="@+id/btn_guardar_cambios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/mybutton"
+            android:layout_marginTop="30dp"
+            android:textSize="@dimen/font_size_title"
+            android:text="Guardar Cambios"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextButton"
+            android:visibility="gone"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:background="@color/cardview_dark_background"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mis Permisos"
+            android:textSize="@dimen/font_size_title"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            />
+
+        <TextView
+            android:id="@+id/tv_permisos_terapeuta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_size_subtitle"
+            android:padding="5dp"
+            android:textColor="@color/colorSecondaryText"
+            android:text="Tienes todos los permisos disponibles. Eres administrador"
+            android:textAlignment="center"
+            />
+
+        <Button
+            android:id="@+id/btn_agregar_terapeuta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/mybutton"
+            android:text="Agregar Terapeuta"
+            android:textSize="@dimen/font_size_subtitle"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:textColor="@color/colorTextButton"/>
+
+
+
+    </LinearLayout>
+
+</ScrollView>
