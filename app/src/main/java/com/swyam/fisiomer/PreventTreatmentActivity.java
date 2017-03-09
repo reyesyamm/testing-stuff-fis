@@ -13,6 +13,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -128,7 +130,7 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
         llenarLista();
 
         //asignar adaptador a rv
-        adapter = new RVTPAdapter(context, tps);
+        adapter = new RVTPAdapter(context, tps,true);
         rv.setAdapter(adapter);
 
         // asignar callbacks
@@ -216,6 +218,14 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
         final ImageButton btnFiltrar;
 
         dialog.setContentView(R.layout.dialog_musculos);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+
         dialog.setTitle("Seleccionar Músculo");
         txtFiltrarMusculo = (EditText) dialog.findViewById(R.id.txt_busqueda_rapida_musculo);
         if(lastSearchFilter.trim().length()>0)
@@ -289,9 +299,9 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
     }
 
     public void llenarLista() {
-        tps.add(new TratamientoPreventivo("Vendaje","Facilitar","Nombre músculo"));
-        tps.add(new TratamientoPreventivo("Fortalecimiento","Concéntrico","Nombre músculo"));
-        tps.add(new TratamientoPreventivo("Autoestiramiento","auto estiramiento","nombre músculo"));
+        //tps.add(new TratamientoPreventivo("Vendaje","Facilitar","Nombre músculo"));
+        //tps.add(new TratamientoPreventivo("Fortalecimiento","Concéntrico","Nombre músculo"));
+        //tps.add(new TratamientoPreventivo("Autoestiramiento","auto estiramiento","nombre músculo"));
     }
 
     private void coloresOculto(){

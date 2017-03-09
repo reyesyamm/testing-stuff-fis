@@ -82,7 +82,7 @@ public class AnalgesicTreatmentActivity extends AppCompatActivity implements  Vi
 
         llenarLista();
 
-        adapter = new RVTAAdapter(context, tas);
+        adapter = new RVTAAdapter(context, tas,true);
         rv.setAdapter(adapter);
         adapter.setOnItemClickListenerT(new OnItemClickListenerT() {
             @Override

@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -251,6 +253,14 @@ public class PerfilActivity extends AppCompatActivity {
     public void mostrarFormDialog(){
         final Dialog dialog = new Dialog(PerfilActivity.this);
         dialog.setContentView(R.layout.dialog_nuevo_terapeuta);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+
         final EditText txtNuevoNombre, txtNuevoUsuario, txtNuevaContrasena, txtNuevaConfirmContrasena;
         final CheckBox chPAdmin, chPDarTerapia;
         final Button btnGuardarNuevoTerapeuta;

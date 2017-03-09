@@ -77,14 +77,23 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         // obtenemos de los encontrados y llenamos
-        ArrayList<String> listTer = obtenerListaUsuarioTerapeutas(context) ;//(ArrayList<String>) getIntent().getSerializableExtra("usuarioTerapeutas");
-        for(String usuario:listTer){
-            listaTerapeutas.add(usuario);
-        }
+        ArrayList<String> listTer = obtenerListaUsuarioTerapeutas(context);//(ArrayList<String>) getIntent().getSerializableExtra("usuarioTerapeutas");
+        if (listTer.size() > 0){
+            for (String usuario : listTer) {
+                listaTerapeutas.add(usuario);
+            }
+            ArrayAdapter<String> adapterListaTerapeutas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listaTerapeutas);
+            adapterListaTerapeutas.setDropDownViewResource(R.layout.spinner_item);
+            sp_lista_terapeutas.setAdapter(adapterListaTerapeutas);
+        }else{
+            Toast.makeText(context, "No se ha podido cargar la lista de los usuarios. Reinicia la aplicación y comprueba disponibilidad del servidor",Toast.LENGTH_LONG).show();
+            /*Snackbar.make(this,"",Snackbar.LENGTH_LONG).setAction("Reintentar", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        ArrayAdapter<String> adapterListaTerapeutas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listaTerapeutas);
-        adapterListaTerapeutas.setDropDownViewResource(R.layout.spinner_item);
-        sp_lista_terapeutas.setAdapter(adapterListaTerapeutas);
+                }
+            }).show();*/
+        }
 
         btn_iniciar_sesion.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,8 +1,22 @@
 package com.swyam.fisiomer;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -21,10 +35,15 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import entidad.Terapeuta;
+
+import static com.swyam.fisiomer.Helpers.MD5;
+import static com.swyam.fisiomer.Helpers.esconderTeclado;
 
 /**
  * Created by Reyes Yam on 04/03/2017.
@@ -38,6 +57,10 @@ public class Connection{
     public static final String SUF_REGISTRAR_TERAPEUTA="terapeuta/registrar.php";
     public static final String SUF_MODIFICAR_TERAPEUTA="terapeuta/modificar.php";
     public static final String SUF_REGISTRAR_PACIENTE ="paciente/registrar.php";
+    public static final String SUF_BUSCAR_CONTEO_PACIENTE = "paciente/buscar.php";
+    public static final String SUF_DATOS_PACIENTE = "paciente/obtener.php";
+    public static final String SUF_OBTENER_RES_SIMILARES = "paciente/similitud.php";
+    public static final String SUF_AGREGAR_NUEVOS_OBJS = "paciente/modificarobjetivos.php";
 
 
     public static final String KEY_USUARIO_LOGEADO="datosUsuario";
@@ -150,7 +173,7 @@ public class Connection{
     }
 
     public static String parsearError(VolleyError error){
-        String strError="Error desconocido";
+        String strError="";
         if (error instanceof NoConnectionError) {
             strError="No se pudo hacer la conexion";
         } else if (error instanceof AuthFailureError) {
@@ -191,6 +214,153 @@ public class Connection{
                 }
             }
         ));
+    }
+
+    public static void cargarListaTerapeutas(Context context,final VolleyResponseListener listener){
+        String url = getHostServer(context)+SUF_LISTA_USUARIO_TERAPEUTAS;
+        VolleySingleton.getInstance(context).addToRequestQueue(new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        listener.onResponse(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onError(error);
+            }
+        }
+        ));
+    }
+
+    public static void abrirDialogoCredenciales(final Activity activity, final OnDialogCred listener){
+        final Context context = activity.getBaseContext();
+        List<String> listaTerapeutas = obtenerListaUsuarioTerapeutas(context);
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_confirmar_credenciales);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+
+        dialog.setTitle("Ingresa tus Credenciales");
+
+        final View contProgress = dialog.findViewById(R.id.contenedor_progressbar);
+        final ProgressBar progressBar = (ProgressBar) dialog.findViewById(R.id.progressbar);
+        final Spinner sp = (Spinner) dialog.findViewById(R.id.spinner_lista_terapeutas_dialog);
+        final EditText txtContrasena = (EditText) dialog.findViewById(R.id.txt_contrasena_terapeuta_dialog);
+        final Button btnVerificarCredenciales = (Button) dialog.findViewById(R.id.btn_verificar_credenciales_dialog);
+        final TextView tvStatusVerificacion = (TextView) dialog.findViewById(R.id.tv_status_verificacion_credenciales);
+
+        final ArrayAdapter<String> adapterListaTerapeutas = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item,listaTerapeutas);
+        adapterListaTerapeutas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp.setAdapter(adapterListaTerapeutas);
+
+        btnVerificarCredenciales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contrasena = txtContrasena.getText().toString();
+                if(sp.getSelectedItemPosition()>=0){
+                    if(contrasena.trim().length()>0){
+                        contProgress.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
+                        tvStatusVerificacion.setText("Verificando credenciales");
+                        tvStatusVerificacion.requestFocus();
+                        tvStatusVerificacion.setTextColor(Color.BLACK);
+                        btnVerificarCredenciales.setEnabled(false);
+                        String usuario = sp.getSelectedItem().toString();
+                        contrasena = MD5(contrasena);
+
+                        if(verificarCredencialesLocal(context,usuario,contrasena)){
+                            dialog.dismiss();
+                            listener.credencialesValidasLocales();
+                        }else{
+                            String servidor = getHostServer(context);
+                            String autentHost = servidor+SUF_AUTENTICAR;
+                            HashMap<String,String> hmap = new HashMap<String, String>();
+                            hmap.put(KEY_USUARIO_USUARIO_LOGEADO, usuario);
+                            hmap.put(KEY_CONTRASENA_USUARIO_LOGEADO, contrasena);
+                            JSONObject obj = new JSONObject(hmap);
+
+                            VerificarCredencialesRemotas(activity.getApplicationContext(), obj, new VolleyResponseListener() {
+                                @Override
+                                public void onError(VolleyError error) {
+                                    btnVerificarCredenciales.setEnabled(true);
+                                    Toast.makeText(context,parsearError(error),Toast.LENGTH_LONG).show();
+                                    tvStatusVerificacion.setText("Ha ocurrido un error");
+                                    tvStatusVerificacion.setTextColor(Color.RED);
+                                    progressBar.setVisibility(View.GONE);
+                                    contProgress.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            contProgress.setVisibility(View.GONE);
+                                        }
+                                    },2000);
+                                }
+
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    btnVerificarCredenciales.setEnabled(true);
+                                    try{
+                                        int estado = response.getInt("estado");
+                                        if(estado==0){
+                                            JSONObject obj = response.getJSONObject("terapeuta");
+                                            if(obj.getInt("existe")==1){
+                                                int id= obj.getInt(KEY_ID_USUARIO_LOGEADO);
+                                                String usuario = obj.getString(KEY_USUARIO_USUARIO_LOGEADO);
+                                                String nombre = obj.getString(KEY_NOMBRE_USUARIO_LOGEADO);
+                                                String contrasena = obj.getString(KEY_CONTRASENA_USUARIO_LOGEADO);
+                                                boolean esAdmin = obj.getInt(KEY_ESADMIN_USUARIO_LOGEADO)>0;
+                                                boolean permiso = obj.getInt(KEY_PERMISO_USUARIO_LOGEADO)>0;
+                                                actualizarCredenciales(context,new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso));
+                                                dialog.dismiss();
+                                                esconderTeclado(activity);
+                                                listener.credencialesValidasRemotas();
+                                            }else{
+                                                tvStatusVerificacion.setText("Credenciales Invalidas");
+                                                tvStatusVerificacion.setTextColor(Color.RED);
+                                                progressBar.setVisibility(View.GONE);
+                                                contProgress.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        contProgress.setVisibility(View.GONE);
+                                                    }
+                                                },2000);
+                                            }
+                                        }else{
+                                            tvStatusVerificacion.setText(response.getString("mensaje"));
+                                            tvStatusVerificacion.setTextColor(Color.RED);
+                                            progressBar.setVisibility(View.GONE);
+                                            contProgress.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    contProgress.setVisibility(View.GONE);
+                                                }
+                                            },2000);
+                                        }
+                                    }catch(Exception ex){
+                                        Toast.makeText(context,"No se han podido verificar las credenciales",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    }else{
+                        txtContrasena.requestFocus();
+                    }
+
+                }else{
+                    Toast.makeText(context, "Selecciona tu usuario",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        dialog.show();
     }
 
 

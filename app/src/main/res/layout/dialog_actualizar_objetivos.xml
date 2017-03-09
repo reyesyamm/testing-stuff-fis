@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/contenedor_botones_sino_modificar_objs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/btn_si_modificar_objetivos"
+            android:text="SI"
+            android:textSize="@dimen/font_size_title"
+            android:background="@drawable/mybutton"
+            android:textColor="@color/colorTextButton"
+            android:layout_margin="10dp"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/btn_no_modificar_objetivos"
+            android:text="NO"
+            android:textSize="@dimen/font_size_title"
+            android:background="@drawable/mybutton"
+            android:textColor="@color/colorTextButton"
+            android:layout_margin="10dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/contenedor_formulario_modificar_objs"
+        android:visibility="visible"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:id="@+id/contenedor_status_guardado_obj"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Formulario"
+                android:textAlignment="center"
+                android:id="@+id/tv_status_guardado_objetivos"
+                />
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressbar_guardado_objs"
+                android:indeterminate="true"
+                />
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@id/txt_objetivo1_paciente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_subtitle"
+                android:hint="Objetivo 1 *"
+                android:maxLength="50"
+                android:textColor="@color/colorSecondaryText"
+                android:maxLines="1"
+                android:lines="1"
+                android:imeOptions="actionNext"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@id/txt_objetivo2_paciente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_subtitle"
+                android:hint="Objetivo 2 *"
+                android:maxLength="50"
+                android:textColor="@color/colorSecondaryText"
+                android:maxLines="1"
+                android:lines="1"
+                android:imeOptions="actionNext"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@id/txt_objetivo3_paciente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_subtitle"
+                android:hint="Objetivo 3 *"
+                android:maxLength="50"
+                android:textColor="@color/colorSecondaryText"
+                android:maxLines="1"
+                android:lines="1"
+                android:imeOptions="actionDone"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/btn_guardar_objetivos"
+                android:text="Guardar"
+                android:textSize="@dimen/font_size_title"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:layout_margin="10dp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/btn_cancelar_objetivos"
+                android:text="Cancelar"
+                android:textSize="@dimen/font_size_title"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:layout_margin="10dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

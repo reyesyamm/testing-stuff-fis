@@ -19,12 +19,14 @@ import entidad.TratamientoAnalgesico;
 public class RVTAAdapter extends RecyclerView.Adapter<RVTAAdapter.TAViewHolder> {
 
     List<TratamientoAnalgesico> tas;
+    Boolean btnEliminarVisible;
     Context context;
     OnItemClickListenerT onItemClickListenerT;
 
-    RVTAAdapter(Context context, List<TratamientoAnalgesico> tas){
+    RVTAAdapter(Context context, List<TratamientoAnalgesico> tas, Boolean v){
         this.tas = tas;
         this.context = context;
+        this.btnEliminarVisible = v;
     }
 
     public void setOnItemClickListenerT(OnItemClickListenerT onItemClickListenerT){
@@ -54,15 +56,19 @@ public class RVTAAdapter extends RecyclerView.Adapter<RVTAAdapter.TAViewHolder> 
         final TratamientoAnalgesico ta = tas.get(position);
         holder.nombreTratamiento.setText(ta.tratamiento);
         holder.resumen.setText(ta.resumenTratamiento());
-        View.OnClickListener listener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                onItemClickListenerT.onItemClickTA(ta);
-            }
-        };
 
-        holder.btnEliminar.setOnClickListener(listener);
+        if(btnEliminarVisible){
+            View.OnClickListener listener = new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    onItemClickListenerT.onItemClickTA(ta);
+                }
+            };
 
+            holder.btnEliminar.setOnClickListener(listener);
+        }else{
+            holder.btnEliminar.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

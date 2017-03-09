@@ -23,14 +23,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:paddingTop="20dp"
             android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_account_circle_white_24dp"
+                />
 
             <TextView
                 android:id="@+id/tv_nombre_terapeuta"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -38,7 +45,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="Nombre del terapeuta"
-                android:textAlignment="center"
+                android:gravity="center_vertical"
                 />
 
         </LinearLayout>

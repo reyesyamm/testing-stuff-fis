@@ -1,10 +1,13 @@
 package com.swyam.fisiomer;
 
+import android.content.Context;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,6 +23,7 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
         CardView cv;
         TextView fecha,terapeuta,resumen;
         View contenedor;
+        ImageView ini,fin;
 
         public TratamientoViewHolder(View itemView) {
             super(itemView);
@@ -28,13 +32,17 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
             terapeuta = (TextView) itemView.findViewById(R.id.tv_nombre_terapeuta_tratamiento);
             resumen = (TextView) itemView.findViewById(R.id.tv_resumen_tratamiento);
             contenedor = itemView.findViewById(R.id.contenedor_detalles_tratamiento);
+            ini =(ImageView) itemView.findViewById(R.id.image_estado_paciente_inicio);
+            fin =(ImageView) itemView.findViewById(R.id.image_estado_paciente_fin);
         }
     }
 
     List<Tratamiento> tratamientos;
     private OnItemClickListener onItemClickListener;
+    private Context context;
 
-    RVTAdapter(List<Tratamiento> tratamientos){
+    RVTAdapter(Context context,List<Tratamiento> tratamientos){
+        this.context = context;
         this.tratamientos = tratamientos;
     }
 
@@ -53,10 +61,11 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
     @Override
     public void onBindViewHolder(RVTAdapter.TratamientoViewHolder holder, final int position){
         final Tratamiento tratamiento = tratamientos.get(position);
-        holder.fecha.setText(tratamiento.fecha);
-        holder.terapeuta.setText(tratamiento.nombreTerapeuta);
-        holder.resumen.setText(tratamiento.resumen);
-
+        holder.fecha.setText(tratamiento.getFechaFormateada());
+        holder.terapeuta.setText("Terapeuta: "+tratamiento.terapeuta);
+        holder.resumen.setText(tratamiento.obtenerResumen());
+        holder.ini.setImageResource(tratamiento.estadoInicio);
+        holder.fin.setImageResource(tratamiento.estadoFin);
         View.OnClickListener listener = new View.OnClickListener(){
             @Override
             public void onClick(View v){

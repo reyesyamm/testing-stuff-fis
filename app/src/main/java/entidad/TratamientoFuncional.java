@@ -7,22 +7,22 @@ import java.io.Serializable;
  */
 public class TratamientoFuncional implements Serializable{
 
-    public int estadoPaciente=1;
-    public String tempNombre;
-    public String temDesc;
+    public String tratamiento;
+    public String tipo;
+    public int musculo;
+    public int estado;
+    public String movilizacion;
 
-    public TratamientoFuncional(String nombre, String descripcion, int estadoPaciente){
-        tempNombre = nombre;
-        temDesc = descripcion;
-        this.estadoPaciente = estadoPaciente;
-    }
-
-    public String nombreTratamiento(){
-        return tempNombre;
+    public TratamientoFuncional(String tr, String tipo, int musculo, String estado, String movilizacion){
+        this.tratamiento = tr;
+        this.tipo = tipo;
+        this.musculo = musculo;
+        this.estado = Tratamiento.estados.get(estado);
+        this.movilizacion = movilizacion;
     }
 
     public String descripcionTratamiento(){
-        return temDesc;
+        return "";
     }
 
 

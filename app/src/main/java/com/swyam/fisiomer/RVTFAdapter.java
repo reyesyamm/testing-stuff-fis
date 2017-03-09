@@ -22,11 +22,13 @@ public class RVTFAdapter extends RecyclerView.Adapter<RVTFAdapter.TFViewHolder> 
 
     List<TratamientoFuncional> tfs;
     Context context;
+    Boolean btnEliminarVisible;
     OnItemClickListenerT onItemClickListener;
 
-    public RVTFAdapter(Context context, List<TratamientoFuncional> pacientes){
+    public RVTFAdapter(Context context, List<TratamientoFuncional> pacientes, boolean btnEliminarVisible){
         this.tfs = pacientes;
         this.context = context;
+        this.btnEliminarVisible = btnEliminarVisible;
     }
 
     @Override
@@ -44,34 +46,23 @@ public class RVTFAdapter extends RecyclerView.Adapter<RVTFAdapter.TFViewHolder> 
     @Override
     public void onBindViewHolder(TFViewHolder holder, int position) {
         final TratamientoFuncional tf = tfs.get(position);
-        holder.tvNombreTratamiento.setText(tf.nombreTratamiento());
+        holder.tvNombreTratamiento.setText(tf.tratamiento);
         holder.tvDescripcionSimpleTratamiento.setText(tf.descripcionTratamiento());
-        switch(tf.estadoPaciente){
-            case 0: // bien
-                holder.imagenEstadoPaciente.setImageResource(R.drawable.cara1);
-                break;
-            case 1: // mediobien
-                holder.imagenEstadoPaciente.setImageResource(R.drawable.cara2);
-                break;
-            case 2: // mal
-                holder.imagenEstadoPaciente.setImageResource(R.drawable.cara3);
-                break;
-            case 3: // muymal
-                holder.imagenEstadoPaciente.setImageResource(R.drawable.cara4);
-                break;
-            default: //android
-                holder.imagenEstadoPaciente.setImageResource(android.R.drawable.sym_def_app_icon);
-                break;
+        holder.imagenEstadoPaciente.setImageResource(tf.estado);
+
+        if(!btnEliminarVisible){
+            holder.btnEliminarTratamiento.setVisibility(View.INVISIBLE);
+        }else{
+
+            View.OnClickListener listener = new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    onItemClickListener.onItemClickTF(tf);
+                }
+            };
+            holder.btnEliminarTratamiento.setOnClickListener(listener);
         }
 
-        View.OnClickListener listener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                onItemClickListener.onItemClickTF(tf);
-            }
-        };
-
-        holder.btnEliminarTratamiento.setOnClickListener(listener);
 
     }
 

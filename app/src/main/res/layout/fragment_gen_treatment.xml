@@ -1,0 +1,169 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.swyam.fisiomer.GenTreatmentFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+            <!-- TODO: Update blank fragment layout -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_title"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Detalles generales del tratamiento aplicado"
+                />
+
+            <TextView
+                android:id="@+id/tv_fecha_tratamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:text="Fecha"
+                android:textColor="@color/colorSecondaryText"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_nombre_paciente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_title"
+                android:text="Paciente: Nombre del paciente"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_nombre_terapeuta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_title"
+                android:text="Terapeuta: Nombre del terapeuta"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/panel"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textAlignment="center"
+                        android:text="Estado del paciente antes del Tratamiento"
+                        />
+
+                    <ImageView
+                        android:id="@+id/image_estado_paciente_inicio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cara1"
+                        android:scaleType="fitCenter"
+                        android:padding="10dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textAlignment="center"
+                        android:text="Estado del paciente despues del Tratamiento"
+                        />
+
+                    <ImageView
+                        android:id="@+id/image_estado_paciente_fin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cara1"
+                        android:scaleType="fitCenter"
+                        android:padding="10dp"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/panel"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_total_tratamientos_funcionales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="- Se realizaron 0 tratamientos funcionales"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_total_tratamientos_preventivos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="- Se realizaron 0 tratamientos preventivos"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_total_tratamientos_analgesicos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="- Se realizaron 0 tratamientos analgésicos"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+</FrameLayout>

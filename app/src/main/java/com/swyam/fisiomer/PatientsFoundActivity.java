@@ -2,6 +2,7 @@ package com.swyam.fisiomer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +30,10 @@ import java.util.List;
 
 import entidad.Paciente;
 import entidad.Tratamiento;
+
+import static com.swyam.fisiomer.Connection.SUF_OBTENER_RES_SIMILARES;
+import static com.swyam.fisiomer.Connection.getHostServer;
+import static com.swyam.fisiomer.Connection.parsearError;
 
 public class PatientsFoundActivity extends AppCompatActivity {
 
@@ -34,6 +47,7 @@ public class PatientsFoundActivity extends AppCompatActivity {
     SimpleDateFormat format;
     Context context;
     ProgressDialog progressDialog;
+    String token="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,42 +68,32 @@ public class PatientsFoundActivity extends AppCompatActivity {
             }
         });
 
+        token = getIntent().getStringExtra("token");
+
+
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Buscando");
+        progressDialog.setTitle("Listando Resultados");
         progressDialog.setMessage("Espere porfavor");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
 
 
+
         total_pacientes = (TextView) findViewById(R.id.tv_total_pacientes_encontrados);
         busqueda_realizada = (TextView) findViewById(R.id.tv_busqueda_realizada);
+        total_pacientes.setText("0");
         context = getBaseContext();
         llm = new LinearLayoutManager(context);
         rv = (RecyclerView) findViewById(R.id.my_rv);
-        format = new SimpleDateFormat("MMM dd, yyyy hh:mm a");
+        format = new SimpleDateFormat("MMMM dd, yyyy hh:mm a");
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
         progressDialog.show();
-
-        String busqueda = getIntent().getStringExtra("busqueda");
-        busqueda_realizada.setText(busqueda);
-
+        busqueda_realizada.setText(token);
         cargarDatos();
-        llenarRV();
-        progressDialog.dismiss();
 
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(Paciente item) {
-                Toast.makeText(context,"Has seleccionado al paciente "+item.nombre,Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onItemClick(Tratamiento t){
-                // no se utiliza
-            }
-        });
 
     }
 
@@ -100,17 +104,77 @@ public class PatientsFoundActivity extends AppCompatActivity {
     }
 
     public void cargarDatos(){
-        Date hoy = new Date();
-        pacientes.add(new Paciente(1,"Carlos Pech",23,format.format(hoy),"Juan Perez"));
-        pacientes.add(new Paciente(1,"Maria Sanchez",50,format.format(hoy),"Juan Perez"));
-        pacientes.add(new Paciente(1,"Laura Peniche",26,format.format(hoy),"Margarita Santana"));
-        pacientes.add(new Paciente(1,"Andrea Manzanero",48,format.format(hoy),"Margarita Santana"));
-        pacientes.add(new Paciente(1,"José Mendoza",25,format.format(hoy),"Andres Marquez"));
+        try{
+            String url = getHostServer(context)+SUF_OBTENER_RES_SIMILARES;
+            JSONObject obj = new JSONObject();
+            obj.put("token",token);
+
+            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
+                    Request.Method.POST,
+                    url,
+                    obj,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            progressDialog.dismiss();
+                            try{
+                                SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                if(response.getInt("estado")==0){
+                                    JSONArray ps = response.getJSONArray("datos");
+                                    total_pacientes.setText(ps.length()+"");
+                                    for(int i=0;i<ps.length();i++){
+                                        JSONObject p = ps.getJSONObject(i);
+                                        Date dt = format2.parse(p.getString("fecha"));
+                                        pacientes.add(new Paciente(p.getInt("id"),p.getString("nombre"),p.getInt("edad"),
+                                                format.format(dt),p.getString("terapeuta"),p.getInt("totales")
+                                                ));
+                                    }
+                                }else{
+                                    Toast.makeText(context, response.getString("mensaje"),Toast.LENGTH_LONG).show();
+                                }
+                            }catch(Exception ex){
+                                ex.printStackTrace();
+                                Toast.makeText(context, "Error al parsear la respuesta recibida",Toast.LENGTH_LONG).show();
+                            }
+                            llenarRV();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.dismiss();
+                            Toast.makeText(context,parsearError(error),Toast.LENGTH_LONG).show();
+                        }
+                    }
+            ));
+
+
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+            Toast.makeText(context,"Error al intentar enviar los datos",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void llenarRV(){
         adapter = new RVPAdapter(pacientes);
         rv.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Paciente item) {
+                //Toast.makeText(context,"Has seleccionado al paciente "+item.nombre,Toast.LENGTH_SHORT).show();
+                int id = item.id;
+                Intent intent = new Intent(PatientsFoundActivity.this, PatientActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemClick(Tratamiento t){
+                // no se utiliza
+            }
+        });
     }
 
 }

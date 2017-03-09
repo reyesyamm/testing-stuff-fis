@@ -20,11 +20,13 @@ public class RVTPAdapter extends RecyclerView.Adapter<RVTPAdapter.TPViewHolder> 
 
     List<TratamientoPreventivo> tps;
     Context context;
+    Boolean btnEliminarVisible;
     OnItemClickListenerT onItemClickListenerT;
 
-    RVTPAdapter(Context context, List<TratamientoPreventivo> tps){
+    RVTPAdapter(Context context, List<TratamientoPreventivo> tps, Boolean v){
         this.context = context;
         this.tps = tps;
+        this.btnEliminarVisible = v;
     }
 
     @Override
@@ -44,15 +46,18 @@ public class RVTPAdapter extends RecyclerView.Adapter<RVTPAdapter.TPViewHolder> 
         final TratamientoPreventivo tp = tps.get(position);
         holder.nombreTratamiento.setText(tp.tratamiento);
         holder.descripcionTratamiento.setText(tp.resumenTratamiento());
+        if(btnEliminarVisible){
+            View.OnClickListener listener = new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    onItemClickListenerT.onItemClickTP(tp);
+                }
+            };
 
-        View.OnClickListener listener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                onItemClickListenerT.onItemClickTP(tp);
-            }
-        };
-
-        holder.btnEliminar.setOnClickListener(listener);
+            holder.btnEliminar.setOnClickListener(listener);
+        }else{
+            holder.btnEliminar.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

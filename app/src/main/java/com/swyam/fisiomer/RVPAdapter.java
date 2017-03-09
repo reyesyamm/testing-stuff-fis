@@ -61,7 +61,8 @@ public class RVPAdapter extends RecyclerView.Adapter<RVPAdapter.PacienteViewHold
     public void onBindViewHolder(RVPAdapter.PacienteViewHolder holder, final int position){
         final Paciente paciente = pacientes.get(position);
         holder.nombrePaciente.setText(paciente.nombre);
-        holder.fechaUltimoTratamiento.setText(paciente.edad+" años, su último tratamiento fue en: "+paciente.fecha_ultimo_tratamiento);
+        holder.fechaUltimoTratamiento.setText(paciente.edad+" años, su último tratamiento fue en: "+paciente.fecha_ultimo_tratamiento+"\n"+
+        "Se le han aplicado en total "+paciente.totales+" tratamientos");
         holder.ultimoTerapeuta.setText("Por "+paciente.nombre_terapeuta);
         View.OnClickListener listener = new View.OnClickListener(){
             @Override

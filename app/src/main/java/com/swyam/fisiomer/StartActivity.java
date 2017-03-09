@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
@@ -115,6 +117,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        hide();
         mVisible = true;
         mContentView = findViewById(R.id.fullscreen_content);
         context= getBaseContext();
@@ -133,7 +136,8 @@ public class StartActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        if (error instanceof NoConnectionError || error instanceof ServerError || error instanceof NoConnectionError) {
+                        String strError = parsearError(error);
+                        if (strError.length()==0 || error instanceof NoConnectionError || error instanceof ServerError || error instanceof NoConnectionError) {
 
                             Intent intent = new Intent(StartActivity.this, SettingsActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -141,8 +145,9 @@ public class StartActivity extends AppCompatActivity {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             intent.putExtra("reiniciar",true);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                         } else {
-                            Toast.makeText(context,parsearError(error),Toast.LENGTH_LONG).show();
+                            Toast.makeText(context,strError,Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -150,6 +155,18 @@ public class StartActivity extends AppCompatActivity {
 
         ));
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().cancelAll(new RequestQueue.RequestFilter() {
+            @Override
+            public boolean apply(Request<?> request) {
+                return true;
+            }
+        });
+
+        super.onBackPressed();
     }
 
     private void continuarCarga(){
@@ -183,6 +200,8 @@ public class StartActivity extends AppCompatActivity {
                                     JSONObject obj = usuarios.getJSONObject(i);
                                     terapeutas.add(obj.getString("usuario"));
                                 }
+
+                                //Toast.makeText(context, Helpers.SerializarLista(terapeutas), Toast.LENGTH_LONG).show();
                                 guardarListaUsuarioTerapeutas(context,terapeutas);
                             }else{
                                 Toast.makeText(context,response.getString("mensaje"),Toast.LENGTH_LONG).show();
@@ -198,7 +217,11 @@ public class StartActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         }
-        ));
+        ).setRetryPolicy(new DefaultRetryPolicy(
+            10000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )));
     }
 
     private void abrirLogin(){
@@ -208,6 +231,8 @@ public class StartActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
+        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+
     }
 
     public void informarError(){
@@ -277,6 +302,7 @@ public class StartActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
+        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
     }
 
     @Override
@@ -286,7 +312,7 @@ public class StartActivity extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(100);
+
     }
 
     private void toggle() {

@@ -1,14 +1,19 @@
 package com.swyam.fisiomer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Reyes Yam on 22/02/2017.
@@ -16,6 +21,8 @@ import java.util.ArrayList;
 public class Helpers {
 
     public static final String SEPARATOR_STRING_SER = "##-##";
+
+
 
 
 
@@ -81,5 +88,27 @@ public class Helpers {
         }
         return retorno;
     }
+
+
+    public static void esconderTeclado(Activity activity){
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public static Date formatearFechaString(String fecha){
+        Date date = null;
+        try{
+            SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            date = format2.parse(fecha);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return date;
+    }
 }
+
+
 

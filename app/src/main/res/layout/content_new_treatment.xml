@@ -25,6 +25,7 @@
             >
 
             <TextView
+                android:id="@+id/tv_titulo_estado_inicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_size_title"
@@ -111,7 +112,7 @@
                 <Button
                     android:id="@+id/btn_agregar_terapia_funcional"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Terapia Funcional"
                     android:drawableLeft="@drawable/ic_add_white_24dp"
@@ -129,7 +130,7 @@
                 <Button
                     android:id="@+id/btn_agregar_terapia_analgesica"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Terapia Analgésicas"
                     android:drawableLeft="@drawable/ic_add_white_24dp"
@@ -147,7 +148,7 @@
                 <Button
                     android:id="@+id/btn_agregar_terapia_preventiva"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Terapia Preventiva"
                     android:drawableLeft="@drawable/ic_add_white_24dp"
@@ -276,6 +277,7 @@
             >
 
             <TextView
+                android:id="@+id/tv_titulo_estado_fin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_size_title"

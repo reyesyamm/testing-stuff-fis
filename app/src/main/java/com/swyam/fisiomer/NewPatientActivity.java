@@ -34,6 +34,8 @@ import entidad.Terapeuta;
 
 import static com.swyam.fisiomer.Helpers.SerializarLista;
 import static com.swyam.fisiomer.Connection.*;
+import static com.swyam.fisiomer.Helpers.esconderTeclado;
+
 public class NewPatientActivity extends AppCompatActivity {
 
     EditText nombre,edad,ocupacion,telefono,diagnosticoRef,medicoDiagnosticoRef,motivoConsulta1,motivoConsulta2;
@@ -237,7 +239,7 @@ public class NewPatientActivity extends AppCompatActivity {
                 strAntecedente2, strExploracion2, strDiagnostico2);
 
         if(validez){
-            guardarDatos(strNombre, strEdad, strOcupacion, strTelefono, strDiagnosticoReferencia, strMedicoDiagnosticoRef,
+            verificarCredenciales(strNombre, strEdad, strOcupacion, strTelefono, strDiagnosticoReferencia, strMedicoDiagnosticoRef,
                     strMotivo1, strMotivo2, strAntecedente1, strAntecedente2, strExploracion1, strExploracion2, strDiagnostico1,
                     strDiagnostico2,strObjetivo1, strObjetivo2, strObjetivo3);
 
@@ -378,7 +380,10 @@ public class NewPatientActivity extends AppCompatActivity {
     }
 
     private void redirigirAPaciente(int id){
-        Toast.makeText(getBaseContext(),"Nuevo usuario registrado: "+id, Toast.LENGTH_LONG).show();
+        esconderTeclado(NewPatientActivity.this);
+        Intent intent =new Intent(NewPatientActivity.this, PatientActivity.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
     }
 
     public void procesarError(VolleyError error){
@@ -485,6 +490,41 @@ public class NewPatientActivity extends AppCompatActivity {
         }
 
         return retorno;
+    }
+
+    private void verificarCredenciales(final String nombre,
+                                       final String edad,
+                                       final String ocupacion,
+                                       final String telefono,
+                                       final String diagRef,
+                                       final String medicoDiag,
+                                       final String motivo1,
+                                       final String motivo2,
+                                       final String antecedente1,
+                                       final String antecedente2,
+                                       final String exploracion1,
+                                       final String exploracion2,
+                                       final String diagnostico1,
+                                       final String diagnostico2,
+                                       final String objetivo1,
+                                       final String objetivo2,
+                                       final String objetivo3){
+
+        abrirDialogoCredenciales(NewPatientActivity.this,new OnDialogCred() {
+            @Override
+            public void credencialesValidasLocales() {
+                guardarDatos(nombre,edad,ocupacion,telefono,diagRef,medicoDiag,motivo1,motivo2,antecedente1,antecedente2,exploracion1,exploracion2,diagnostico1,diagnostico2,objetivo1,objetivo2,objetivo3);
+            }
+
+            @Override
+            public void credencialesValidasRemotas() {
+
+                guardarDatos(nombre,edad,ocupacion,telefono,diagRef,medicoDiag,motivo1,motivo2,antecedente1,antecedente2,exploracion1,exploracion2,diagnostico1,diagnostico2,objetivo1,objetivo2,objetivo3);
+            }
+
+
+        });
+
     }
 
 }

@@ -98,13 +98,13 @@ public class FunctionalTreatmentActivity extends AppCompatActivity {
 
         llenarTFS();
 
-        adapter = new RVTFAdapter(context,tfs);
+        adapter = new RVTFAdapter(context,tfs,true);
         rv.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnItemClickListenerT() {
             @Override
             public void onItemClickTF(TratamientoFuncional tratamiento) {
-                Toast.makeText(context,"Se eliminará este tf: "+tratamiento.tempNombre,Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Se eliminará este tf: "+tratamiento.tratamiento,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -169,9 +169,9 @@ public class FunctionalTreatmentActivity extends AppCompatActivity {
     }
 
     public void llenarTFS(){
-        tfs.add(new TratamientoFuncional("Punción Seca","Breve descripcion del tratamiento",0));
-        tfs.add(new TratamientoFuncional("Fibrolisis","Breve descripcion del tratamiento",1));
-        tfs.add(new TratamientoFuncional("Punción Seca","Breve descripcion del tratamiento",2));
+        //tfs.add(new TratamientoFuncional("Punción Seca","Breve descripcion del tratamiento",0));
+        //tfs.add(new TratamientoFuncional("Fibrolisis","Breve descripcion del tratamiento",1));
+        //tfs.add(new TratamientoFuncional("Punción Seca","Breve descripcion del tratamiento",2));
 
     }
 
