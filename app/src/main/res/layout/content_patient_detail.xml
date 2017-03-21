@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#edf0f5"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.swyam.fisiomer.PatientDetailActivity"
+    tools:showIn="@layout/activity_patient_detail">
+
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Fecha de guardado"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+                <TextView
+                    android:id="@+id/tv_fecha_registro_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:text="Fecha"
+                    android:textAlignment="center"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Terapeuta que registró"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+                <TextView
+                    android:id="@+id/tv_terapeuta_registro_paciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:text="Nombre Terapeuta"
+                    android:textAlignment="center"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/divider"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Datos generales"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textAlignment="center"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+                    <EditText
+                        android:id="@+id/txt_nombre_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombre"
+                        android:inputType="text"
+                        android:maxLength="80"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:imeOptions="actionNext"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <EditText
+                        android:id="@+id/txt_edad_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Edad"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:imeOptions="actionNext"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <EditText
+                        android:id="@+id/txt_ocupacion_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ocupación"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:imeOptions="actionNext"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <EditText
+                        android:id="@+id/txt_telefono_paciente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Teléfono"
+                        android:inputType="text"
+                        android:maxLength="15"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:imeOptions="actionDone"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_actualizar_datos_generales_paciente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mybutton"
+                android:text="Actualizar datos"
+                android:textColor="@color/colorTextButton"
+                android:textAllCaps="false"
+                android:textSize="@dimen/font_size_subtitle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/divider"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="10dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/divider"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Referencia"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textAlignment="center"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Diagnóstico"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                />
+
+            <TextView
+                android:id="@+id/tv_diagnostico_referencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:padding="5dp"
+                android:text="Diagnostico de referencia no disponible"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Médico"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                />
+
+            <TextView
+                android:id="@+id/tv_medico_diagnostico_referencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:padding="5dp"
+                android:text="Médico diagnostico de referencia no disponible"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/divider"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="10dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/divider"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Identificación Geográfica"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textAlignment="center"
+                />
+
+            <ImageView
+                android:id="@+id/image_cuerpo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitStart"
+                android:adjustViewBounds="true"
+                android:src="@drawable/human_body"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/divider"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="10dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/divider"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Motivo Consulta 1"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textAlignment="center"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Motivo"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                />
+
+            <TextView
+                android:id="@+id/tv_motivo_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:padding="5dp"
+                android:text="Motivo de consulta 1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Antecedente"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                />
+
+            <TextView
+                android:id="@+id/tv_antecedente_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:padding="5dp"
+                android:text="Antecedente"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Exploración Clínica"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                />
+
+            <TextView
+                android:id="@+id/tv_exploracion_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:padding="5dp"
+                android:text="Exploración Clínica"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Diagnóstico Funcional"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                />
+
+            <TextView
+                android:id="@+id/tv_diagnostico_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorSecondaryText"
+                android:padding="5dp"
+                android:text="Diagnostico Funcional"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/divider"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/contenedor_motivo2"
+            android:orientation="vertical"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/divider"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="10dp"
+                />
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:padding="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Motivo Consulta 2"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textAlignment="center"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Motivo"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_motivo_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_paragraph"
+                    android:textColor="@color/colorSecondaryText"
+                    android:padding="5dp"
+                    android:text="Motivo de consulta 1"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Antecedente"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_antecedente_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_paragraph"
+                    android:textColor="@color/colorSecondaryText"
+                    android:padding="5dp"
+                    android:text="Antecedente"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Exploración Clínica"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_exploracion_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_paragraph"
+                    android:textColor="@color/colorSecondaryText"
+                    android:padding="5dp"
+                    android:text="Exploración Clínica"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Diagnóstico Funcional"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorPrimaryText"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_diagnostico_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_paragraph"
+                    android:textColor="@color/colorSecondaryText"
+                    android:padding="5dp"
+                    android:text="Diagnostico Funcional"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/divider"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="10dp"
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</ScrollView>

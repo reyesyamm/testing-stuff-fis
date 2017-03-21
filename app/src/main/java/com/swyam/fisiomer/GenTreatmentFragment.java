@@ -74,12 +74,8 @@ public class GenTreatmentFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         tratamiento= ((TreatmentDetailsActivity)getActivity()).obtenerTratamiento();
-
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,9 +87,9 @@ public class GenTreatmentFragment extends Fragment {
         nombreTerapeuta = (TextView) view.findViewById(R.id.tv_nombre_terapeuta);
         imagenEstadoIni = (ImageView) view.findViewById(R.id.image_estado_paciente_inicio);
         imagenEstadoFin = (ImageView) view.findViewById(R.id.image_estado_paciente_fin);
-        totalFun = (TextView) view.findViewById(R.id.tv_total_tratamientos_funcionales);
-        totalPrev = (TextView) view.findViewById(R.id.tv_total_tratamientos_preventivos);
-        totalAnal = (TextView) view.findViewById(R.id.tv_total_tratamientos_analgesicos);
+        totalFun = (TextView) view.findViewById(R.id.tv_total_tfuns);
+        totalPrev = (TextView) view.findViewById(R.id.tv_total_tprevs);
+        totalAnal = (TextView) view.findViewById(R.id.tv_total_tanals);
         if(tratamiento!=null){
             String nPaciente = ((TreatmentDetailsActivity)getActivity()).nombrePaciente();
             fechaTratamiento.setText(tratamiento.getFechaFormateada());
@@ -101,9 +97,9 @@ public class GenTreatmentFragment extends Fragment {
             nombreTerapeuta.setText("Terapeuta: "+tratamiento.terapeuta);
             imagenEstadoIni.setImageResource(tratamiento.estadoInicio);
             imagenEstadoFin.setImageResource(tratamiento.estadoFin);
-            totalFun.setText("Se realizaron "+tratamiento.totalFun()+" tratamientos funcionales");
-            totalPrev.setText("Se realizaron "+tratamiento.totalPrev()+" tratamientos preventivos");
-            totalAnal.setText("Se realizaron "+tratamiento.totalAna()+" tratamientos analgésicos");
+            totalFun.setText(tratamiento.totalFun()+"");
+            totalPrev.setText(tratamiento.totalPrev()+"");
+            totalAnal.setText(tratamiento.totalAna()+"");
         }else{
             Log.d("fragment","tratamiento es null");
         }

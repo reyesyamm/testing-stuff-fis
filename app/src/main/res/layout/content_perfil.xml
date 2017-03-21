@@ -16,6 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <TextView
@@ -26,6 +28,7 @@
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryText"
             />
+
         <ImageButton
             android:id="@+id/btn_editar_datos"
             android:layout_width="wrap_content"
@@ -36,29 +39,36 @@
             />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Nombre *: "
-                android:textSize="@dimen/font_size_subtitle"
+                android:text="Usuario: "
                 android:textColor="@color/colorSecondaryText"
-                />
+                android:textSize="@dimen/font_size_subtitle" />
 
-            <EditText
-                android:id="@+id/txt_nombre_terapeuta"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_usuario_terapeuta"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:maxLength="80"
-                android:maxLines="1"
+                android:layout_weight="1"
                 android:lines="1"
-                android:textSize="@dimen/font_size_subtitle"
-                android:imeOptions="actionNext"
-                />
+                android:maxLength="25"
+                android:maxLines="1"
+                android:textSize="@dimen/font_size_subtitle" />
+
+            <ImageButton
+                android:id="@+id/btn_info_usuario_terapeuta"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:padding="5dp"
+                android:src="@drawable/ic_help_outline_black_36dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -70,31 +80,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Usuario: "
+                android:text="Nombre: "
                 android:textSize="@dimen/font_size_subtitle"
                 android:textColor="@color/colorSecondaryText"
                 />
 
-            <TextView
-                android:id="@+id/tv_usuario_terapeuta"
-                android:layout_width="1dp"
-                android:layout_weight="1"
+            <EditText
+                android:id="@+id/txt_nombre_terapeuta"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxLength="25"
+                android:maxLength="80"
                 android:maxLines="1"
+                android:inputType="text"
                 android:lines="1"
                 android:textSize="@dimen/font_size_subtitle"
+                android:imeOptions="actionNext"
                 />
-
-            <ImageButton
-                android:id="@+id/btn_info_usuario_terapeuta"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@color/colorAccent"
-                android:src="@android:drawable/ic_lock_idle_lock"
-                android:padding="5dp"
-                />
-
         </LinearLayout>
 
         <LinearLayout
@@ -183,7 +184,7 @@
             android:layout_height="3dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="40dp"
-            android:background="@color/cardview_dark_background"
+            android:background="@color/divider"
             />
 
         <TextView
@@ -210,13 +211,12 @@
             android:id="@+id/btn_agregar_terapeuta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/mybutton"
-            android:text="Agregar Terapeuta"
-            android:textSize="@dimen/font_size_subtitle"
-            android:textAllCaps="false"
             android:layout_gravity="center"
-            android:textColor="@color/colorTextButton"/>
-
+            android:background="@drawable/mybutton"
+            android:text="Nuevo Terapeuta"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextButton"
+            android:textSize="@dimen/font_size_subtitle" />
 
 
     </LinearLayout>

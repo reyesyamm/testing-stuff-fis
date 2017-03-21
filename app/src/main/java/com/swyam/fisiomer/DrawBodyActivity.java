@@ -182,17 +182,17 @@ public class DrawBodyActivity extends AppCompatActivity {
         pintarCoordenadas();
     }
 
-    public float cX(float x){
+    public int cX(float x){
         //if(Math.abs(widthRatio)==1)
         //    return x;
-        return widthRatio*(x-imageBounds.left);
+        return (int)(widthRatio*(x-imageBounds.left));
         //return widthRatio*(x-root.getLeft());
     }
 
-    public float cY(float y){
+    public int cY(float y){
         //if(Math.abs(heightRatio)==1)
         //    return y;
-        return heightRatio*(y-imageBounds.top);
+        return (int)(heightRatio*(y-imageBounds.top));
         //return heightRatio*(y-root.getTop());
     }
 

@@ -3,25 +3,26 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv_tratamiento"
-    cardview:cardCornerRadius="2dp"
-    android:background="#ffffff"
-    cardview:cardElevation="3dp"
+    cardview:cardCornerRadius="5dp"
+    cardview:cardElevation="5dp"
     cardview:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:id="@+id/contenedor_detalles_tratamiento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+
         android:orientation="vertical">
+
+
 
         <TextView
             android:id="@+id/tv_nombre_terapeuta_tratamiento"
-            android:textSize="@dimen/font_size_subtitle"
+            android:textSize="@dimen/font_size_title"
             android:textColor="@color/colorPrimaryText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Terapeua: Nombre"
+            android:text="Terapeuta: Nombre"
+            android:padding="5dp"
             />
 
         <TextView
@@ -31,21 +32,20 @@
             android:textSize="@dimen/font_size_subtitle"
             android:textColor="@color/colorPrimaryText"
             android:text="Fecha"
+            android:paddingLeft="5dp"
             />
 
-        <TextView
-            android:id="@+id/tv_resumen_tratamiento"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/font_size_paragraph"
-            android:text="Breve resumen del tratamiento que se realizó al paciente en su última visita. Para visualizar el resumen completo el terapeuta debe oprimir este elemento."
-            android:textColor="@color/colorSecondaryText"
-            android:padding="5dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/divider"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -59,7 +59,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_subtitle"
-                    android:text="Al iniciar Tratamiento"
+                    android:text="Al iniciar"
+                    android:textAlignment="center"
                     android:textColor="@color/colorPrimaryText"
                     />
 
@@ -67,7 +68,7 @@
                     android:id="@+id/image_estado_paciente_inicio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/cara1" />
             </LinearLayout>
 
@@ -83,7 +84,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_subtitle"
-                    android:text="Al terminar Tratamiento"
+                    android:text="Al terminar"
+                    android:textAlignment="center"
                     android:textColor="@color/colorPrimaryText"
                     />
 
@@ -92,7 +94,100 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/cara1"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#edf0f5"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_total_tfuns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="1"
+                    android:textSize="@dimen/font_size_title"
+                    android:textAlignment="center"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Funcionales"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_total_tanals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="1"
+                    android:textSize="@dimen/font_size_title"
+                    android:textAlignment="center"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Analgésicas"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_total_tprevs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="1"
+                    android:textSize="@dimen/font_size_title"
+                    android:textAlignment="center"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Preventivas"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     />
 
             </LinearLayout>
@@ -101,15 +196,31 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_resumen_tratamiento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_size_footer"
+            android:textSize="@dimen/font_size_paragraph"
+            android:text="Breve resumen del tratamiento que se realizó al paciente en su última visita. Para visualizar el resumen completo el terapeuta debe oprimir este elemento."
             android:textColor="@color/colorSecondaryText"
-            android:padding="3dp"
-            android:text="Selecciona este elemento para mostrar tratamiento detallado."
+            android:padding="5dp"
+            android:visibility="gone"
             />
 
-
+        <TextView
+            android:id="@+id/contenedor_detalles_tratamiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_size_subtitle"
+            android:textColor="@color/colorIcons"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textStyle="bold"
+            android:background="#00bfd0"
+            android:textAlignment="center"
+            android:text="Mostrar Tratamiento Detallado"
+            />
 
     </LinearLayout>
 

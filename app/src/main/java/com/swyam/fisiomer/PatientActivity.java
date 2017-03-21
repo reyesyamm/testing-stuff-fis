@@ -2,11 +2,13 @@ package com.swyam.fisiomer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 
 import entidad.Paciente;
+import entidad.Terapeuta;
 import entidad.Tratamiento;
 import entidad.TratamientoAnalgesico;
 import entidad.TratamientoFuncional;
@@ -39,23 +42,30 @@ import entidad.TratamientoPreventivo;
 
 import static com.swyam.fisiomer.Connection.SUF_DATOS_PACIENTE;
 import static com.swyam.fisiomer.Connection.getHostServer;
+import static com.swyam.fisiomer.Connection.obtenerTerapeutaLogeado;
 import static com.swyam.fisiomer.Connection.parsearError;
 import static com.swyam.fisiomer.Helpers.Capitalize;
 import static com.swyam.fisiomer.Helpers.formatearFechaString;
+import static com.swyam.fisiomer.Helpers.getStrFechaFormateada;
 
 
 public class PatientActivity extends AppCompatActivity {
 
-    TextView tvObjetivos, tvTerapeutaObjetivos, tvFechaObjetivos;
+    TextView tvObjetivos, tvTerapeutaObjetivos, tvFechaObjetivos,tvEtiquetaTotalUltimos;
     ProgressDialog progressDialog;
     RecyclerView rv;
     LinearLayoutManager llm;
     Context context;
-    SimpleDateFormat format;
+
     RVTAdapter adapter;
     List<Tratamiento> tratamientos = new ArrayList<>();
     int idPaciente;
     Toolbar toolbar;
+
+    public static final int SOLICITAR_NUEVO_TRATAMIENTO = 1;
+    public static final int SOLICITUD_CAMBIOS_DATOS_GENERALES = 2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +88,11 @@ public class PatientActivity extends AppCompatActivity {
         tvObjetivos = (TextView) findViewById(R.id.tv_objetivos);
         tvTerapeutaObjetivos = (TextView) findViewById(R.id.tv_nombre_terapeuta_objetivos);
         tvFechaObjetivos = (TextView) findViewById(R.id.tv_fecha_objetivos);
-
+        tvEtiquetaTotalUltimos = (TextView) findViewById(R.id.tv_total_tramientos_realizados);
 
         rv = (RecyclerView) findViewById(R.id.my_rv);
         llm = new LinearLayoutManager(context);
         rv.setLayoutManager(llm);
-        format = new SimpleDateFormat("MMM dd, yyyy hh:mm a");
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Obteniendo datos");
         progressDialog.setMessage("Espere porfavor");
@@ -99,16 +108,36 @@ public class PatientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PatientActivity.this, NewTreatmentActivity.class);
-                startActivity(intent);
+                intent.putExtra("paciente",toolbar.getSubtitle().toString());
+                intent.putExtra("idPaciente",idPaciente);
+                startActivityForResult(intent,SOLICITAR_NUEVO_TRATAMIENTO);
             }
         });
 
-        cargarTodoDatos(idPaciente);
+        cargarTodoDatos(idPaciente,false);
+
+    }
+
+    private int idNuevoTratamiento = -1;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == SOLICITAR_NUEVO_TRATAMIENTO && resultCode == RESULT_OK) {
+            idNuevoTratamiento = data.getIntExtra("idTratamiento",-1);
+            progressDialog.show();
+            tratamientos.clear();
+            cargarTodoDatos(idPaciente,true);
+
+
+
+        }else if(requestCode ==SOLICITUD_CAMBIOS_DATOS_GENERALES && resultCode==RESULT_OK){
+            String nombre = data.getStringExtra("nombre");
+            toolbar.setSubtitle(nombre);
+        }
     }
 
 
 
-    public void cargarTodoDatos(final int id){
+    public void cargarTodoDatos(final int id, final boolean isReloading){
         if(id<=0){
             progressDialog.dismiss();
             Toast.makeText(context,"No se ha seleccionado un usuario",Toast.LENGTH_LONG).show();
@@ -125,9 +154,7 @@ public class PatientActivity extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                procesarRespuesta(response);
-                                //progressDialog.dismiss();
-                                //Toast.makeText(context,"entregado",Toast.LENGTH_LONG).show();
+                                procesarRespuesta(response,isReloading);
                             }
                         },
                         new Response.ErrorListener() {
@@ -152,7 +179,7 @@ public class PatientActivity extends AppCompatActivity {
         }
     }
 
-    public void procesarRespuesta(JSONObject response){
+    public void procesarRespuesta(JSONObject response,boolean isReloading){
 
         try{
             if(response.getInt("estado")==0){
@@ -165,18 +192,19 @@ public class PatientActivity extends AppCompatActivity {
                 String o1 = objetivos.getString("objetivo1");
                 String o2 = objetivos.getString("objetivo2");
                 String o3 = objetivos.getString("objetivo3");
-                String strObjetivos = ((o1.length()>0)?("- "+o1+"\n"):"");
-                strObjetivos+=((o2.length()>0)?("- "+o2+"\n"):"");
-                strObjetivos+=((o3.length()>0)?("- "+o3):"");
+                String strObjetivos = ((o1.length()>0)?("- "+o1):"");
+                strObjetivos+=((o2.length()>0)?("\n- "+o2):"");
+                strObjetivos+=((o3.length()>0)?("\n- "+o3):"");
                 tvObjetivos.setText(strObjetivos);
                 String terObj = "Actualizados por "+objetivos.getString("terapeuta");
 
                 tvTerapeutaObjetivos.setText(terObj);
-                tvFechaObjetivos.setText(format.format( formatearFechaString(objetivos.getString("fecha"))));
+                tvFechaObjetivos.setText(getStrFechaFormateada( formatearFechaString(objetivos.getString("fecha"))));
 
                 // Obtenemos la lista de tratamientos
                 JSONArray tratamientosJSON = datos.getJSONArray("tratamientos");
                 if(tratamientosJSON.length()>0){
+                    tvEtiquetaTotalUltimos.setText("Últimos "+tratamientosJSON.length()+" tratamientos aplicados");
                     for(int i=0;i<tratamientosJSON.length();i++){
                         JSONObject tr = tratamientosJSON.getJSONObject(i);
                         boolean tf =  tr.getBoolean("existeFuncional");
@@ -207,14 +235,28 @@ public class PatientActivity extends AppCompatActivity {
 
                         tratamientos.add(tratamientoObj);
                     }
+
+                    if(isReloading){
+                        adapter.notifyDataSetChanged();
+                        Toast.makeText(context,"El nuevo tratamiento se ha guardado. Lo encontrarás en el primer elemento de esta lista",Toast.LENGTH_LONG).show();
+                        llm.scrollToPositionWithOffset(0, 0);
+                    }
                 }else{
+                    tvEtiquetaTotalUltimos.setText("No se han aplicado tratamientos");
                     Toast.makeText(context,"El paciente no tiene tratamientos aplicados",Toast.LENGTH_LONG).show();
                 }
-                llenarRV();
+
+
+                if(!isReloading)
+                    llenarRV();
             }else{
                 Toast.makeText(context,response.getString("mensaje"),Toast.LENGTH_LONG).show();
             }
             progressDialog.dismiss();
+
+            //if(idNuevoTratamiento>0)
+            //    mostrarVentanaParaMultimedia();
+
         }catch(JSONException ex){
             ex.printStackTrace();
             progressDialog.dismiss();
@@ -224,8 +266,6 @@ public class PatientActivity extends AppCompatActivity {
             progressDialog.dismiss();
             Toast.makeText(context, "Error desconocido en la respuesta",Toast.LENGTH_LONG).show();
         }
-
-
     }
 
     public List<TratamientoFuncional> parsearJSONTFs(JSONArray tfs){
@@ -236,10 +276,10 @@ public class PatientActivity extends AppCompatActivity {
                 for(int i=0;i<tfs.length();i++){
                     JSONObject temptf = tfs.getJSONObject(i);
                     tfun.add(new TratamientoFuncional(
-                            temptf.getString("tratamiento"),
-                            temptf.getString("tipo"),
+                            temptf.getInt("tratamiento"),
+                            temptf.getInt("tipo"),
                             temptf.getInt("musculo"),
-                            temptf.getString("estado"),
+                            temptf.getInt("estado"),
                             temptf.getString("movilizacion")
                     ));
                 }
@@ -258,8 +298,8 @@ public class PatientActivity extends AppCompatActivity {
                 for(int i=0;i<tps.length();i++){
                     JSONObject temptp = tps.getJSONObject(i);
                     tprev.add(new TratamientoPreventivo(
-                            temptp.getString("tratamiento"),
-                            temptp.getString("tipo"),
+                            temptp.getInt("tratamiento"),
+                            temptp.getInt("tipo"),
                             temptp.getInt("articulacionMusculo")
                     ));
 
@@ -280,8 +320,8 @@ public class PatientActivity extends AppCompatActivity {
                 for(int i=0;i<tas.length();i++){
                     JSONObject tempta = tas.getJSONObject(i);
                     tanal.add(new TratamientoAnalgesico(
-                            tempta.getString("tratamiento"),
-                            tempta.getString("tipo"),
+                            tempta.getInt("tratamiento"),
+                            tempta.getInt("tipo"),
                             tempta.getString("contenido")
                     ));
                 }
@@ -325,11 +365,37 @@ public class PatientActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_detalles_paciente) {
+            Connection.abrirDialogoCredenciales(this, new OnDialogCred() {
+                @Override
+                public void credencialesValidasLocales() {
+                    abrirExpediente();
+                }
+
+                @Override
+                public void credencialesValidasRemotas() {
+                    abrirExpediente();
+                }
+            });
+
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void abrirExpediente(){
+        Terapeuta t = obtenerTerapeutaLogeado(context);
+        if(t.esAdmin){
+            Intent intent =new Intent(PatientActivity.this, PatientDetailActivity.class);
+            intent.putExtra("id",idPaciente);
+            startActivityForResult(intent,SOLICITUD_CAMBIOS_DATOS_GENERALES);
+        }else{
+            Toast.makeText(context,"No tienes permisos para ver el expdiente clínico",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 
 
 }

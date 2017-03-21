@@ -9,7 +9,7 @@ import entidad.TratamientoPreventivo;
  */
 public interface OnItemClickListenerT {
 
-    void onItemClickTF(TratamientoFuncional tratamiento);
-    void onItemClickTP(TratamientoPreventivo tratamiento);
-    void onItemClickTA(TratamientoAnalgesico tratamiento);
+    void onItemClickTF(int tratamiento, int position);
+    void onItemClickTP(int tratamiento, int position);
+    void onItemClickTA(int tratamiento, int position);
 }

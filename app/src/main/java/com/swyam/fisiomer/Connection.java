@@ -8,12 +8,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -61,6 +66,9 @@ public class Connection{
     public static final String SUF_DATOS_PACIENTE = "paciente/obtener.php";
     public static final String SUF_OBTENER_RES_SIMILARES = "paciente/similitud.php";
     public static final String SUF_AGREGAR_NUEVOS_OBJS = "paciente/modificarobjetivos.php";
+    public static final String SUF_GUARDAR_NUEVO_TRATAMIENTO = "paciente/nuevotratamiento.php";
+    public static final String SUF_EXPEDIENTE_PACIENTE = "paciente/expediente.php";
+    public static final String SUF_GUARDAR_CAMBIOS_DATOS_PACIENTE="paciente/actualizar.php";
 
 
     public static final String KEY_USUARIO_LOGEADO="datosUsuario";
@@ -97,6 +105,19 @@ public class Connection{
     public static final String KEY_OBJETIVOS_TRAT_IDTERAPEUTA= "terapeuta";
     public static final String KEY_OBJETIVOS_TRAT_IDPACIENTE= "paciente";
     public static final String KEY_OBJETIVOS_TRAT_FECHA= "fecha";
+
+
+    public static final int MAX_TRATAMIENTO_PS = 5;
+    public static final int MAX_TRATAMIENTO_FIB = Integer.MAX_VALUE;
+    public static final int MAX_TRATAMIENTO_TM = Integer.MAX_VALUE;
+
+    public static final int MAX_TRATAMIENTO_ELECTRO = Integer.MAX_VALUE;
+    public static final int MAX_TRATAMIENTO_ULTRASONIDO = Integer.MAX_VALUE;
+    public static final int MAX_TRATAMIENTO_LASSER = 1;
+
+    public static final int MAX_TRATAMIENTO_VENDAJE = 2;
+    public static final int MAX_TRATAMIENTO_FORTALECIMIENTO = 1;
+    public static final int MAX_TRATAMIENTO_AUTOESTIRAMIENTO = 3;
 
 
     public static String getHostServer(Context context){
@@ -234,6 +255,84 @@ public class Connection{
             }
         }
         ));
+    }
+
+    public static void abrirDialogoSeleccionarMusculo(final Activity activity,final String lastSearchFilter,final ArrayAdapter<String> mAdapter, final OnDialogMusculo listener){
+        final Context context = activity.getBaseContext();
+        final Dialog dialog = new Dialog(activity);
+        final EditText txtFiltrarMusculo;
+        final ListView listMusculos;
+        final Button btnCerrarListaMusculos;
+        final ImageButton btnFiltrar;
+
+        dialog.setContentView(R.layout.dialog_musculos);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+
+        dialog.setTitle("Seleccionar Músculo");
+        txtFiltrarMusculo = (EditText) dialog.findViewById(R.id.txt_busqueda_rapida_musculo);
+        if(lastSearchFilter.trim().length()>0)
+            txtFiltrarMusculo.setText(lastSearchFilter);
+        listMusculos = (ListView) dialog.findViewById(R.id.lv_musculos);
+        btnCerrarListaMusculos = (Button) dialog.findViewById(R.id.btn_cerrar_dialogo_musculos);
+        btnFiltrar = (ImageButton) dialog.findViewById(R.id.btn_filtrar_busqueda_musculo);
+        //mAdapter = ArrayAdapter.createFromResource(this, R.array.str_musculos, android.R.layout.simple_list_item_1);
+        listMusculos.setAdapter(mAdapter);
+        listMusculos.setTextFilterEnabled(true);
+
+        btnFiltrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    mAdapter.getFilter().filter(txtFiltrarMusculo.getText().toString());
+                    //lastSearchFilter = txtFiltrarMusculo.getText().toString();
+                    listener.OnBtnFilter(txtFiltrarMusculo.getText().toString());
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                    Toast.makeText(context,"No se pudo filtrar la lista",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        txtFiltrarMusculo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_SEARCH){
+                    try{
+                        mAdapter.getFilter().filter(v.getText().toString());
+                        listener.OnSoftKeyFilter(v.getText().toString());
+                        //lastSearchFilter = v.getText().toString();
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                        Toast.makeText(context,"No se pudo filtrar la lista",Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        btnCerrarListaMusculos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        listMusculos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(context, "Musculo: "+mAdapter.getItem(position),Toast.LENGTH_SHORT).show();
+                listener.OnMusculoSeleccionado(mAdapter.getItem(position));
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     public static void abrirDialogoCredenciales(final Activity activity, final OnDialogCred listener){

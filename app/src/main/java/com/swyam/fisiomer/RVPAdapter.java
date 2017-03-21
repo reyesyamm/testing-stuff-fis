@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,18 +22,16 @@ public class RVPAdapter extends RecyclerView.Adapter<RVPAdapter.PacienteViewHold
     public static class PacienteViewHolder extends RecyclerView.ViewHolder{
         CardView cv;
         TextView nombrePaciente;
-        TextView fechaUltimoTratamiento;
-        TextView ultimoTerapeuta;
-        ImageButton btnIcon;
+        TextView detallesTratamiento;
+        TextView ultimoTratamientoTerapeuta;
         View contenedor;
 
         PacienteViewHolder(View itemView){
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv_paciente);
             nombrePaciente = (TextView) itemView.findViewById(R.id.tv_nombre_paciente);
-            fechaUltimoTratamiento = (TextView) itemView.findViewById(R.id.tv_ultimo_tratamiento);
-            ultimoTerapeuta = (TextView) itemView.findViewById(R.id.tv_nombre_terapeuta);
-            btnIcon = (ImageButton) itemView.findViewById(R.id.btnIconPaciente);
+            detallesTratamiento = (TextView) itemView.findViewById(R.id.tv_detalles_paciente_tratamiento);
+            ultimoTratamientoTerapeuta = (TextView) itemView.findViewById(R.id.tv_fecha_ultimo_tratamiento_nombre_terapeuta);
             contenedor = itemView.findViewById(R.id.contenedor_detalles_paciente);
 
         }
@@ -61,17 +60,14 @@ public class RVPAdapter extends RecyclerView.Adapter<RVPAdapter.PacienteViewHold
     public void onBindViewHolder(RVPAdapter.PacienteViewHolder holder, final int position){
         final Paciente paciente = pacientes.get(position);
         holder.nombrePaciente.setText(paciente.nombre);
-        holder.fechaUltimoTratamiento.setText(paciente.edad+" años, su último tratamiento fue en: "+paciente.fecha_ultimo_tratamiento+"\n"+
-        "Se le han aplicado en total "+paciente.totales+" tratamientos");
-        holder.ultimoTerapeuta.setText("Por "+paciente.nombre_terapeuta);
+        holder.detallesTratamiento.setText(paciente.edad+" años\n"+paciente.totales+" tratamientos aplicados");
+        holder.ultimoTratamientoTerapeuta.setText("Última visita: "+paciente.fecha_ultimo_tratamiento+"\n Terapeuta: "+paciente.nombre_terapeuta);
         View.OnClickListener listener = new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 onItemClickListener.onItemClick(paciente);
             }
         };
-
-        holder.btnIcon.setOnClickListener(listener);
         holder.contenedor.setOnClickListener(listener);
     }
 

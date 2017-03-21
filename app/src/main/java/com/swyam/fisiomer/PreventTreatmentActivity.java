@@ -2,6 +2,7 @@ package com.swyam.fisiomer;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,46 +24,69 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import entidad.Tratamiento;
 import entidad.TratamientoAnalgesico;
 import entidad.TratamientoFuncional;
 import entidad.TratamientoPreventivo;
 
+import static com.swyam.fisiomer.Connection.MAX_TRATAMIENTO_AUTOESTIRAMIENTO;
+import static com.swyam.fisiomer.Connection.MAX_TRATAMIENTO_FORTALECIMIENTO;
+import static com.swyam.fisiomer.Connection.MAX_TRATAMIENTO_VENDAJE;
+import static com.swyam.fisiomer.Connection.abrirDialogoSeleccionarMusculo;
 import static com.swyam.fisiomer.Helpers.*;
+import static entidad.Tratamiento.obtenerIndiceMusculo;
 
 public class PreventTreatmentActivity extends AppCompatActivity implements View.OnClickListener {
 
     Context context;
+
+    // Elementos para el manejo de las pestañas
     Button btnVen, btnFort, btnAuto;
     TextView tvVen, tvFort, tvAuto;
     View contVen, contFort, contAuto;
+    int tabSeleccionado=0;
 
-    // Views para vendaje
+    // Elementos para pestaña vendaje
     View contVenEstabilizarLinfatico, contVenFacilitarRelajar;
     RadioButton rFacilitar, rRelajar, rLinfatico, rEstabilizar;
+    Spinner spArticulaciones;
+    Button btnVenSelMus,btnAgregarELTratamiento, btnAgregarRFTratamiento;
+    TextView tvNombreMusculoVendaje;
 
-    // botones de seleccionar musculo
-    Button btnAutoSelMus, btnFortaSelMus, btnVenSelMus;
+    // Elementos para pestaña fortalecimiento
+    RadioButton rConcentrico, rExcentrico;
+    Button btnFortaSelMus, btnAgregarFortTratamiento;
+    TextView tvNombreMusculoFort;
 
-    // Botones agregar tratamiento
-    Button btnAgregarELTratamiento, btnAgregarRFTratamiento, btnAgregarFortTratamiento, btnAgregarAutoTratamiento;
+    // Elementos para pestaña autoestiramiento
+    Button btnAutoSelMus, btnAgregarAutoTratamiento;
+    TextView tvNombreMusculoAuto;
 
+
+    // Elementos para la lista
     RecyclerView rv;
     LinearLayoutManager llm;
-
-    int tabSeleccionado=0;
     RVTPAdapter adapter;
     List<TratamientoPreventivo> tps = new ArrayList<>();
 
     // para vista musculos
-    ArrayAdapter<CharSequence> mAdapter;// = ArrayAdapter.createFromResource(this, R.array.str_musculos, android.R.layout.simple_list_item_1);;
+    ArrayAdapter<String> mAdapter;
     String lastSearchFilter="";
 
+    // variables para control del total y limites de seleccion de tratamientos
+    int totalVendSel = 0;
+    int totalFortSel = 0;
+    int totalAutoEst = 0;
+
+    int indexMuscVend=-1, indexMuscFort=-1, indexMuscAuto=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +108,13 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
             }
         });
 
-        mAdapter = ArrayAdapter.createFromResource(this, R.array.str_musculos, android.R.layout.simple_list_item_1);
-        lastSearchFilter="";
+        // Obtenemos datos de la actividad anterior
+        String nombrePaciente = getIntent().getStringExtra("paciente");
+        getSupportActionBar().setSubtitle(nombrePaciente);
+        tps = (List<TratamientoPreventivo>) getIntent().getSerializableExtra("tprevs");
+        actualizarTotales();
+
+        // inicializamos elementos para el manejo de las pestañas
         context = getBaseContext();
         btnVen = (Button) findViewById(R.id.btn_tab_vendaje);
         btnFort = (Button) findViewById(R.id.btn_tab_fortalecimiento);
@@ -96,42 +125,52 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
         contVen = findViewById(R.id.contenedor_ll_opciones_vendaje);
         contFort = findViewById(R.id.contenedor_ll_opciones_fortalecimiento);
         contAuto = findViewById(R.id.contenedor_ll_opciones_autoestiramiento);
+        lastSearchFilter="";
 
-        // vendaje
+        // inicializamos elementos correspondientes a la pestaña vendajes
         contVenEstabilizarLinfatico = findViewById(R.id.contenedor_ll_opciones_vendaje_estabilizar_o_linfatico);
         contVenFacilitarRelajar = findViewById(R.id.contenedor_ll_opciones_vendaje_facilitar_o_relajar);
         rFacilitar = (RadioButton) findViewById(R.id.radio_facilitar);
         rRelajar = (RadioButton) findViewById(R.id.radio_relajar);
         rLinfatico = (RadioButton) findViewById(R.id.radio_linfatico);
         rEstabilizar = (RadioButton) findViewById(R.id.radio_estabilizar);
-
-        // botones seleccionar musculo
-        btnAutoSelMus = (Button) findViewById(R.id.btn_autoestiramiento_seleccionar_musculo);
-        btnFortaSelMus = (Button) findViewById(R.id.btn_fortalecimiento_seleccionar_musculo);
+        spArticulaciones = (Spinner) findViewById(R.id.spinner_vendaje_estabilizar_o_linfatico_articulacion);
+        tvNombreMusculoVendaje = (TextView) findViewById(R.id.tv_nombre_musculo_seleccionado_facilitar_o_relajar);
         btnVenSelMus = (Button) findViewById(R.id.btn_seleccionar_musculo_vendaje_fac_rel);
-
-        // botones agregar tratamiento
         btnAgregarELTratamiento = (Button) findViewById(R.id.btn_agregar_tratamiento_vendaje_estabilizar_o_linfatico);
         btnAgregarRFTratamiento = (Button) findViewById(R.id.btn_agregar_tratamiento_vendaje_facilitar_o_relajar);
-        btnAgregarAutoTratamiento = (Button) findViewById(R.id.btn_agregar_tratamiento_autoestiramiento);
-        btnAgregarFortTratamiento = (Button) findViewById(R.id.btn_agregar_tratamiento_fortalecimiento);
 
+        // inicializamos elementos correspondientes a la pestaña fortalecimiento
+        btnFortaSelMus = (Button) findViewById(R.id.btn_fortalecimiento_seleccionar_musculo);
+        btnAgregarFortTratamiento = (Button) findViewById(R.id.btn_agregar_tratamiento_fortalecimiento);
+        rConcentrico = (RadioButton) findViewById(R.id.radio_concentrico);
+        rExcentrico = (RadioButton) findViewById(R.id.radio_excentrico);
+        tvNombreMusculoFort = (TextView) findViewById(R.id.tv_nombre_musculo_seleccionado_fortalecimiento);
+
+        // inicializamos elementos correspondientes a la pestaña autoestiramiento
+        btnAutoSelMus = (Button) findViewById(R.id.btn_autoestiramiento_seleccionar_musculo);
+        btnAgregarAutoTratamiento = (Button) findViewById(R.id.btn_agregar_tratamiento_autoestiramiento);
+        tvNombreMusculoAuto = (TextView) findViewById(R.id.tv_nombre_musculo_seleccionado_autoestiramiento);
+
+        // cargamos la lista de musculos y lo asociamos al spinner de articulaciones
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Tratamiento.lMusculos); //ArrayAdapter.createFromResource(this, R.array.str_musculos, android.R.layout.simple_list_item_1);
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Tratamiento.lArticulacion);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spArticulaciones.setAdapter(spinnerAdapter);
+
+        // inicializamos los elementos encargados de manejar la lista
         rv = (RecyclerView) findViewById(R.id.rv_tratamientos_preventivos);
         llm = new LinearLayoutManager(context);
         rv.setLayoutManager(llm);
+        adapter = new RVTPAdapter(context, tps,true);
+        rv.setAdapter(adapter);
 
         // El primer tab esta seleccionado predeterminadamente
         btnVen.setBackgroundColor(getColor2(context,R.color.colorPrimaryDark));
         tvVen.setBackgroundColor(getColor2(context,R.color.colorPrimaryDark));
         contVen.setVisibility(View.VISIBLE);
         tabSeleccionado = 0;
-
-        // llenar el lista
-        llenarLista();
-
-        //asignar adaptador a rv
-        adapter = new RVTPAdapter(context, tps,true);
-        rv.setAdapter(adapter);
 
         // asignar callbacks
         btnVen.setOnClickListener(this);
@@ -149,23 +188,40 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
         btnAgregarFortTratamiento.setOnClickListener(this);
         btnAgregarAutoTratamiento.setOnClickListener(this);
 
+        // manejamos los eventos en el recyclerview
         adapter.setOnItemClickListenerT(new OnItemClickListenerT() {
             @Override
-            public void onItemClickTF(TratamientoFuncional tratamiento) { //no se usa
+            public void onItemClickTF(int tratamiento,int position) { //no se usa
 
             }
 
             @Override
-            public void onItemClickTP(TratamientoPreventivo tratamiento) {
-                Toast.makeText(context, "Seleccionaste el tratamiento "+tratamiento.tratamiento,Toast.LENGTH_SHORT).show();
+            public void onItemClickTP(int tratamiento, int position) {
+                adapter.removeAt(position);
+                switch(tratamiento){
+                    case 1:
+                        totalVendSel--;
+                        break;
+                    case 2:
+                        totalFortSel--;
+                        break;
+                    case 3:
+                        totalAutoEst--;
+                        break;
+                }
             }
 
             @Override
-            public void onItemClickTA(TratamientoAnalgesico t){
+            public void onItemClickTA(int tratamiento, int position){
 
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        regresar();
     }
 
 
@@ -192,97 +248,174 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
             case R.id.btn_autoestiramiento_seleccionar_musculo:
             case R.id.btn_fortalecimiento_seleccionar_musculo:
             case R.id.btn_seleccionar_musculo_vendaje_fac_rel:
-                    abrirVentanaSeleccionarMusculo();
+
+                abrirDialogoSeleccionarMusculo(this, lastSearchFilter, mAdapter, new OnDialogMusculo() {
+                    @Override
+                    public void OnMusculoSeleccionado(String musculo) {
+                        musculoSeleccionado(obtenerIndiceMusculo(musculo));
+                    }
+
+                    @Override
+                    public void OnBtnFilter(String filter) {
+                        lastSearchFilter = filter;
+                    }
+
+                    @Override
+                    public void OnSoftKeyFilter(String filter) {
+                        lastSearchFilter = filter;
+                    }
+                });
                 break;
             case R.id.btn_agregar_tratamiento_vendaje_facilitar_o_relajar:
             case R.id.btn_agregar_tratamiento_vendaje_estabilizar_o_linfatico:
             case R.id.btn_agregar_tratamiento_fortalecimiento:
             case R.id.btn_agregar_tratamiento_autoestiramiento:
-                    agregarTratamientoCorrespondiente();
+                prepararTratamientoCorrespondiente();
                 break;
 
         }
     }
 
-    public void agregarTratamientoCorrespondiente(){
-        Toast.makeText(this,"Agregar Tratamiento en creación ",Toast.LENGTH_SHORT).show();
+    public void prepararTratamientoCorrespondiente(){
+        switch(tabSeleccionado){
+            case 0:
+                crearTratamientoVendaje();
+                break;
+            case 1:
+                crearTratamientoFortalecimiento();
+                break;
+            case 2:
+                crearTratamientoAutoEstiramiento();
+                break;
+        }
     }
 
-    public void abrirVentanaSeleccionarMusculo(){
-        //Toast.makeText(this,"Seleccionar musculo en creación",Toast.LENGTH_SHORT).show();
-        // configuracion cuadro dialogo
-        final Dialog dialog = new Dialog(PreventTreatmentActivity.this);
-        final EditText txtFiltrarMusculo;
-        final ListView listMusculos;
-        final Button btnCerrarListaMusculos;
-        final ImageButton btnFiltrar;
+    public void intentarAgregarTratamiento(TratamientoPreventivo tp){
+        if(tp.tratamiento<1 || tp.tratamiento>3)
+        {
+            Toast.makeText(context,"No se puede agregar un tratamiento vacío",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String strSuf="una articulación";
+        if(tp.tipo==2 || tp.tipo==3 || tp.tipo==5 || tp.tipo==6)
+        {
+            strSuf = "un músculo";
+        }
 
-        dialog.setContentView(R.layout.dialog_musculos);
+        if(tp.articulacionMusculo<0)
+        {
+            Toast.makeText(context,"Debes seleccionar "+strSuf,Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        Window window = dialog.getWindow();
-        lp.copyFrom(window.getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
+        Toast.makeText(context,"Agregado",Toast.LENGTH_SHORT).show();
+        tps.add(tp);
+        adapter.notifyItemInserted(tps.size()-1);
+        switch(tp.tratamiento){
+            case 1:
+                totalVendSel++;
 
-        dialog.setTitle("Seleccionar Músculo");
-        txtFiltrarMusculo = (EditText) dialog.findViewById(R.id.txt_busqueda_rapida_musculo);
-        if(lastSearchFilter.trim().length()>0)
-            txtFiltrarMusculo.setText(lastSearchFilter);
-        listMusculos = (ListView) dialog.findViewById(R.id.lv_musculos);
-        btnCerrarListaMusculos = (Button) dialog.findViewById(R.id.btn_cerrar_dialogo_musculos);
-        btnFiltrar = (ImageButton) dialog.findViewById(R.id.btn_filtrar_busqueda_musculo);
-        //mAdapter = ArrayAdapter.createFromResource(this, R.array.str_musculos, android.R.layout.simple_list_item_1);
-        listMusculos.setAdapter(mAdapter);
-        listMusculos.setTextFilterEnabled(true);
+                break;
+            case 2:
+                totalFortSel++;
+                break;
+            case 3:
+                totalAutoEst++;
 
-        btnFiltrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    mAdapter.getFilter().filter(txtFiltrarMusculo.getText().toString());
-                    lastSearchFilter = txtFiltrarMusculo.getText().toString();
-                }catch(Exception ex){
-                    ex.printStackTrace();
-                    Toast.makeText(context,"No se pudo filtrar la lista",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        }
+        Helpers.esconderTeclado(this);
 
-        txtFiltrarMusculo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId== EditorInfo.IME_ACTION_SEARCH){
-                    try{
-                        mAdapter.getFilter().filter(v.getText().toString());
-                        lastSearchFilter = v.getText().toString();
-                    }catch(Exception ex){
-                        ex.printStackTrace();
-                        Toast.makeText(context,"No se pudo filtrar la lista",Toast.LENGTH_SHORT).show();
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
 
-        btnCerrarListaMusculos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        listMusculos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, "Musculo: "+mAdapter.getItem(position),Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
+
+    public void crearTratamientoVendaje(){
+        if(totalVendSel>=MAX_TRATAMIENTO_VENDAJE)
+        {
+            Toast.makeText(context,"No puedes agregar más tratamientos de 'vendaje'",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int tratamiento = 1;
+        int tipo = 0;
+
+        if(rEstabilizar.isChecked())
+            tipo = 1;
+        else if(rFacilitar.isChecked())
+            tipo =2;
+        else if(rRelajar.isChecked())
+            tipo = 3;
+        else if(rLinfatico.isChecked())
+            tipo = 4;
+
+        int articulacionMusculo = 0;
+        if(rEstabilizar.isChecked() || rLinfatico.isChecked())
+            articulacionMusculo = spArticulaciones.getSelectedItemPosition();
+        else if(rFacilitar.isChecked() || rRelajar.isChecked())
+            articulacionMusculo = indexMuscVend;
+
+        TratamientoPreventivo tp = new TratamientoPreventivo(tratamiento,tipo,articulacionMusculo);
+        intentarAgregarTratamiento(tp);
+    }
+
+    public void crearTratamientoFortalecimiento(){
+        if(totalFortSel>=MAX_TRATAMIENTO_FORTALECIMIENTO){
+            Toast.makeText(context,"No puedes agregar más tratamientos de 'fortalecimiento'",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int tratamiento = 2;
+        int tipo = (rConcentrico.isChecked())?5:6;
+        int articulacionMusculo = indexMuscFort;
+
+        TratamientoPreventivo tp = new TratamientoPreventivo(tratamiento,tipo,articulacionMusculo);
+        intentarAgregarTratamiento(tp);
+    }
+
+    public void crearTratamientoAutoEstiramiento(){
+        if(totalAutoEst>=MAX_TRATAMIENTO_AUTOESTIRAMIENTO){
+            Toast.makeText(context,"No puedes agregar más tratamientos de 'autoestiramiento'",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int tratamiento = 3;
+        int tipo = 7;
+        int articulacionMusculo = indexMuscAuto;
+        TratamientoPreventivo tp = new TratamientoPreventivo(tratamiento,tipo,articulacionMusculo);
+        intentarAgregarTratamiento(tp);
+    }
+
+    public void musculoSeleccionado(int id){
+
+        switch(tabSeleccionado){
+            case 0: // vendaje
+                if(totalVendSel<MAX_TRATAMIENTO_VENDAJE){
+                    tvNombreMusculoVendaje.setText(Tratamiento.strMusculo(id));
+                    indexMuscVend =id;
+                }else{
+                    Toast.makeText(context,"No puedes agregar más tratamientos de 'vendaje'",Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+            case 1: // fortalecimiento
+                if(totalFortSel<MAX_TRATAMIENTO_FORTALECIMIENTO){
+                    tvNombreMusculoFort.setText(Tratamiento.strMusculo(id));
+                    indexMuscFort=id;
+                }else{
+                    Toast.makeText(context,"No puedes agregar más tratamientos de 'fortalecimiento'",Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+            case 2: // autoestiramiento
+                if(totalAutoEst<MAX_TRATAMIENTO_AUTOESTIRAMIENTO){
+                    tvNombreMusculoAuto.setText(Tratamiento.strMusculo(id));
+                    indexMuscAuto=id;
+                }else{
+                    Toast.makeText(context,"No puedes agregar más tratamientos de 'autoestiramiento'",Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
 
     public void mostrarOpcionVendaje(){
         if((rFacilitar.isChecked() || rRelajar.isChecked()) && contVenFacilitarRelajar.getVisibility()==View.GONE){
@@ -295,13 +428,11 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
     }
 
     public void regresar(){
-        finish();
-    }
 
-    public void llenarLista() {
-        //tps.add(new TratamientoPreventivo("Vendaje","Facilitar","Nombre músculo"));
-        //tps.add(new TratamientoPreventivo("Fortalecimiento","Concéntrico","Nombre músculo"));
-        //tps.add(new TratamientoPreventivo("Autoestiramiento","auto estiramiento","nombre músculo"));
+        Intent intent = getIntent();
+        intent.putExtra("tprevs",(Serializable)tps);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void coloresOculto(){
@@ -345,6 +476,19 @@ public class PreventTreatmentActivity extends AppCompatActivity implements View.
             }
             tabSeleccionado=tab;
 
+        }
+    }
+
+    public void actualizarTotales(){
+        if(tps.size()>0){
+            for(TratamientoPreventivo tp:tps){
+                if(tp.tratamiento==1)
+                    totalVendSel++;
+                else if(tp.tratamiento==2)
+                    totalFortSel++;
+                else if(tp.tratamiento==3)
+                    totalAutoEst++;
+            }
         }
     }
 

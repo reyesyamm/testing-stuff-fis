@@ -24,6 +24,7 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
         TextView fecha,terapeuta,resumen;
         View contenedor;
         ImageView ini,fin;
+        TextView totalTFuns,totalTAnals,totalTPrevs;
 
         public TratamientoViewHolder(View itemView) {
             super(itemView);
@@ -34,6 +35,9 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
             contenedor = itemView.findViewById(R.id.contenedor_detalles_tratamiento);
             ini =(ImageView) itemView.findViewById(R.id.image_estado_paciente_inicio);
             fin =(ImageView) itemView.findViewById(R.id.image_estado_paciente_fin);
+            totalTFuns = (TextView) itemView.findViewById(R.id.tv_total_tfuns);
+            totalTAnals = (TextView) itemView.findViewById(R.id.tv_total_tanals);
+            totalTPrevs = (TextView) itemView.findViewById(R.id.tv_total_tprevs);
         }
     }
 
@@ -66,6 +70,9 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
         holder.resumen.setText(tratamiento.obtenerResumen());
         holder.ini.setImageResource(tratamiento.estadoInicio);
         holder.fin.setImageResource(tratamiento.estadoFin);
+        holder.totalTFuns.setText(tratamiento.totalFun()+"");
+        holder.totalTAnals.setText(tratamiento.totalAna()+"");
+        holder.totalTPrevs.setText(tratamiento.totalPrev()+"");
         View.OnClickListener listener = new View.OnClickListener(){
             @Override
             public void onClick(View v){

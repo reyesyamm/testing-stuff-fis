@@ -52,16 +52,17 @@ public class RVTAAdapter extends RecyclerView.Adapter<RVTAAdapter.TAViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(TAViewHolder holder, int position) {
+    public void onBindViewHolder(TAViewHolder holder,final int position) {
         final TratamientoAnalgesico ta = tas.get(position);
-        holder.nombreTratamiento.setText(ta.tratamiento);
-        holder.resumen.setText(ta.resumenTratamiento());
+        holder.nombreTratamiento.setText(ta.obtenerTratamientoStr());
+        holder.tipo.setText(ta.obtenerTipoStr());
+        holder.contenido.setText(ta.resumenTratamiento());
 
         if(btnEliminarVisible){
             View.OnClickListener listener = new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    onItemClickListenerT.onItemClickTA(ta);
+                    onItemClickListenerT.onItemClickTA(ta.tratamiento, position);
                 }
             };
 
@@ -69,6 +70,12 @@ public class RVTAAdapter extends RecyclerView.Adapter<RVTAAdapter.TAViewHolder> 
         }else{
             holder.btnEliminar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void removeAt(int position) {
+        tas.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, tas.size());
     }
 
     @Override
@@ -79,13 +86,14 @@ public class RVTAAdapter extends RecyclerView.Adapter<RVTAAdapter.TAViewHolder> 
     public static class TAViewHolder extends RecyclerView.ViewHolder{
 
         CardView cv;
-        TextView nombreTratamiento,resumen;
+        TextView nombreTratamiento,tipo,contenido;
         ImageButton btnEliminar;
         public TAViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv_tratamiento_analgesico);
             nombreTratamiento = (TextView) itemView.findViewById(R.id.tv_nombre_tratamiento);
-            resumen = (TextView) itemView.findViewById(R.id.tv_descripcion_tratamiento);
+            tipo = (TextView) itemView.findViewById(R.id.tv_tipo_tratamiento);
+            contenido = (TextView) itemView.findViewById(R.id.tv_contenido_tratamiento);
             btnEliminar = (ImageButton) itemView.findViewById(R.id.btn_eliminar_ta);
         }
     }

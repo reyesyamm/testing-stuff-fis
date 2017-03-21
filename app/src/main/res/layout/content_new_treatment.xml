@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,6 +17,7 @@
         android:orientation="vertical"
         >
 
+        <!-- estados al llegar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,10 +47,11 @@
                     android:id="@+id/btn_estado_inicio_bien"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:src="@drawable/cara1"
                     android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     android:background="@null"
                     />
 
@@ -57,10 +59,11 @@
                     android:id="@+id/btn_estado_inicio_mediobien"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
                     android:background="@null"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/cara2"
                     />
 
@@ -68,10 +71,11 @@
                     android:id="@+id/btn_estado_inicio_mal"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
                     android:background="@null"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/cara3"
                     />
 
@@ -79,10 +83,11 @@
                     android:id="@+id/btn_estado_inicio_muymal"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:src="@drawable/cara4"
                     android:background="@null"
+                    android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
 
                     />
@@ -91,10 +96,10 @@
 
         </LinearLayout>
 
+        <!-- contenedores de las listas -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
@@ -104,6 +109,7 @@
             android:orientation="vertical"
             >
 
+            <!-- botones para agregar diferentes terapias -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,14 +170,14 @@
                     />
             </LinearLayout>
 
-
+            <!-- CONTENEDOR TERAPIAS FUNCIONALES -->
             <LinearLayout
                 android:id="@+id/contenedor_ll_terapias_funcionales"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:orientation="vertical"
                 android:background="@drawable/panel">
 
@@ -183,29 +189,25 @@
                     android:textAlignment="center"
                     android:textSize="@dimen/font_size_subtitle"/>
 
-                <LinearLayout
-                    android:id="@+id/contenedor_ll_terapias_funcionaes_aplicadas"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_tfuns"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:padding="10dp"
-                    android:orientation="vertical"
-                    >
-
-
-
-                </LinearLayout>
+                    android:scrollbars="vertical"
+                    android:nestedScrollingEnabled="true"
+                    />
 
             </LinearLayout>
 
 
+            <!-- CONTENEDOR TERAPIAS ANALGESICAS -->
             <LinearLayout
                 android:id="@+id/contenedor_ll_terapias_analgesicas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:orientation="vertical"
                 android:background="@drawable/panel">
 
@@ -217,27 +219,23 @@
                     android:textAlignment="center"
                     android:textSize="@dimen/font_size_subtitle"/>
 
-                <LinearLayout
-                    android:id="@+id/contenedor_ll_terapias_analgesicas_aplicadas"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_tanals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:padding="10dp"
-                    android:orientation="vertical"
-                    >
-
-                </LinearLayout>
+                    android:scrollbars="vertical"
+                    android:nestedScrollingEnabled="true"
+                    />
             </LinearLayout>
 
-
+            <!-- CONTENEDOR TERAPIAS PREVENTIVAS -->
             <LinearLayout
                 android:id="@+id/contenedor_ll_terapias_preventivas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:orientation="vertical"
                 android:background="@drawable/panel">
 
@@ -249,21 +247,19 @@
                     android:textAlignment="center"
                     android:textSize="@dimen/font_size_subtitle"/>
 
-                <LinearLayout
-                    android:id="@+id/contenedor_ll_terapias_preventivas_aplicadas"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_tprevs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:padding="10dp"
-                    android:orientation="vertical"
-                    >
-
-                </LinearLayout>
+                    android:scrollbars="vertical"
+                    android:nestedScrollingEnabled="true"
+                    />
             </LinearLayout>
+
 
         </LinearLayout>
 
-
+        <!-- estados al salir -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -298,8 +294,9 @@
                     android:id="@+id/btn_estado_fin_bien"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/cara1"
                     android:scaleType="fitCenter"
                     android:background="@null"
@@ -309,10 +306,11 @@
                     android:id="@+id/btn_estado_fin_mediobien"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
                     android:background="@null"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/cara2"
                     />
 
@@ -320,21 +318,23 @@
                     android:id="@+id/btn_estado_fin_mal"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
                     android:background="@null"
                     android:src="@drawable/cara3"
+                    android:adjustViewBounds="true"
                     />
 
                 <ImageButton
                     android:id="@+id/btn_estado_fin_muymal"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
                     android:src="@drawable/cara4"
                     android:background="@null"
+                    android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
 
                     />
@@ -343,7 +343,7 @@
 
         </LinearLayout>
 
-
+        <!-- boton guardado -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -371,7 +371,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

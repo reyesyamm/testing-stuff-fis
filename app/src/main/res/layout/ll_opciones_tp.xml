@@ -90,9 +90,7 @@
                     android:padding="5dp"
                     android:layout_margin="5dp"
                     android:drawSelectorOnTop="true"
-                    android:entries="@array/str_articulaciones"
                     android:textAlignment="center"
-
                     />
             </LinearLayout>
 

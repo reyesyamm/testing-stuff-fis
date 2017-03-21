@@ -4,55 +4,66 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv_tratamiento_funcional"
     cardview:cardCornerRadius="2dp"
-    android:background="#ffffff"
     cardview:cardElevation="3dp"
     cardview:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:background="#fbf5f4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp"
+            android:orientation="horizontal"
+            android:padding="4dp"
             android:layout_margin="1dp"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/tv_nombre_tratamiento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_size_subtitle"
-                android:textColor="@color/colorPrimaryText"
-                android:text="Nombre tratamiento"
-                />
+            <ImageView
+                android:id="@+id/imagen_estado_paciente"
+                android:src="@drawable/cara1"
+                android:scaleType="fitCenter"
+
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imagen_estado_paciente"
-                    android:src="@drawable/cara1"
-                    android:scaleType="fitCenter"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent" />
+                android:padding="3dp"
+                android:orientation="vertical"
+                android:layout_weight="4">
 
                 <TextView
-                    android:id="@+id/tv_descripcion_tratamiento"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
+                    android:id="@+id/tv_nombre_tratamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_subtitle"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:text="--"
+                    />
+                <TextView
+                    android:id="@+id/tv_tipo_tratamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_paragraph"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="--"
+                    />
+                <TextView
+                    android:id="@+id/tv_contenido_tratamiento"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_paragraph"
                     android:textColor="@color/colorSecondaryText"
-                    android:text="Opciones seleccionadas para el tratamiento"
-                    />
-
+                    android:text="--" />
             </LinearLayout>
 
         </LinearLayout>
@@ -62,12 +73,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_vertical"
-            android:background="@drawable/border_panel"
+            android:background="@null"
             android:padding="5dp"
             android:layout_marginTop="2dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="2dp"
             android:src="@android:drawable/ic_delete"
+
             />
 
 

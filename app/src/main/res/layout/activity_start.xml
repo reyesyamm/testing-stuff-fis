@@ -1,19 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    android:orientation="vertical"
+    android:id="@+id/ll_start"
+
     tools:context="com.swyam.fisiomer.StartActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
     <ImageView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:keepScreenOn="true"
         android:src="@drawable/logotransparente"
@@ -21,10 +18,48 @@
          />
 
     <ProgressBar
-        android:layout_width="match_parent"
+        android:id="@+id/progressbar_verificando_conexion"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:indeterminate="true"
+        android:layout_gravity="center"
         />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#000000"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:id="@+id/contendor_error_conexion"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:text="Error al verificar la conexión al servidor.\nToca la pantalla para reintentar"
+            android:textSize="@dimen/font_size_subtitle"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="5dp"
+            />
+
+        <Button
+            android:id="@+id/btn_configurar_conexion"
+            android:layout_width="wrap_content"
+            android:text="Configurar"
+            android:textAllCaps="false"
+            android:textSize="@dimen/font_size_title"
+            android:textColor="#ffff00"
+            android:textStyle="bold"
+            android:background="@null"
+            android:layout_marginRight="10dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</FrameLayout>

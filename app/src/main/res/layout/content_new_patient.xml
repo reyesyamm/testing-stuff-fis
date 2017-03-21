@@ -366,8 +366,8 @@
             <TextView
                 android:id="@+id/tv_info_areas_pintadas"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Aun no se han pintado"
+                android:layout_height="match_parent"
+                android:text="Aún no se han pintado"
                 android:gravity="center"
                 android:ellipsize="end"
                 android:textSize="@dimen/font_size_subtitle"

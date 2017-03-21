@@ -34,12 +34,13 @@ import entidad.Tratamiento;
 import static com.swyam.fisiomer.Connection.SUF_OBTENER_RES_SIMILARES;
 import static com.swyam.fisiomer.Connection.getHostServer;
 import static com.swyam.fisiomer.Connection.parsearError;
+import static com.swyam.fisiomer.Helpers.formatearFechaString;
+import static com.swyam.fisiomer.Helpers.getStrFechaFormateada;
 
 public class PatientsFoundActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
 
-    TextView total_pacientes;
-    TextView busqueda_realizada;
     RecyclerView rv;
     LinearLayoutManager llm;
     RVPAdapter adapter;
@@ -53,9 +54,8 @@ public class PatientsFoundActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patients_found);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -78,11 +78,6 @@ public class PatientsFoundActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
 
-
-
-        total_pacientes = (TextView) findViewById(R.id.tv_total_pacientes_encontrados);
-        busqueda_realizada = (TextView) findViewById(R.id.tv_busqueda_realizada);
-        total_pacientes.setText("0");
         context = getBaseContext();
         llm = new LinearLayoutManager(context);
         rv = (RecyclerView) findViewById(R.id.my_rv);
@@ -90,7 +85,6 @@ public class PatientsFoundActivity extends AppCompatActivity {
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
         progressDialog.show();
-        busqueda_realizada.setText(token);
         cargarDatos();
 
 
@@ -118,15 +112,14 @@ public class PatientsFoundActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             progressDialog.dismiss();
                             try{
-                                SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 if(response.getInt("estado")==0){
                                     JSONArray ps = response.getJSONArray("datos");
-                                    total_pacientes.setText(ps.length()+"");
+                                    toolbar.setSubtitle(ps.length()+" resultados para '"+token+"'");
                                     for(int i=0;i<ps.length();i++){
                                         JSONObject p = ps.getJSONObject(i);
-                                        Date dt = format2.parse(p.getString("fecha"));
+                                        Date dt = formatearFechaString(p.getString("fecha"));
                                         pacientes.add(new Paciente(p.getInt("id"),p.getString("nombre"),p.getInt("edad"),
-                                                format.format(dt),p.getString("terapeuta"),p.getInt("totales")
+                                                getStrFechaFormateada(dt),p.getString("terapeuta"),p.getInt("totales")
                                                 ));
                                     }
                                 }else{

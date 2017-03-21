@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="2dp"
     android:background="@color/divider"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.swyam.fisiomer.AnalgesicTreatmentActivity"

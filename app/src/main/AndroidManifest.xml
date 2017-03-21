@@ -3,6 +3,9 @@
     package="com.swyam.fisiomer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -92,6 +95,17 @@
         <activity
             android:name=".ListPatientsActivity"
             android:label="@string/title_activity_list_patients"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PatientDetailActivity"
+            android:label="@string/title_activity_patient_detail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MediaManagerActivity"
+            android:label="@string/title_activity_media_manager"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

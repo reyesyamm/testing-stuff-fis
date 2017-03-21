@@ -177,7 +177,7 @@
                 android:textColor="@color/colorTextButton"
                 android:background="@drawable/mybutton"
                 android:layout_margin="10dp"
-                android:text="Registrar Nuevo Terapeuta"
+                android:text="Registrar"
                 android:textSize="@dimen/font_size_subtitle"
                 />
 

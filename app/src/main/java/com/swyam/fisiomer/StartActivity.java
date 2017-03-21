@@ -3,6 +3,8 @@ package com.swyam.fisiomer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,9 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -112,7 +117,10 @@ public class StartActivity extends AppCompatActivity {
      */
 
     Context context;
-
+    Button btnConfigurarConexion;
+    View contError;
+    boolean estaVerificando = true;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,40 +129,62 @@ public class StartActivity extends AppCompatActivity {
         mVisible = true;
         mContentView = findViewById(R.id.fullscreen_content);
         context= getBaseContext();
+        contError = findViewById(R.id.contendor_error_conexion);
+        btnConfigurarConexion = (Button) findViewById(R.id.btn_configurar_conexion);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar_verificando_conexion);
 
+        verificarConexion();
+
+        btnConfigurarConexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this, SettingsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("reiniciar",true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+            }
+        });
+
+        mContentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!estaVerificando){
+                    verificarConexion();
+                }else{
+                    Toast.makeText(context,"Espere porfavor",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    public void verificarConexion(){
+        estaVerificando = true;
+        contError.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         String server = getHostServer(context);
 
         // Primero verificaremos la correcta conectividad al servidor
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new StringRequest(
-                Request.Method.GET,
-                server,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        continuarCarga();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String strError = parsearError(error);
-                        if (strError.length()==0 || error instanceof NoConnectionError || error instanceof ServerError || error instanceof NoConnectionError) {
-
-                            Intent intent = new Intent(StartActivity.this, SettingsActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            intent.putExtra("reiniciar",true);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-                        } else {
-                            Toast.makeText(context,strError,Toast.LENGTH_LONG).show();
-
-                        }
-                    }
+            Request.Method.GET,
+            server,
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    continuarCarga();
                 }
-
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    estaVerificando = false;
+                    contError.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
         ));
-
     }
 
     @Override
@@ -232,7 +262,6 @@ public class StartActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-
     }
 
     public void informarError(){

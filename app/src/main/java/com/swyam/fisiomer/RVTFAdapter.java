@@ -21,6 +21,7 @@ import entidad.TratamientoFuncional;
 public class RVTFAdapter extends RecyclerView.Adapter<RVTFAdapter.TFViewHolder> {
 
     List<TratamientoFuncional> tfs;
+
     Context context;
     Boolean btnEliminarVisible;
     OnItemClickListenerT onItemClickListener;
@@ -46,9 +47,13 @@ public class RVTFAdapter extends RecyclerView.Adapter<RVTFAdapter.TFViewHolder> 
     @Override
     public void onBindViewHolder(TFViewHolder holder, int position) {
         final TratamientoFuncional tf = tfs.get(position);
-        holder.tvNombreTratamiento.setText(tf.tratamiento);
-        holder.tvDescripcionSimpleTratamiento.setText(tf.descripcionTratamiento());
-        holder.imagenEstadoPaciente.setImageResource(tf.estado);
+        final int pos = position;
+        holder.tvNombreTratamiento.setText(tf.obtenerStrTratamiento());
+        holder.tvTipoSimpleTratamiento.setText(tf.obtenerStrTipo());
+        holder.tvContenidoTratamiento.setText(tf.contenidoTratamiento());
+
+
+        holder.imagenEstadoPaciente.setImageResource(Tratamiento.estadosInt.get(tf.estado));
 
         if(!btnEliminarVisible){
             holder.btnEliminarTratamiento.setVisibility(View.INVISIBLE);
@@ -57,7 +62,7 @@ public class RVTFAdapter extends RecyclerView.Adapter<RVTFAdapter.TFViewHolder> 
             View.OnClickListener listener = new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    onItemClickListener.onItemClickTF(tf);
+                    onItemClickListener.onItemClickTF(tf.tratamiento,pos);
                 }
             };
             holder.btnEliminarTratamiento.setOnClickListener(listener);
@@ -79,9 +84,15 @@ public class RVTFAdapter extends RecyclerView.Adapter<RVTFAdapter.TFViewHolder> 
         this.onItemClickListener = onItemClickLListener;
     }
 
+    public void removeAt(int position) {
+        tfs.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, tfs.size());
+    }
+
     public static class TFViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvNombreTratamiento, tvDescripcionSimpleTratamiento;
+        TextView tvNombreTratamiento, tvTipoSimpleTratamiento, tvContenidoTratamiento;
         ImageView imagenEstadoPaciente;
         ImageButton btnEliminarTratamiento;
         CardView cv;
@@ -90,9 +101,10 @@ public class RVTFAdapter extends RecyclerView.Adapter<RVTFAdapter.TFViewHolder> 
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv_tratamiento_funcional);
             tvNombreTratamiento = (TextView) itemView.findViewById(R.id.tv_nombre_tratamiento);
-            tvDescripcionSimpleTratamiento = (TextView) itemView.findViewById(R.id.tv_descripcion_tratamiento);
+            tvTipoSimpleTratamiento = (TextView) itemView.findViewById(R.id.tv_tipo_tratamiento);
             imagenEstadoPaciente = (ImageView) itemView.findViewById(R.id.imagen_estado_paciente);
             btnEliminarTratamiento = (ImageButton) itemView.findViewById(R.id.btn_eliminar_tf);
+            tvContenidoTratamiento = (TextView) itemView.findViewById(R.id.tv_contenido_tratamiento);
         }
     }
 }

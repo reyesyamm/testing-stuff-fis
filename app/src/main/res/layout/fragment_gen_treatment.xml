@@ -6,153 +6,220 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:fillViewport="true"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp"
-            android:orientation="vertical">
-            <!-- TODO: Update blank fragment layout -->
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_size_title"
+                android:textAlignment="center"
+                android:text="Detalles Generales"
                 android:textColor="@color/colorPrimaryText"
-                android:text="Detalles generales del tratamiento aplicado"
-                />
+                android:textSize="@dimen/font_size_title" />
 
             <TextView
                 android:id="@+id/tv_fecha_tratamiento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_size_paragraph"
-                android:text="Fecha"
-                android:textColor="@color/colorSecondaryText"
                 android:gravity="end"
-                android:textAlignment="textEnd"
+                android:paddingBottom="5dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                />
+                android:text="Fecha"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_size_paragraph" />
 
             <TextView
                 android:id="@+id/tv_nombre_paciente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_size_title"
+                android:textColor="@color/colorPrimaryText"
                 android:text="Paciente: Nombre del paciente"
-                />
+                android:textSize="@dimen/font_size_title" />
 
 
             <TextView
                 android:id="@+id/tv_nombre_terapeuta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_size_title"
+                android:textColor="@color/colorPrimaryText"
                 android:text="Terapeuta: Nombre del terapeuta"
-                />
+                android:textSize="@dimen/font_size_title" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/panel"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
 
-                    android:layout_weight="1">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_size_subtitle"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textAlignment="center"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:text="Estado del paciente antes del Tratamiento"
-                        />
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_subtitle" />
 
                     <ImageView
                         android:id="@+id/image_estado_paciente_inicio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cara1"
-                        android:scaleType="fitCenter"
                         android:padding="10dp"
-                        />
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/cara1" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_size_subtitle"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textAlignment="center"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:text="Estado del paciente despues del Tratamiento"
-                        />
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_size_subtitle" />
 
                     <ImageView
                         android:id="@+id/image_estado_paciente_fin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cara1"
-                        android:scaleType="fitCenter"
                         android:padding="10dp"
-                        />
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/cara1" />
 
                 </LinearLayout>
-
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/panel"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/tv_total_tratamientos_funcionales"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_size_subtitle"
-                    android:textColor="@color/colorPrimaryText"
-                    android:text="- Se realizaron 0 tratamientos funcionales"
-                    />
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Total Tratamientos Aplicados"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_size_subtitle" />
 
-                <TextView
-                    android:id="@+id/tv_total_tratamientos_preventivos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_size_subtitle"
-                    android:textColor="@color/colorPrimaryText"
-                    android:text="- Se realizaron 0 tratamientos preventivos"
-                    />
 
-                <TextView
-                    android:id="@+id/tv_total_tratamientos_analgesicos"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_size_subtitle"
-                    android:textColor="@color/colorPrimaryText"
-                    android:text="- Se realizaron 0 tratamientos analgésicos"
-                    />
+                    android:background="#edf0f5"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_total_tfuns"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="@dimen/font_size_title" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Funcionales"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/font_size_subtitle" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_total_tanals"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="@dimen/font_size_title" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Analgésicas"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/font_size_subtitle" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_total_tprevs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="@dimen/font_size_title" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Preventivas"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/font_size_subtitle" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -161,9 +228,6 @@
 
 
     </ScrollView>
-
-
-
 
 
 </FrameLayout>

@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // obtenemos de los encontrados y llenamos
         ArrayList<String> listTer = obtenerListaUsuarioTerapeutas(context);//(ArrayList<String>) getIntent().getSerializableExtra("usuarioTerapeutas");
-        if (listTer.size() > 0){
+        if (listTer!=null && listTer.size() > 0){
             for (String usuario : listTer) {
                 listaTerapeutas.add(usuario);
             }

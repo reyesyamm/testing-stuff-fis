@@ -46,6 +46,7 @@ import static com.swyam.fisiomer.Connection.getHostServer;
 import static com.swyam.fisiomer.Connection.obtenerTerapeutaLogeado;
 import static com.swyam.fisiomer.Connection.parsearError;
 import static com.swyam.fisiomer.Helpers.MD5;
+import static com.swyam.fisiomer.Helpers.esconderTeclado;
 
 public class PerfilActivity extends AppCompatActivity {
 
@@ -126,6 +127,12 @@ public class PerfilActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean v){
+        super.onWindowFocusChanged(v);
+        btnEditarDatos.requestFocus();
     }
 
     private void intentarGuardarDatos(){
@@ -278,6 +285,8 @@ public class PerfilActivity extends AppCompatActivity {
         contenedorprogress = dialog.findViewById(R.id.contenedor_progressbar);
         progressBar = (ProgressBar) dialog.findViewById(R.id.progressbar);
         statusRegistro = (TextView) dialog.findViewById(R.id.tv_status_registro_terapeuta);
+
+        dialog.setTitle("Nuevo Terapeuta");
 
         chPAdmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
