@@ -18,6 +18,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import entidad.Multimedia;
 import entidad.Tratamiento;
 import entidad.TratamientoAnalgesico;
 import entidad.TratamientoFuncional;
@@ -25,7 +26,7 @@ import entidad.TratamientoPreventivo;
 
 public class TreatmentDetailsActivity extends AppCompatActivity
                                         implements GenTreatmentFragment.OnFragmentInteractionListener, FunTreatmentFragment.OnFragmentInteractionListener,
-                                        PrevTreatmentFragment.OnFragmentInteractionListener, AnaTreatmentFragment.OnFragmentInteractionListener{
+                                        PrevTreatmentFragment.OnFragmentInteractionListener, AnaTreatmentFragment.OnFragmentInteractionListener, MultimediaFragment.OnFragmentInteractionListener{
 
     Context context;
     Tratamiento tratamiento;
@@ -78,6 +79,10 @@ public class TreatmentDetailsActivity extends AppCompatActivity
             adapter.addFragment(new AnaTreatmentFragment(), "Analgésicos");
 
 
+        if(tratamiento.totalMultimedia()>0)
+            adapter.addFragment(new MultimediaFragment(),"Multimedia");
+
+
         viewPager.setAdapter(adapter);
     }
 
@@ -106,6 +111,7 @@ public class TreatmentDetailsActivity extends AppCompatActivity
         return toolbar.getSubtitle().toString();
     }
 
+    public List<Multimedia> obtenerArchivosMultimedia(){ return tratamiento.lmul; }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

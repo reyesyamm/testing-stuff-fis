@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cv_item_multimedia"
+    cardview:cardCornerRadius="1dp"
+    cardview:cardElevation="2dp"
+    cardview:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contenedor_item_multimedia"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:background="@color/divider"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/image_thumb_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nube"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="false"
+                />
+            <ImageView
+                android:id="@+id/image_view_icono_tipo_multimedia"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_camera_alt_white_36dp"
+                android:background="@drawable/round_button"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_tipo_archivo_multimedia"
+                android:textSize="@dimen/font_size_subtitle"
+                android:text="Foto"
+                android:textColor="@color/colorPrimaryText"
+                />
+
+            <TextView
+                android:id="@+id/tv_formato_fecha_multimedia"
+                android:layout_width="match_parent"
+                android:text="JPG | FECHA TOMADA"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryText"/>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_nombre_terapeuta_multimedia"
+                android:textSize="@dimen/font_size_paragraph"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Nombre Terapeuta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_info_descargado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Este archivo no se encuentra descargardo."
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_size_paragraph"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</android.support.v7.widget.CardView>

@@ -44,7 +44,6 @@
                 android:text="Paciente: Nombre del paciente"
                 android:textSize="@dimen/font_size_title" />
 
-
             <TextView
                 android:id="@+id/tv_nombre_terapeuta"
                 android:layout_width="match_parent"
@@ -223,6 +222,44 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/panel"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Fotos y Videos"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_size_subtitle" />
+
+
+                <TextView
+                    android:id="@+id/tv_total_multimedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_collections_white_36dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Total multimedia"
+                    android:textColor="@color/colorTextButton"
+                    android:textSize="@dimen/font_size_paragraph"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 

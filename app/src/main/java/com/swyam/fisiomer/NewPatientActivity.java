@@ -300,7 +300,10 @@ public class NewPatientActivity extends AppCompatActivity {
             obj.put("expediente",jsonExpediente);
             obj.put("objetivos",jsonObjetivos);
 
+            Terapeuta T = obtenerTerapeutaLogeado(getBaseContext());
+
             JSONObject datos = new JSONObject(obj);
+            datos.put("apikey",T.apikey);
             try{
                 String json = datos.toString();
                 Log.d("json",json);
@@ -513,6 +516,12 @@ public class NewPatientActivity extends AppCompatActivity {
         abrirDialogoCredenciales(NewPatientActivity.this,new OnDialogCred() {
             @Override
             public void credencialesValidasLocales() {
+                Terapeuta t = obtenerTerapeutaLogeado(getBaseContext());
+                if(!t.esAdmin && !t.permiso){
+                    Toast.makeText(getBaseContext(),"Tu usuario es de solo lectura. No puedes guardar el tratamiento",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 guardarDatos(nombre,edad,ocupacion,telefono,diagRef,medicoDiag,motivo1,motivo2,antecedente1,antecedente2,exploracion1,exploracion2,diagnostico1,diagnostico2,objetivo1,objetivo2,objetivo3);
             }
 

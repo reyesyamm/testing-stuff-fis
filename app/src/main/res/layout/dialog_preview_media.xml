@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/frame_contenedor_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divider">
+
+
+
+        <ImageView
+            android:id="@+id/image_multimedia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logotransparente"
+            android:visibility="gone" />
+
+        <VideoView
+            android:layout_gravity="center"
+            android:id="@+id/video_multimedia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/contenendor_buffering"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingTop="100dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="Cargando el video"
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_height="wrap_content" />
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#55ffffff"
+            android:orientation="horizontal"
+            android:padding="3dp">
+
+            <ImageButton
+                android:visibility="invisible"
+                android:id="@+id/btn_play_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@color/colorAccent"
+                android:padding="3dp"
+                android:src="@android:drawable/ic_media_play" />
+
+            <ImageButton
+                android:visibility="invisible"
+                android:id="@+id/btn_pause_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@color/colorAccent"
+                android:padding="3dp"
+                android:src="@android:drawable/ic_media_pause" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_cerrar_dialogo_multimedia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@color/colorAccent"
+                android:drawableLeft="@drawable/ic_close_white_36dp"
+                android:minHeight="0dp"
+                android:padding="3dp"
+                android:text="Cerrar"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTextButton"
+                android:textSize="@dimen/font_size_subtitle"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <ImageButton
+            android:layout_gravity="center|left"
+            android:id="@+id/btn_previo_multimedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/colorAccent"
+            android:padding="3dp"
+            android:src="@drawable/ic_arrow_back_white_36dp" />
+
+        <ImageButton
+            android:layout_gravity="center|right"
+            android:id="@+id/btn_siguiente_multimedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/colorAccent"
+            android:padding="3dp"
+            android:src="@drawable/ic_arrow_forward_white_36dp" />
+
+    </FrameLayout>
+</LinearLayout>

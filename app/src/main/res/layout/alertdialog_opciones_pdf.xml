@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¿Que desea incluir en el reporte?"
+        android:textSize="@dimen/font_size_subtitle"
+        android:textColor="@color/colorPrimaryText"
+        android:textAlignment="center"
+        android:padding="4dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/border_panel"
+        android:orientation="vertical"
+        >
+
+        <CheckBox
+            android:id="@+id/checkbox_pdf_expediente_clinico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Expediente Clínico Registrado"
+            android:textSize="@dimen/font_size_paragraph"
+            android:checked="true"
+            android:layout_marginBottom="5dp"
+            />
+
+        <CheckBox
+            android:id="@+id/checkbox_pdf_historial_objetivos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historial de Objetivos"
+            android:textSize="@dimen/font_size_paragraph"
+            android:checked="true"
+            android:layout_marginBottom="5dp"
+            />
+
+        <CheckBox
+            android:id="@+id/checkbox_pdf_historial_tratamientos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historial de Tratamientos"
+            android:textSize="@dimen/font_size_paragraph"
+            android:checked="true"
+            android:layout_marginBottom="5dp"
+            />
+
+        <CheckBox
+            android:id="@+id/checkbox_pdf_imagenes_anexadas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Imágenes Anexadas"
+            android:textSize="@dimen/font_size_paragraph"
+            android:checked="true"
+            android:layout_marginBottom="5dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/btn_pdf_aceptas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/mybutton"
+            android:text="Aceptar"
+            android:textSize="@dimen/font_size_paragraph"
+            android:textColor="@color/colorTextButton"
+            />
+
+        <Button
+            android:id="@+id/btn_pdf_cancelar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/mybutton"
+            android:text="Cancelar"
+            android:textSize="@dimen/font_size_paragraph"
+            android:textColor="@color/colorTextButton"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

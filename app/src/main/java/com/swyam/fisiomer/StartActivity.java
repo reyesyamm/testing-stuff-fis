@@ -36,6 +36,7 @@ import java.util.List;
 
 import entidad.Terapeuta;
 
+import static com.swyam.fisiomer.Connection.KEY_API_KEY_USUARIO_LOGEADO;
 import static com.swyam.fisiomer.Connection.KEY_CONTRASENA_USUARIO_LOGEADO;
 import static com.swyam.fisiomer.Connection.KEY_ESADMIN_USUARIO_LOGEADO;
 import static com.swyam.fisiomer.Connection.KEY_ID_USUARIO_LOGEADO;
@@ -230,9 +231,8 @@ public class StartActivity extends AppCompatActivity {
                                     JSONObject obj = usuarios.getJSONObject(i);
                                     terapeutas.add(obj.getString("usuario"));
                                 }
-
                                 //Toast.makeText(context, Helpers.SerializarLista(terapeutas), Toast.LENGTH_LONG).show();
-                                guardarListaUsuarioTerapeutas(context,terapeutas);
+                                guardarListaUsuarioTerapeutas(getApplicationContext(),terapeutas);
                             }else{
                                 Toast.makeText(context,response.getString("mensaje"),Toast.LENGTH_LONG).show();
                             }
@@ -310,7 +310,8 @@ public class StartActivity extends AppCompatActivity {
                     String contrasena = obj.getString(KEY_CONTRASENA_USUARIO_LOGEADO);
                     boolean esAdmin = obj.getInt(KEY_ESADMIN_USUARIO_LOGEADO)>0;
                     boolean permiso = obj.getInt(KEY_PERMISO_USUARIO_LOGEADO)>0;
-                    actualizarCredenciales(context,new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso));
+                    String apikey = obj.getString(KEY_API_KEY_USUARIO_LOGEADO);
+                    actualizarCredenciales(context,new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso,apikey));
                     redireccionarHogar();
                 }else{
                     // redireccionar a Login
@@ -329,9 +330,10 @@ public class StartActivity extends AppCompatActivity {
         Intent intent = new Intent(StartActivity.this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
-        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+        //overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+        overridePendingTransition(0,0);
     }
 
     @Override
@@ -361,7 +363,7 @@ public class StartActivity extends AppCompatActivity {
         mVisible = false;
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+        //mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
     @SuppressLint("InlinedApi")

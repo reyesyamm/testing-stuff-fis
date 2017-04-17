@@ -33,7 +33,7 @@ public class GenTreatmentFragment extends Fragment {
 
 
 
-    TextView fechaTratamiento, nombrePaciente, nombreTerapeuta,totalFun, totalPrev, totalAnal;
+    TextView fechaTratamiento, nombrePaciente, nombreTerapeuta,totalFun, totalPrev, totalAnal,tvTotalMultimedia;
     ImageView imagenEstadoIni, imagenEstadoFin;
     View view;
 
@@ -90,6 +90,7 @@ public class GenTreatmentFragment extends Fragment {
         totalFun = (TextView) view.findViewById(R.id.tv_total_tfuns);
         totalPrev = (TextView) view.findViewById(R.id.tv_total_tprevs);
         totalAnal = (TextView) view.findViewById(R.id.tv_total_tanals);
+        tvTotalMultimedia = (TextView) view.findViewById(R.id.tv_total_multimedia);
         if(tratamiento!=null){
             String nPaciente = ((TreatmentDetailsActivity)getActivity()).nombrePaciente();
             fechaTratamiento.setText(tratamiento.getFechaFormateada());
@@ -100,6 +101,12 @@ public class GenTreatmentFragment extends Fragment {
             totalFun.setText(tratamiento.totalFun()+"");
             totalPrev.setText(tratamiento.totalPrev()+"");
             totalAnal.setText(tratamiento.totalAna()+"");
+            if(tratamiento.totalMultimedia()==0){
+                tvTotalMultimedia.setText("Este tratamiento no tiene archivos multimedia");
+            }else{
+                tvTotalMultimedia.setText("Tratamiento con "+tratamiento.totalMultimedia()+" archivos multimedia (Foto/Video)");
+            }
+
         }else{
             Log.d("fragment","tratamiento es null");
         }

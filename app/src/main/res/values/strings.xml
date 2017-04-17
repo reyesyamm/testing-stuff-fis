@@ -14,6 +14,12 @@
     <string name="title_activity_functional_treatment">Tratamiento Funcional</string>
     <string name="title_activity_prevent_treatment">Tratamiento Preventivo</string>
 
+    <string-array name="opciones_reporte_pdf">
+        <item>Expediente Clínico Registrado</item>
+        <item>Historial de Objetivos</item>
+        <item>Historial de Tratamientos</item>
+        <item>Imágenes Anexadas</item>
+    </string-array>
 
     <string-array name="str_tiempo_electro">
         <item>1 minuto</item>
@@ -26,6 +32,11 @@
         <item>8 minutos</item>
         <item>9 minutos</item>
         <item>10 minutos</item>
+        <item>11 minutos</item>
+        <item>12 minutos</item>
+        <item>13 minutos</item>
+        <item>14 minutos</item>
+        <item>15 minutos</item>
     </string-array>
 
     <string name="title_activity_analgesic_treatment">Tratamiento Analgésico</string>
@@ -41,6 +52,7 @@
     <string name="title_activity_list_patients">"Todos los pacientes "</string>
     <string name="title_activity_patient_detail">Expediente Clínico</string>
     <string name="title_activity_media_manager">Agregar Imagen o Video</string>
+    <string name="title_activity_generate_pdf_report">Generar Reporte PDF</string>
 
 
 </resources>

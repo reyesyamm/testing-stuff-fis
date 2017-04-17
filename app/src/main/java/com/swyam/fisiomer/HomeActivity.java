@@ -1,15 +1,21 @@
 package com.swyam.fisiomer;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -41,6 +47,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,8 +82,7 @@ public class HomeActivity extends AppCompatActivity
 
     TextView tvNombreTerapeuta;
     EditText txtBuscarPaciente;
-    Button btnBuscarPaciente;
-    TextInputLayout til;
+    ImageButton btnBuscarPaciente;
     ProgressDialog progressDialog;
     ImageButton btnLimpiar;
     List<String> listaTerapeutas =  new ArrayList<String>();
@@ -102,15 +108,18 @@ public class HomeActivity extends AppCompatActivity
         context = getBaseContext();
         tvNombreTerapeuta = (TextView) findViewById(R.id.tv_nombre_terapeuta);
         txtBuscarPaciente = (EditText) findViewById(R.id.txt_buscar_paciente);
-        btnBuscarPaciente = (Button) findViewById(R.id.btn_buscar_paciente);
-        til = (TextInputLayout) findViewById(R.id.text_input_layout);
-        btnLimpiar = (ImageButton) findViewById(R.id.btn_limpiar_cuadro_busqueda);
+        btnBuscarPaciente = (ImageButton) findViewById(R.id.btn_buscar_paciente);
+        //btnLimpiar = (ImageButton) findViewById(R.id.btn_limpiar_cuadro_busqueda);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Buscando");
         progressDialog.setMessage("Espere porfavor");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
+
+        solicitarPermisos();
+
+
 
         progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancelar", new DialogInterface.OnClickListener() {
             @Override
@@ -139,13 +148,13 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        btnLimpiar.setOnClickListener(new View.OnClickListener() {
+        /*btnLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                til.setError(null);
+                txtBuscarPaciente.setError(null);
                 txtBuscarPaciente.setText("");
             }
-        });
+        });*/
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +164,46 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        crearCarpetaImagenes();
+
+    }
+
+    public void crearCarpetaImagenes(){
+        try{
+            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), Helpers.IMAGE_DIRECTORY_NAME);
+            if (!mediaStorageDir.exists()) {
+                if (!mediaStorageDir.mkdirs()) {
+                    Log.d("HomeActivity", "Oops! Failed create "
+                            + Helpers.IMAGE_DIRECTORY_NAME + " directory");
+                    Toast.makeText(context,"No se pudo crear la carpeta de imagenes",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+            Toast.makeText(context,"No se pudo crear la carpeta de imagenes",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    private static final int MY_PERMISSIONS_REQUEST_USE_CAMERA = 2;
+    private void solicitarPermisos(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            }
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
+
+            }
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},MY_PERMISSIONS_REQUEST_USE_CAMERA);
+        }
 
     }
 
@@ -234,19 +283,28 @@ public class HomeActivity extends AppCompatActivity
         esconderTeclado(this);
         String nombrePaciente = txtBuscarPaciente.getText().toString();
         if(nombrePaciente.length()>0){
-            til.setError(null);
+            txtBuscarPaciente.setError(null);
             progressDialog.show();
             realizarBusqueda(nombrePaciente);
         }else{
-            til.setError("Valor inválido");
+            txtBuscarPaciente.setError("Valor inválido");
         }
     }
 
     public void realizarBusqueda(final String token){
         String url = getHostServer(context)+SUF_BUSCAR_CONTEO_PACIENTE;
         JSONObject obj = new JSONObject();
+
+        Terapeuta t = Connection.obtenerTerapeutaLogeado(context);
+        if(t==null){
+            Toast.makeText(context,"Error, terapeuta no logeado, reinicia la aplicación",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         try{
+
             obj.put("token",token);
+            obj.put("apikey",t.apikey);
             VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
                     Request.Method.POST,
                     url,

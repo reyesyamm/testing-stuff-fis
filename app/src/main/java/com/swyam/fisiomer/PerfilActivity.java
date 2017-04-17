@@ -92,8 +92,6 @@ public class PerfilActivity extends AppCompatActivity {
         btnNuevoTerapeuta = (Button) findViewById(R.id.btn_agregar_terapeuta);
         contInfoContrasena = findViewById(R.id.tv_info_contrasenas);
 
-
-
         llenarDatos();
 
         IniciarConfiguracionesPredeterminadas();
@@ -187,7 +185,14 @@ public class PerfilActivity extends AppCompatActivity {
         hmap.put(Connection.KEY_ID_USUARIO_LOGEADO, String.valueOf(id));
         hmap.put(Connection.KEY_NOMBRE_USUARIO_LOGEADO,nombre);
         hmap.put(Connection.KEY_CONTRASENA_USUARIO_LOGEADO,contrasena);
+        Terapeuta t = Connection.obtenerTerapeutaLogeado(context);
         JSONObject obj = new JSONObject(hmap);
+        try{
+            obj.put("apikey",t.apikey);
+        }catch(Exception ex){
+
+        }
+
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
                 Request.Method.POST,
                 url,
@@ -353,7 +358,7 @@ public class PerfilActivity extends AppCompatActivity {
                 statusRegistro.requestFocus();
                 statusRegistro.setTextColor(Color.BLACK);
                 btnGuardarNuevoTerapeuta.setEnabled(false);
-
+                Terapeuta tt = obtenerTerapeutaLogeado(context);
                 String url = getHostServer(context)+SUF_REGISTRAR_TERAPEUTA;
                 HashMap<String,String> hmap = new HashMap<String, String>();
                 hmap.put(KEY_NOMBRE_USUARIO_LOGEADO, nombre);
@@ -361,6 +366,7 @@ public class PerfilActivity extends AppCompatActivity {
                 hmap.put(KEY_CONTRASENA_USUARIO_LOGEADO, MD5(contrasena));
                 hmap.put(KEY_ESADMIN_USUARIO_LOGEADO,permAdmin?"1":"0");
                 hmap.put(KEY_PERMISO_USUARIO_LOGEADO,permRegistratTerapia?"1":"0");
+                hmap.put("apikey",tt.apikey);
                 JSONObject obj = new JSONObject(hmap);
 
                 VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(

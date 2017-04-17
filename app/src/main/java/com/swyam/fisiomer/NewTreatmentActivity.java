@@ -52,6 +52,10 @@ import static com.swyam.fisiomer.Connection.parsearError;
 
 public class NewTreatmentActivity extends AppCompatActivity  implements  View.OnClickListener{
 
+    private String strObjetivosMasRecientes;
+    private String strTerapeutaObjetivos;
+    private String strFechaObjetivos;
+
     Button btnAgregarTF, btnAgregarTA, btnAgregarTP;
     Button btnGuardarTratamiento;
     ImageButton btnIni1, btnIni2, btnIni3, btnIni4, btnFin1, btnFin2, btnFin3, btnFin4;
@@ -71,7 +75,7 @@ public class NewTreatmentActivity extends AppCompatActivity  implements  View.On
     RVTFAdapter rvtfAdapter;
     RVTPAdapter rvtpAdapter;
     RVTAAdapter rvtaAdapter;
-    LinearLayoutManager llm1;
+
 
 
     // nombrepaciente
@@ -100,6 +104,11 @@ public class NewTreatmentActivity extends AppCompatActivity  implements  View.On
 
         nombrePaciente = getIntent().getStringExtra("paciente");
         idPaciente = getIntent().getIntExtra("idPaciente",-1);
+
+        strObjetivosMasRecientes = getIntent().getStringExtra("objetivos");
+        strTerapeutaObjetivos = getIntent().getStringExtra("terapeutaObjetivos");
+        strFechaObjetivos = getIntent().getStringExtra("fechaObjetivos");
+
         getSupportActionBar().setSubtitle(nombrePaciente);
 
         btnGuardarTratamiento = (Button) findViewById(R.id.btn_terminar_tratamiento);
@@ -443,6 +452,13 @@ public class NewTreatmentActivity extends AppCompatActivity  implements  View.On
         final View contProgress = dialog.findViewById(R.id.contenedor_status_guardado_obj);
         final ProgressBar progressBar = (ProgressBar) dialog.findViewById(R.id.progressbar_guardado_objs);
         final TextView tvStatusGuardado = (TextView) dialog.findViewById(R.id.tv_status_guardado_objetivos);
+        final TextView tvUltimosObjetivos = (TextView) dialog.findViewById(R.id.tv_objetivos);
+        final TextView tvTerapeutaObjetivos = (TextView) dialog.findViewById(R.id.tv_nombre_terapeuta_objetivos);
+        final TextView tvFechaObjetivos = (TextView) dialog.findViewById(R.id.tv_fecha_objetivos);
+
+        tvUltimosObjetivos.setText(strObjetivosMasRecientes);
+        tvTerapeutaObjetivos.setText(strTerapeutaObjetivos);
+        tvFechaObjetivos.setText(strFechaObjetivos);
 
         dialog.setTitle("¿Modificar objetivos?");
         contBtns.setVisibility(View.VISIBLE);
@@ -492,6 +508,13 @@ public class NewTreatmentActivity extends AppCompatActivity  implements  View.On
 
     private void guardarNuevoTratamiento(String obj1, String obj2, String obj3){
 
+        Terapeuta t = obtenerTerapeutaLogeado(getBaseContext());
+
+        if(!t.esAdmin && !t.permiso){
+            Toast.makeText(getBaseContext(),"Tu usuario es de solo lectura. No puedes guardar el tratamiento",Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if(idPaciente<=0){
             Toast.makeText(getBaseContext(),"No existe un paciente seleccionado",Toast.LENGTH_SHORT).show();
             return;
@@ -504,6 +527,8 @@ public class NewTreatmentActivity extends AppCompatActivity  implements  View.On
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.show();
+
+
 
 
         try{
@@ -558,7 +583,7 @@ public class NewTreatmentActivity extends AppCompatActivity  implements  View.On
                 }
             }
 
-            Terapeuta t = obtenerTerapeutaLogeado(getBaseContext());
+
             tratamientopadre.put("estadoPacienteInicio",tratamiento.estadoInicio);
             tratamientopadre.put("estadoPacienteFin",tratamiento.estadoFin);
             tratamientopadre.put("paciente",idPaciente);
@@ -570,6 +595,8 @@ public class NewTreatmentActivity extends AppCompatActivity  implements  View.On
             tratamientopadre.put("funcionales",tratamientosFuncionales);
             tratamientopadre.put("analgesicos",tratamientosAnalgesicos);
             tratamientopadre.put("preventivos",tratamientosPreventivos);
+
+            tratamientopadre.put("apikey",t.apikey);
 
             String url = getHostServer(getBaseContext())+SUF_GUARDAR_NUEVO_TRATAMIENTO;
 

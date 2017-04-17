@@ -9,110 +9,124 @@
     tools:context="com.swyam.fisiomer.MediaManagerActivity"
     tools:showIn="@layout/activity_media_manager">
 
-    <LinearLayout
-        android:id="@+id/contenedor_botones_video"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:background="#55FFFFFF"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/btnPlayVideo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_play"
-            android:background="@drawable/mybutton"
-            android:layout_margin="2dp"
-            />
-
-        <ImageButton
-            android:id="@+id/btnPauseVideo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_pause"
-            android:background="@drawable/mybutton"
-            android:layout_margin="2dp"
-            />
-
-        <Button
-            android:id="@+id/btn_anexar_tratamiento"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:textColor="@color/colorTextButton"
-            android:textSize="@dimen/font_size_paragraph"
-            android:textAllCaps="false"
-            android:background="@drawable/mybutton"
-            android:text="Anexar al tratamiento"
-            />
-    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="1dp"
+        android:background="#550099cc"
         android:layout_weight="1">
 
         <ImageView
-            android:src="@drawable/logotransparente"
             android:id="@+id/image_previa_media"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
-            android:scaleType="centerInside"
             android:adjustViewBounds="true"
-            />
+            android:scaleType="centerInside"
+            android:src="@drawable/logotransparente"
+            android:visibility="visible" />
 
         <VideoView
+            android:id="@+id/video_previa_media"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/video_previa_media"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/contenedor_botones_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="#55FFFFFF"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnPlayVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:background="@color/colorAccent"
+                android:src="@android:drawable/ic_media_play" />
+
+            <ImageButton
+                android:id="@+id/btnPauseVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:background="@color/colorAccent"
+                android:src="@android:drawable/ic_media_pause" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                android:layout_weight="3"
+                />
+
+
+            <ImageButton
+                android:id="@+id/btnEliminarMediaSeleccionado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:layout_margin="2dp"
+                android:background="@color/colorAccent"
+                android:src="@drawable/ic_delete_forever_black_24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnNuevaImagen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:padding="3dp"
+                android:src="@drawable/ic_camera_alt_white_36dp" />
+
+            <ImageButton
+                android:id="@+id/btnNuevoVideo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:padding="3dp"
+                android:src="@drawable/ic_videocam_white_36dp" />
+
+            <ImageButton
+                android:id="@+id/btnImportarMedia"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:padding="3dp"
+                android:src="@drawable/ic_collections_white_36dp" />
+
+        </LinearLayout>
+
+
+        <Button
             android:visibility="gone"
-            />
+            android:id="@+id/btn_anexar_tratamiento"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:background="@drawable/round_button"
+            android:text="Click aqui para\nanexar al \ntratamiento"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextButton"
+            android:textSize="@dimen/font_size_paragraph" />
+
 
     </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <ImageButton
-            android:id="@+id/btnNuevaImagen"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_camera_alt_white_36dp"
-            android:padding="3dp"
-            android:layout_margin="2dp"
-            android:background="@drawable/mybutton"
-            android:layout_weight="1"/>
-
-        <ImageButton
-            android:id="@+id/btnNuevoVideo"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_videocam_white_36dp"
-            android:padding="3dp"
-            android:layout_margin="2dp"
-            android:background="@drawable/mybutton"
-            android:layout_weight="1"/>
-
-        <ImageButton
-            android:id="@+id/btnImportarMedia"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_collections_white_36dp"
-            android:padding="3dp"
-            android:layout_margin="2dp"
-            android:background="@drawable/mybutton"
-            android:layout_weight="1"/>
-
-
-
-
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -1,12 +1,16 @@
 package com.swyam.fisiomer;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -37,6 +42,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,6 +75,11 @@ public class Connection{
     public static final String SUF_GUARDAR_NUEVO_TRATAMIENTO = "paciente/nuevotratamiento.php";
     public static final String SUF_EXPEDIENTE_PACIENTE = "paciente/expediente.php";
     public static final String SUF_GUARDAR_CAMBIOS_DATOS_PACIENTE="paciente/actualizar.php";
+    public static final String SUF_SUBIR_MULTIMEDIA = "multimedia/subir.php";
+    public static final String SUF_ELIMINAR_MULTIMEDIA = "multimedia/eliminar.php";
+    public static final String SUF_GENERAR_REPORTE_PDF_PACIENTE = "reporte/generar.php";
+    public static final String SUF_RUTA_PDF_GENERADO = "reporte/archivos/";
+    public static final String UPLOADS_SERVER_PATH="uploads/";
 
 
     public static final String KEY_USUARIO_LOGEADO="datosUsuario";
@@ -77,6 +88,7 @@ public class Connection{
     public static final String KEY_USUARIO_USUARIO_LOGEADO="usuario";
     public static final String KEY_CONTRASENA_USUARIO_LOGEADO ="contrasena";
     public static final String KEY_ESADMIN_USUARIO_LOGEADO ="esAdmin";
+    public static final String KEY_API_KEY_USUARIO_LOGEADO = "claveApi";
     public static final String KEY_PERMISO_USUARIO_LOGEADO="permiso";
     public static final String KEY_DATOS_GENERALES_TERAPEUTAS="datos_generales_terapeutas";
     public static final String KEY_LISTA_USUARIO_TERAPEUTAS="lista_usuarios_terapeutas";
@@ -141,6 +153,7 @@ public class Connection{
         editor.putString(KEY_CONTRASENA_USUARIO_LOGEADO,t.contrasena);
         editor.putBoolean(KEY_ESADMIN_USUARIO_LOGEADO,t.esAdmin);
         editor.putBoolean(KEY_PERMISO_USUARIO_LOGEADO,t.permiso);
+        editor.putString(KEY_API_KEY_USUARIO_LOGEADO,t.apikey);
         editor.commit();
     }
 
@@ -155,7 +168,8 @@ public class Connection{
         String contrasena = preferences.getString(KEY_CONTRASENA_USUARIO_LOGEADO,"");
         boolean esAdmin = preferences.getBoolean(KEY_ESADMIN_USUARIO_LOGEADO,false);
         boolean permiso = preferences.getBoolean(KEY_PERMISO_USUARIO_LOGEADO,false);
-        return new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso);
+        String apikey = preferences.getString(KEY_API_KEY_USUARIO_LOGEADO,"");
+        return new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso,apikey);
     }
 
     public static void limpiarSiExistenCredenciales(Context context){
@@ -257,6 +271,7 @@ public class Connection{
         ));
     }
 
+
     public static void abrirDialogoSeleccionarMusculo(final Activity activity,final String lastSearchFilter,final ArrayAdapter<String> mAdapter, final OnDialogMusculo listener){
         final Context context = activity.getBaseContext();
         final Dialog dialog = new Dialog(activity);
@@ -289,14 +304,26 @@ public class Connection{
             @Override
             public void onClick(View v) {
                 try{
-                    mAdapter.getFilter().filter(txtFiltrarMusculo.getText().toString());
+                    mAdapter.getFilter().filter(txtFiltrarMusculo.getText().toString(), new Filter.FilterListener() {
+                        @Override
+                        public void onFilterComplete(int count) {
+                            if(count==0)
+                                Toast.makeText(context,"No se encontraron resultados en la lista",Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     //lastSearchFilter = txtFiltrarMusculo.getText().toString();
+
+                    if(mAdapter.getCount()==0)
+                        Toast.makeText(context,"No se encontraron resultados en la lista",Toast.LENGTH_SHORT).show();
+
                     listener.OnBtnFilter(txtFiltrarMusculo.getText().toString());
                 }catch(Exception ex){
                     ex.printStackTrace();
                     Toast.makeText(context,"No se pudo filtrar la lista",Toast.LENGTH_SHORT).show();
                 }
             }
+
+
         });
 
         txtFiltrarMusculo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -304,7 +331,14 @@ public class Connection{
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId== EditorInfo.IME_ACTION_SEARCH){
                     try{
-                        mAdapter.getFilter().filter(v.getText().toString());
+                        mAdapter.getFilter().filter(v.getText().toString(), new Filter.FilterListener() {
+                            @Override
+                            public void onFilterComplete(int count) {
+                                if(count==0)
+                                    Toast.makeText(context,"No se encontraron resultados en la lista",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                         listener.OnSoftKeyFilter(v.getText().toString());
                         //lastSearchFilter = v.getText().toString();
                     }catch(Exception ex){
@@ -360,6 +394,14 @@ public class Connection{
         final ArrayAdapter<String> adapterListaTerapeutas = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item,listaTerapeutas);
         adapterListaTerapeutas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp.setAdapter(adapterListaTerapeutas);
+
+        Terapeuta t = obtenerTerapeutaLogeado(context);
+        if(t!=null){
+            int i = adapterListaTerapeutas.getPosition(t.usuario);
+            if(i>=0){
+                sp.setSelection(i);
+            }
+        }
 
         btnVerificarCredenciales.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -417,7 +459,8 @@ public class Connection{
                                                 String contrasena = obj.getString(KEY_CONTRASENA_USUARIO_LOGEADO);
                                                 boolean esAdmin = obj.getInt(KEY_ESADMIN_USUARIO_LOGEADO)>0;
                                                 boolean permiso = obj.getInt(KEY_PERMISO_USUARIO_LOGEADO)>0;
-                                                actualizarCredenciales(context,new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso));
+                                                String apikey = obj.getString(KEY_API_KEY_USUARIO_LOGEADO);
+                                                actualizarCredenciales(context,new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso,apikey));
                                                 dialog.dismiss();
                                                 esconderTeclado(activity);
                                                 listener.credencialesValidasRemotas();
@@ -460,6 +503,22 @@ public class Connection{
         });
 
         dialog.show();
+    }
+
+
+    public static File obtenerRutaArchivosPDF(){
+        String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+        File folder = new File(extStorageDirectory, "Reportes Fisiomer");
+        return folder;
+    }
+
+
+    public static boolean isDownloadManagerAvailable(Context context) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            return true;
+        }
+        return false;
     }
 
 

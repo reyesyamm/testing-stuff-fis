@@ -4,20 +4,29 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,6 +85,11 @@ public class Helpers {
         return "";
     }
 
+    public static final File storageDir(){
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), Helpers.IMAGE_DIRECTORY_NAME);
+        return mediaStorageDir;
+    }
+
     public static final int getColor2(Context context, int id) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= 23) {
@@ -97,6 +111,19 @@ public class Helpers {
         }
         return retorno;
     }
+
+    public static ArrayList<String> DesSerializarLista(String strLista){
+        ArrayList<String> lista = new ArrayList<>();
+        if(strLista!=null){
+            String[] elementos = strLista.split(SEPARATOR_STRING_SER);
+            if(elementos.length>0){
+                for(String str:elementos)
+                    lista.add(str);
+            }
+        }
+        return lista;
+    }
+
 
 
     public static void esconderTeclado(Activity activity){
@@ -122,6 +149,78 @@ public class Helpers {
         //SimpleDateFormat format = new SimpleDateFormat("MMMM E, yyyy hh:mm a");
         SimpleDateFormat format = new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm aaa");
         return format.format(d);
+    }
+
+    public static boolean guardarBitmap(Bitmap bm, File file_out){
+        boolean returnment = true;
+        try{
+            // Log.i("filename",filename_thumb.getAbsolutePath());
+            FileOutputStream out = null;
+
+            try {
+                out = new FileOutputStream(file_out);
+                bm.compress(Bitmap.CompressFormat.JPEG, 90, out); // bmp is your Bitmap instance
+                // PNG is a lossless format, the compression factor (100) is ignored
+            } catch (Exception e) {
+                e.printStackTrace();
+                returnment = false;
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch(Exception ex){
+            returnment = false;
+            Log.e("namefile",file_out.getAbsolutePath());
+        }
+
+        return returnment;
+    }
+
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, File resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        //BitmapFactory.decodeResource(res, resId, options);
+        BitmapFactory.decodeFile(resId.getAbsolutePath(),options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        //return BitmapFactory.decodeResource(res, resId, options);
+        return BitmapFactory.decodeFile(resId.getAbsolutePath(),options);
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
 
@@ -257,6 +356,14 @@ public class Helpers {
      */
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+
+    public static String stripAccents(String s)
+    {
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return s;
     }
 
 }

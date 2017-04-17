@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         // obtenemos de los encontrados y llenamos
-        ArrayList<String> listTer = obtenerListaUsuarioTerapeutas(context);//(ArrayList<String>) getIntent().getSerializableExtra("usuarioTerapeutas");
+        ArrayList<String> listTer = obtenerListaUsuarioTerapeutas(getApplicationContext());//(ArrayList<String>) getIntent().getSerializableExtra("usuarioTerapeutas");
         if (listTer!=null && listTer.size() > 0){
             for (String usuario : listTer) {
                 listaTerapeutas.add(usuario);
@@ -181,7 +181,8 @@ public class LoginActivity extends AppCompatActivity {
                     String contrasena = obj.getString(KEY_CONTRASENA_USUARIO_LOGEADO);
                     boolean esAdmin = obj.getInt(KEY_ESADMIN_USUARIO_LOGEADO)>0;
                     boolean permiso = obj.getInt(KEY_PERMISO_USUARIO_LOGEADO)>0;
-                    actualizarCredenciales(context,new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso));
+                    String apikey = obj.getString(KEY_API_KEY_USUARIO_LOGEADO);
+                    actualizarCredenciales(context,new Terapeuta(id,nombre,usuario,contrasena,esAdmin,permiso,apikey));
                     redireccionarHogar();
                 }else{
                     progressDialog.dismiss();

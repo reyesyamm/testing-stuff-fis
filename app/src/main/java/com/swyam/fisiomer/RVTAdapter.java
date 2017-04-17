@@ -25,6 +25,7 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
         View contenedor;
         ImageView ini,fin;
         TextView totalTFuns,totalTAnals,totalTPrevs;
+        TextView tvMultimedia;
 
         public TratamientoViewHolder(View itemView) {
             super(itemView);
@@ -38,6 +39,7 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
             totalTFuns = (TextView) itemView.findViewById(R.id.tv_total_tfuns);
             totalTAnals = (TextView) itemView.findViewById(R.id.tv_total_tanals);
             totalTPrevs = (TextView) itemView.findViewById(R.id.tv_total_tprevs);
+            tvMultimedia = (TextView) itemView.findViewById(R.id.tv_contenedor_total_multimedia);
         }
     }
 
@@ -73,6 +75,14 @@ public class RVTAdapter extends RecyclerView.Adapter<RVTAdapter.TratamientoViewH
         holder.totalTFuns.setText(tratamiento.totalFun()+"");
         holder.totalTAnals.setText(tratamiento.totalAna()+"");
         holder.totalTPrevs.setText(tratamiento.totalPrev()+"");
+
+        if(tratamiento.totalMultimedia()>0){
+            holder.tvMultimedia.setText("Tratamiento con "+tratamiento.totalMultimedia()+" archivos multimedia (imagen/video).");
+        }else{
+            holder.tvMultimedia.setText("Sin Fotos ni Videos");
+        }
+
+
         View.OnClickListener listener = new View.OnClickListener(){
             @Override
             public void onClick(View v){

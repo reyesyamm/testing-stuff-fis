@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.swyam.fisiomer.GeneratePdfReportActivity"
+    tools:showIn="@layout/activity_generate_pdf_report">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/panel"
+        android:layout_marginTop="20dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_titulo_generando_pdf_de_paciente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generando el Reporte"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/font_size_title"
+            />
+
+        <TextView
+            android:id="@+id/tv_espere_porfavor_pdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_size_subtitle"
+            android:text="Espere porfavor"
+            android:textAlignment="center"
+            android:textColor="@color/colorSecondaryText"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_lista_elementos_reporte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_size_paragraph"
+            android:text="Elementos solicitados"
+            android:textColor="#6544a9"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:background="#27c5ab"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressbar_descarga_pdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            />
+
+        <Button
+            android:id="@+id/btn_ver_reporte_pdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver Reporte PDF"
+            android:textAllCaps="false"
+            android:textSize="@dimen/font_size_subtitle"
+            android:textColor="@color/colorTextButton"
+            android:background="@drawable/mybutton_shadow"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>

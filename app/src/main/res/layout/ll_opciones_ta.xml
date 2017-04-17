@@ -77,17 +77,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/txt_electro_dosis"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="top|left"
-                        android:lines="3"
-                        android:minLines="3"
-                        android:maxLength="255"
-                        android:textSize="@dimen/font_size_paragraph"
-                        android:hint="Dosis"
+                        android:text="Dosis"
+                        android:textSize="@dimen/font_size_subtitle"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textAlignment="center"
+                        />
 
+                    <Spinner
+                        android:id="@+id/spinner_electro_dosis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:layout_margin="5dp"
+                        android:drawSelectorOnTop="true"
+                        android:entries="@array/str_tiempo_electro"
+                        android:textAlignment="center"
                         />
 
                 </android.support.design.widget.TextInputLayout>

@@ -50,7 +50,7 @@ public class AnalgesicTreatmentActivity extends AppCompatActivity implements  Vi
 
     //Para electro
     RadioButton rEMS,rTENS,rInterf;
-    EditText txtDosis;
+    Spinner spDosis;
 
     // Para ultrasonido
     RadioButton rPulsado, rContinuo,r1MHZ,r3MHZ;
@@ -104,7 +104,7 @@ public class AnalgesicTreatmentActivity extends AppCompatActivity implements  Vi
         rEMS = (RadioButton) findViewById(R.id.radio_ems);
         rTENS = (RadioButton) findViewById(R.id.radio_tens);
         rInterf = (RadioButton) findViewById(R.id.radio_interferencial);
-        txtDosis = (EditText) findViewById(R.id.txt_electro_dosis);
+        spDosis = (Spinner) findViewById(R.id.spinner_electro_dosis);
 
         //ultrasonido
         rPulsado = (RadioButton) findViewById(R.id.radio_pulsado);
@@ -206,7 +206,7 @@ public class AnalgesicTreatmentActivity extends AppCompatActivity implements  Vi
                 else if(rInterf.isChecked())
                     tipo = 3;
 
-                contenido = txtDosis.getText().toString();
+                contenido = spDosis.getSelectedItem().toString();
             }
                 break;
             case 1: // agregar un tratamiento de tipo ultrasonido
@@ -255,7 +255,7 @@ public class AnalgesicTreatmentActivity extends AppCompatActivity implements  Vi
         if(ta.tratamiento==1 && ta.contenido.trim().length()==0){
             tvalido = false;
             Toast.makeText(context,"No has indicado la dosis",Toast.LENGTH_SHORT).show();
-            txtDosis.requestFocus();
+            spDosis.requestFocus();
         }
 
         if(tvalido && ta.tratamiento==3 && ta.contenido.trim().length()==0){
@@ -270,7 +270,7 @@ public class AnalgesicTreatmentActivity extends AppCompatActivity implements  Vi
             adapter.notifyItemInserted(tas.size()-1);
 
             if(ta.tratamiento==1){
-                txtDosis.setText("");
+                spDosis.setSelection(0);
             }
 
             if(ta.tratamiento==3)

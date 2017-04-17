@@ -2,40 +2,112 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    >
+    android:padding="10dp">
 
     <LinearLayout
-        android:id="@+id/contenedor_botones_sino_modificar_objs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:orientation="horizontal">
+        android:background="@drawable/border_panel"
+        android:padding="4dp"
+        android:orientation="vertical"
+        android:layout_margin="2dp"
+        >
 
-        <Button
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/btn_si_modificar_objetivos"
-            android:text="SI"
-            android:textSize="@dimen/font_size_title"
-            android:background="@drawable/mybutton"
-            android:textColor="@color/colorTextButton"
-            android:layout_margin="10dp"
+            android:textSize="@dimen/font_size_subtitle"
+            android:text="Objetivos más recientes"
+            android:textColor="@color/colorPrimaryText"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
-        <Button
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_objetivos"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/btn_no_modificar_objetivos"
-            android:text="NO"
-            android:textSize="@dimen/font_size_title"
-            android:background="@drawable/mybutton"
-            android:textColor="@color/colorTextButton"
-            android:layout_margin="10dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:text=""
+            android:textSize="@dimen/font_size_paragraph"
             />
+
+        <TextView
+            android:id="@+id/tv_nombre_terapeuta_objetivos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/font_size_footer"
+            android:textColor="@color/colorAccent"
+            />
+
+        <TextView
+            android:id="@+id/tv_fecha_objetivos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/font_size_footer"
+            android:textColor="@color/colorPrimary"
+            />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/contenedor_botones_sino_modificar_objs"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¿Deseas actualizar los objetivos del tratamiento para este paciente?"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size_subtitle"
+            android:paddingBottom="5dp"
+            android:textColor="@color/colorPrimaryText"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:orientation="horizontal">
+
+
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/btn_si_modificar_objetivos"
+                android:text="SI"
+                android:textSize="@dimen/font_size_title"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:layout_margin="10dp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/btn_no_modificar_objetivos"
+                android:text="NO"
+                android:textSize="@dimen/font_size_title"
+                android:background="@drawable/mybutton"
+                android:textColor="@color/colorTextButton"
+                android:layout_margin="10dp"
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
     <LinearLayout
         android:id="@+id/contenedor_formulario_modificar_objs"
         android:visibility="visible"
@@ -44,6 +116,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingresa los nuevos objetivos"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size_subtitle"
+            android:paddingBottom="5dp"
+            android:textColor="@color/colorPrimaryText"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,6 +169,7 @@
                 android:textColor="@color/colorSecondaryText"
                 android:maxLines="1"
                 android:lines="1"
+                android:inputType="text"
                 android:imeOptions="actionNext"
                 />
 
@@ -106,6 +189,7 @@
                 android:textColor="@color/colorSecondaryText"
                 android:maxLines="1"
                 android:lines="1"
+                android:inputType="text"
                 android:imeOptions="actionNext"
                 />
 
@@ -125,6 +209,7 @@
                 android:textColor="@color/colorSecondaryText"
                 android:maxLines="1"
                 android:lines="1"
+                android:inputType="text"
                 android:imeOptions="actionDone"
                 />
 

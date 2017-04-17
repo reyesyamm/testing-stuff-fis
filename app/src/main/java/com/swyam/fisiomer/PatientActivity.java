@@ -1,5 +1,7 @@
 package com.swyam.fisiomer;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,9 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import entidad.Multimedia;
 import entidad.Paciente;
 import entidad.Terapeuta;
 import entidad.Tratamiento;
@@ -110,6 +116,9 @@ public class PatientActivity extends AppCompatActivity {
                 Intent intent = new Intent(PatientActivity.this, NewTreatmentActivity.class);
                 intent.putExtra("paciente",toolbar.getSubtitle().toString());
                 intent.putExtra("idPaciente",idPaciente);
+                intent.putExtra("objetivos",tvObjetivos.getText().toString());
+                intent.putExtra("terapeutaObjetivos",tvTerapeutaObjetivos.getText().toString());
+                intent.putExtra("fechaObjetivos",tvFechaObjetivos.getText().toString());
                 startActivityForResult(intent,SOLICITAR_NUEVO_TRATAMIENTO);
             }
         });
@@ -146,6 +155,8 @@ public class PatientActivity extends AppCompatActivity {
             try{
                 JSONObject obj = new JSONObject();
                 obj.put("id",id+"");
+                Terapeuta t = obtenerTerapeutaLogeado(context);
+                obj.put("apikey",t.apikey);
 
                 VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
                         Request.Method.POST,
@@ -167,15 +178,11 @@ public class PatientActivity extends AppCompatActivity {
                         }
                 ));
 
-
-
             }catch(Exception ex){
                 ex.printStackTrace();
                 progressDialog.dismiss();
                 Toast.makeText(context,"Error al intentar obtener los datos del paciente",Toast.LENGTH_LONG).show();
             }
-
-
         }
     }
 
@@ -210,6 +217,8 @@ public class PatientActivity extends AppCompatActivity {
                         boolean tf =  tr.getBoolean("existeFuncional");
                         boolean tp = tr.getBoolean("existePreventivo");
                         boolean ta = tr.getBoolean("existeAnalgesico");
+                        boolean em = tr.getBoolean("existeMultimedia");
+
                         Tratamiento tratamientoObj = new Tratamiento(
                             tr.getInt("id"),
                             tr.getString("estadoPacienteInicio"),
@@ -231,6 +240,10 @@ public class PatientActivity extends AppCompatActivity {
 
                         if(ta){
                             tratamientoObj.asignarTratamientoAnalgesico(parsearJSONTAs(tr.getJSONArray("analgesico")));
+                        }
+
+                        if(em){
+                            tratamientoObj.asignarListaMultimedia(parsearJSONMult(tr.getJSONArray("multimedia")));
                         }
 
                         tratamientos.add(tratamientoObj);
@@ -333,6 +346,30 @@ public class PatientActivity extends AppCompatActivity {
         return tanal;
     }
 
+    public List<Multimedia> parsearJSONMult(JSONArray mult){
+        List<Multimedia> lmul = new ArrayList<Multimedia>();
+
+        try{
+            for(int i=0;i<mult.length();i++){
+                JSONObject temMult = mult.getJSONObject(i);
+                lmul.add(new Multimedia(
+                        temMult.getInt("id"),
+                        temMult.getString("nombreArchivo"),
+                        temMult.getString("fecha"),
+                        temMult.getString("formato"),
+                        temMult.getString("terapeuta")
+                ));
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+            Toast.makeText(context,"Algo ha ocurrido en el formato de los datos recibidos",Toast.LENGTH_SHORT).show();
+        }
+        return lmul;
+
+    }
+
+
+
     public void llenarRV(){
         adapter = new RVTAdapter(context,tratamientos);
         rv.setAdapter(adapter);
@@ -365,7 +402,7 @@ public class PatientActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_detalles_paciente) {
-            Connection.abrirDialogoCredenciales(this, new OnDialogCred() {
+            /*Connection.abrirDialogoCredenciales(this, new OnDialogCred() {
                 @Override
                 public void credencialesValidasLocales() {
                     abrirExpediente();
@@ -375,14 +412,79 @@ public class PatientActivity extends AppCompatActivity {
                 public void credencialesValidasRemotas() {
                     abrirExpediente();
                 }
-            });
+            });*/
+            abrirExpediente();
 
-
+            return true;
+        }else if(id==R.id.action_generar_pdf){
+            mostrarDialogoOpcionesPDF2();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void mostrarDialogoOpcionesPDF2(){
+        final List<Integer> mSelectedItems = new ArrayList();  // Where we track the selected items
+        mSelectedItems.add(0); mSelectedItems.add(1); mSelectedItems.add(2); mSelectedItems.add(3);
+        final boolean[] checkeds = new boolean[]{true,true,true,true};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Set the dialog title
+        builder.setTitle("Incluir en el Reporte PDF")
+                // Specify the list array, the items to be selected by default (null for none),
+                // and the listener through which to receive callbacks when items are selected
+                .setMultiChoiceItems(R.array.opciones_reporte_pdf,checkeds,
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which,
+                                                boolean isChecked) {
+                                if (isChecked) {
+                                    // If the user checked the item, add it to the selected items
+                                    mSelectedItems.add(which);
+                                } else if (mSelectedItems.contains(which)) {
+                                    // Else, if the item is already in the array, remove it
+                                    mSelectedItems.remove(Integer.valueOf(which));
+                                }
+                            }
+                        })
+                // Set the action buttons
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK, so save the mSelectedItems results somewhere
+                        // or return them to the component that opened the dialog
+
+                        boolean mExpediente = mSelectedItems.contains(0);
+                        boolean mObjetivos = mSelectedItems.contains(1);
+                        boolean mTratamientos = mSelectedItems.contains(2);
+                        boolean mImagenes = mSelectedItems.contains(3);
+                        if(mExpediente || mObjetivos || mTratamientos || mImagenes){
+                            Intent intent = new Intent(PatientActivity.this, GeneratePdfReportActivity.class);
+                            intent.putExtra("expediente",mExpediente);
+                            intent.putExtra("objetivos",mObjetivos);
+                            intent.putExtra("tratamientos",mTratamientos);
+                            intent.putExtra("imagenes",mImagenes);
+                            intent.putExtra("paciente",toolbar.getSubtitle().toString());
+                            intent.putExtra("id",idPaciente);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(context,"Debes Seleccionar al menos un elmento. "+mSelectedItems.size(),Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
 
     public void abrirExpediente(){
         Terapeuta t = obtenerTerapeutaLogeado(context);
@@ -394,8 +496,5 @@ public class PatientActivity extends AppCompatActivity {
             Toast.makeText(context,"No tienes permisos para ver el expdiente clínico",Toast.LENGTH_LONG).show();
         }
     }
-
-
-
 
 }

@@ -5,16 +5,13 @@
     android:id="@+id/cv_tratamiento"
     cardview:cardCornerRadius="5dp"
     cardview:cardElevation="5dp"
-    cardview:cardUseCompatPadding="true">
+    android:layout_marginBottom="25dp"
+    cardview:cardUseCompatPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical">
-
-
-
         <TextView
             android:id="@+id/tv_nombre_terapeuta_tratamiento"
             android:textSize="@dimen/font_size_title"
@@ -164,6 +161,7 @@
                     />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -194,6 +192,20 @@
 
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:background="@color/colorAccent"
+            android:padding="5dp"
+            android:drawableLeft="@drawable/ic_collections_white_36dp"
+            android:id="@+id/tv_contenedor_total_multimedia"
+            android:text="Este tratamiento contiene archivos multimedia anexados"
+            android:textSize="@dimen/font_size_paragraph"
+            android:textColor="@color/colorTextButton"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_resumen_tratamiento"

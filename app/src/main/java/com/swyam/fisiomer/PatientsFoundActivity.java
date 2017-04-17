@@ -29,10 +29,12 @@ import java.util.Date;
 import java.util.List;
 
 import entidad.Paciente;
+import entidad.Terapeuta;
 import entidad.Tratamiento;
 
 import static com.swyam.fisiomer.Connection.SUF_OBTENER_RES_SIMILARES;
 import static com.swyam.fisiomer.Connection.getHostServer;
+import static com.swyam.fisiomer.Connection.obtenerTerapeutaLogeado;
 import static com.swyam.fisiomer.Connection.parsearError;
 import static com.swyam.fisiomer.Helpers.formatearFechaString;
 import static com.swyam.fisiomer.Helpers.getStrFechaFormateada;
@@ -101,7 +103,11 @@ public class PatientsFoundActivity extends AppCompatActivity {
         try{
             String url = getHostServer(context)+SUF_OBTENER_RES_SIMILARES;
             JSONObject obj = new JSONObject();
+
+            Terapeuta t = obtenerTerapeutaLogeado(context);
+
             obj.put("token",token);
+            obj.put("apikey",t.apikey);
 
             VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
                     Request.Method.POST,

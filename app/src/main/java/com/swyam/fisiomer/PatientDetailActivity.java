@@ -34,9 +34,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import entidad.Terapeuta;
+
 import static com.swyam.fisiomer.Connection.SUF_EXPEDIENTE_PACIENTE;
 import static com.swyam.fisiomer.Connection.SUF_GUARDAR_CAMBIOS_DATOS_PACIENTE;
 import static com.swyam.fisiomer.Connection.getHostServer;
+import static com.swyam.fisiomer.Connection.obtenerTerapeutaLogeado;
 import static com.swyam.fisiomer.Connection.parsearError;
 import static com.swyam.fisiomer.Helpers.SEPARATOR_STRING_SER;
 import static com.swyam.fisiomer.Helpers.formatearFechaString;
@@ -71,6 +74,8 @@ public class PatientDetailActivity extends AppCompatActivity {
     boolean datosModificados = false;
 
     ProgressDialog progressDialog;
+
+    Terapeuta T;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,17 +134,35 @@ public class PatientDetailActivity extends AppCompatActivity {
         pincel.setStyle(Paint.Style.FILL);
         pincel.setStrokeWidth(3);
         pincel.setAlpha(127);
-
+        T = obtenerTerapeutaLogeado(context);
 
         actualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(datosEnEdicion){
-                    // proecedemos a intentar guardar
-//                    actualizar.setText("Editar");
                     Helpers.esconderTeclado(PatientDetailActivity.this);
-                    procederGuardado();
+                    Connection.abrirDialogoCredenciales(PatientDetailActivity.this, new OnDialogCred() {
+                        @Override
+                        public void credencialesValidasLocales() {
+                            T = obtenerTerapeutaLogeado(context);
+                            if(T.esAdmin || T.permiso){
+                                procederGuardado();
+                            }else{
+                                Toast.makeText(context,"Tu usuario es de solo lectura. No puedes guardar el tratamiento",Toast.LENGTH_LONG).show();
+                            }
 
+                        }
+
+                        @Override
+                        public void credencialesValidasRemotas() {
+                            T = obtenerTerapeutaLogeado(context);
+                            if(T.esAdmin || T.permiso){
+                                procederGuardado();
+                            }else{
+                                Toast.makeText(context,"Tu usuario es de solo lectura. No puedes guardar el tratamiento",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
 
                 }else{
                     // habilitamos
@@ -203,6 +226,7 @@ public class PatientDetailActivity extends AppCompatActivity {
             JSONObject obj = new JSONObject();
             try{
                 obj.put("id",pacienteId);
+                obj.put("apikey",T.apikey);
                 String str = obj.toString();
                 Log.d("sss",str);
             }catch (Exception ex){
@@ -332,6 +356,7 @@ public class PatientDetailActivity extends AppCompatActivity {
                 obj.put("edad",strEdad);
                 obj.put("ocupacion",strOcupacion);
                 obj.put("telefono",strTelefono);
+                obj.put("apikey",T.apikey);
             }catch(Exception ex){
                 ex.printStackTrace();
             }
